@@ -1,0 +1,32 @@
+---
+description: Enforce repository commit conventions whenever creating or generating commits
+globs:
+alwaysApply: true
+---
+
+# Commit conventions
+
+When proposing, generating, or creating a Git commit:
+
+- Inspect the staged diff first and describe only what is actually staged.
+- Use Conventional Commits in the form `<type>(<scope>): <summary>`.
+- Use one of these types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `build`, `ci`, `perf`, `style`, or `revert`.
+- Add a concise scope when it clarifies the affected area; omit it for repository-wide changes.
+- Write the summary in lowercase imperative form, keep it concise, and do not add a trailing period.
+- Keep each commit focused on one logical change and never include unrelated or pre-existing changes.
+- For breaking changes, add `!` before the colon and include a `BREAKING CHANGE:` footer.
+- Add a body only when it explains motivation, context, or a non-obvious tradeoff.
+- Run the relevant lint, type-check, test, and build commands before committing. Report any check that could not run.
+- Never create a commit unless the user explicitly requests it.
+
+Valid examples:
+
+- `feat(home): add case study carousel`
+- `fix(nav): prevent mobile menu overflow`
+- `chore: configure pnpm workspace`
+
+Invalid examples:
+
+- `Updated files`
+- `fix stuff.`
+- `feat(homepage): Added a new hero section.`
