@@ -6,6 +6,15 @@ alwaysApply: true
 
 # Commit conventions
 
+## Branch workflow
+
+- Treat `main` as protected. Before editing files for a new feature, create and switch to `feat/<short-kebab-case-description>` from `main`.
+- Use an appropriate `fix/`, `refactor/`, `docs/`, or `chore/` prefix for other changes.
+- Never create feature commits directly on `main` and never push commits directly to `main`.
+- Keep one logical change per branch, validate it, and open a pull request targeting `main`.
+- Merge only through the pull request after checks and review pass.
+- Do not switch branches with uncommitted changes unless the user has explicitly confirmed where those changes belong.
+
 When proposing, generating, or creating a Git commit:
 
 - Inspect the staged diff first and describe only what is actually staged.

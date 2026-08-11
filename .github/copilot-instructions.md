@@ -2,6 +2,15 @@
 
 This is a Next.js App Router project using React, TypeScript, Tailwind CSS, and pnpm. Use `pnpm` for dependency management and project scripts. Keep route composition in `src/app`, reusable presentation components in `src/components`, and shared utilities or configuration in `src/lib`.
 
+## Branch workflow
+
+- Treat `main` as a protected integration branch.
+- Before implementing a new feature, create `feat/<short-kebab-case-description>` from `main` and work there.
+- Use `fix/`, `refactor/`, `docs/`, or `chore/` prefixes when they better describe the branch.
+- Keep branches focused on one logical change.
+- Never commit or push feature work directly to `main`.
+- Open a pull request from the working branch into `main` and merge only after validation and review pass.
+
 ## Commit messages
 
 When GitHub Copilot generates a commit message, inspect the staged changes and follow these rules:
