@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/lib/site-config";
 
 import "./globals.css";
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

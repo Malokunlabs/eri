@@ -115,7 +115,8 @@ html {
   }
 
   .eri-pill--primary,
-  .eri-pill--secondary {
+  .eri-pill--secondary,
+  .eri-pill--footer {
     min-height: 42px;
     padding: 11px 16px;
     font-size: 15px;
@@ -136,8 +137,28 @@ html {
     font-weight: 500;
   }
 
+  .eri-pill--footer {
+    min-height: 38px;
+    padding: 9px 15px;
+    background: var(--eri-color-coral-dark);
+    color: var(--eri-color-white);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .eri-pill--signup {
+    min-height: 40px;
+    padding: 10px 17px;
+    background: var(--eri-color-coral-dark);
+    color: var(--eri-color-white);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
   .eri-pill--primary:hover,
-  .eri-pill--header:hover {
+  .eri-pill--header:hover,
+  .eri-pill--footer:hover,
+  .eri-pill--signup:hover {
     background: color-mix(in srgb, var(--eri-color-coral-dark), black 9%);
   }
 
