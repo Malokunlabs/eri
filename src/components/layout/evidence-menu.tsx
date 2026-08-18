@@ -1,13 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const evidenceLinks = ["Video Diaries", "Insights", "Case Studies"] as const;
+const evidenceLinks = [
+  { label: "Video Diaries", href: "/video-diaries" },
+  { label: "Insights", href: "#" },
+  { label: "Case Studies", href: "#" },
+] as const;
 
-export function EvidenceMenu() {
+type EvidenceMenuProps = {
+  variant?: "dark" | "light";
+};
+
+export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isLight = variant === "light";
+  const isEvidenceActive = evidenceLinks.some((link) => link.href === pathname);
 
   useEffect(() => {
     if (!isOpen) {
@@ -47,7 +59,13 @@ export function EvidenceMenu() {
         aria-expanded={isOpen}
         aria-controls="evidence-menu"
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-1.5 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
+        className={`flex items-center gap-1.5 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 ${
+          isLight
+            ? isEvidenceActive
+              ? "text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[6px] focus-visible:outline-eri-dark"
+              : "text-eri-grey-11 focus-visible:outline-eri-dark"
+            : "focus-visible:outline-eri-white"
+        }`}
       >
         Evidence
         <span
@@ -69,18 +87,22 @@ export function EvidenceMenu() {
         }`}
       >
         <div className="overflow-hidden rounded-[28px] border-2 border-black bg-eri-menu shadow-[0_18px_30px_rgba(77,26,8,0.3)]">
-          {evidenceLinks.map((label, index) => (
-            <Link
-              key={label}
-              href="#"
-              onClick={() => setIsOpen(false)}
-              className={`block min-h-18 px-8 py-6 font-display text-[20px] leading-[1.2] text-eri-white transition-colors hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none ${
-                index === 0 ? "bg-white/[0.06]" : ""
-              } ${index > 0 ? "border-t border-black/15" : ""}`}
-            >
-              {label}
-            </Link>
-          ))}
+          {evidenceLinks.map((link, index) => {
+            const isActive = pathname === link.href;
+
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className={`block min-h-18 px-8 py-6 font-display text-[20px] leading-[1.2] text-eri-white transition-colors hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none ${
+                  isActive ? "bg-white/12" : index === 0 ? "bg-white/6" : ""
+                } ${index > 0 ? "border-t border-black/15" : ""}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
