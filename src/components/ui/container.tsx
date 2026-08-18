@@ -6,6 +6,7 @@ type ContainerSize =
   | "work"
   | "audience"
   | "reports"
+  | "insights"
   | "footer";
 
 type ContainerProps = ComponentPropsWithoutRef<"div"> & {
@@ -18,6 +19,7 @@ const containerWidths: Record<ContainerSize, string> = {
   work: "max-w-[1106px]",
   audience: "max-w-[1096px]",
   reports: "max-w-[1096px]",
+  insights: "max-w-[1096px]",
   footer: "max-w-[1136px]",
 };
 
