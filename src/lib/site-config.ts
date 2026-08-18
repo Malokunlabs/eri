@@ -1,4 +1,5 @@
 export const siteConfig = {
   name: "Eri",
-  description: "A modern website built with Next.js.",
+  description:
+    "Ground-level field intelligence gathered by Eri teams across Nigeria.",
 } as const;
