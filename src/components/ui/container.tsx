@@ -1,11 +1,26 @@
 import type { ComponentPropsWithoutRef } from "react";
 
-type ContainerProps = ComponentPropsWithoutRef<"div">;
+type ContainerSize = "wide" | "brands" | "work" | "footer";
 
-export function Container({ className = "", ...props }: ContainerProps) {
+type ContainerProps = ComponentPropsWithoutRef<"div"> & {
+  size?: ContainerSize;
+};
+
+const containerWidths: Record<ContainerSize, string> = {
+  wide: "max-w-[1456px]",
+  brands: "max-w-[1042px]",
+  work: "max-w-[1106px]",
+  footer: "max-w-[1136px]",
+};
+
+export function Container({
+  className = "",
+  size = "wide",
+  ...props
+}: ContainerProps) {
   return (
     <div
-      className={`mx-auto w-full max-w-[1456px] px-6 sm:px-8 ${className}`}
+      className={`mx-auto w-full px-3 sm:px-8 ${containerWidths[size]} ${className}`}
       {...props}
     />
   );
