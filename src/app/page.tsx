@@ -16,8 +16,8 @@ export default function Home() {
       <AudienceSection />
       <ReportsSection />
       <InsightsSection />
-      <ReachUsSection />
       <FaqSection />
+      <ReachUsSection />
     </main>
   );
 }
