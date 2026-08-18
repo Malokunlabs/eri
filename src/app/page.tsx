@@ -1,6 +1,7 @@
 import { AudienceSection } from "@/components/home/audience-section";
 import { BrandsSection } from "@/components/home/brands-section";
 import { HeroSection } from "@/components/home/hero-section";
+import { ReportsSection } from "@/components/home/reports-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <BrandsSection />
       <WorkDoneSection />
       <AudienceSection />
+      <ReportsSection />
     </main>
   );
 }

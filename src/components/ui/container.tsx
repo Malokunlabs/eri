@@ -1,6 +1,12 @@
 import type { ComponentPropsWithoutRef } from "react";
 
-type ContainerSize = "wide" | "brands" | "work" | "audience" | "footer";
+type ContainerSize =
+  | "wide"
+  | "brands"
+  | "work"
+  | "audience"
+  | "reports"
+  | "footer";
 
 type ContainerProps = ComponentPropsWithoutRef<"div"> & {
   size?: ContainerSize;
@@ -11,6 +17,7 @@ const containerWidths: Record<ContainerSize, string> = {
   brands: "max-w-[1042px]",
   work: "max-w-[1106px]",
   audience: "max-w-[1096px]",
+  reports: "max-w-[1096px]",
   footer: "max-w-[1136px]",
 };
 
