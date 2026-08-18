@@ -1,5 +1,6 @@
 import { AudienceSection } from "@/components/home/audience-section";
 import { BrandsSection } from "@/components/home/brands-section";
+import { FaqSection } from "@/components/home/faq-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { InsightsSection } from "@/components/home/insights-section";
 import { ReachUsSection } from "@/components/home/reach-us-section";
@@ -16,6 +17,7 @@ export default function Home() {
       <ReportsSection />
       <InsightsSection />
       <ReachUsSection />
+      <FaqSection />
     </main>
   );
 }
