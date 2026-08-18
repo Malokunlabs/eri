@@ -1,3 +1,4 @@
+import { AudienceSection } from "@/components/home/audience-section";
 import { BrandsSection } from "@/components/home/brands-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroSection />
       <BrandsSection />
       <WorkDoneSection />
+      <AudienceSection />
     </main>
   );
 }
