@@ -1,19 +1,54 @@
+import Image from "next/image";
 import Link from "next/link";
 
+import { EvidenceMenu } from "@/components/layout/evidence-menu";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/lib/site-config";
+
+const navigation = [
+  { label: "Services", href: "#" },
+  { label: "Reports", href: "#" },
+  { label: "About", href: "#" },
+] as const;
 
 export function SiteHeader() {
   return (
-    <header className="border-b border-slate-200 bg-white/80 backdrop-blur">
-      <Container className="flex h-16 items-center justify-between">
+    <header className="relative z-40 h-20 text-eri-white">
+      <Container className="flex h-full items-center justify-between">
         <Link
-          href="/"
-          className="font-semibold tracking-tight text-slate-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-950"
+          href="#"
+          aria-label="Eri home"
+          className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
         >
-          {siteConfig.name}
+          <Image
+            src="/logo/header/logo.svg"
+            alt="Eri"
+            width={91}
+            height={32}
+            loading="eager"
+          />
         </Link>
-        <span className="text-sm text-slate-500">Next.js starter</span>
+
+        <nav aria-label="Primary navigation" className="hidden md:block">
+          <ul className="flex items-center gap-9">
+            <li>
+              <EvidenceMenu />
+            </li>
+            {navigation.map((item) => (
+              <li key={item.label}>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-1 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <Link href="#" className="eri-pill eri-pill--header">
+          Book a Signal
+        </Link>
       </Container>
     </header>
   );
