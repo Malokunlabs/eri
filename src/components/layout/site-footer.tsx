@@ -24,6 +24,13 @@ const socialLinks = [
   },
 ] as const;
 
+const linkHrefMap: Record<string, string> = {
+  Home: "/",
+  "Case Studies": "/case-studies",
+  Insights: "/insights",
+  "Video Diaries": "/video-diaries",
+};
+
 function FooterLinkGroup({
   title,
   links,
@@ -40,7 +47,7 @@ function FooterLinkGroup({
         {links.map((link) => (
           <li key={link}>
             <Link
-              href="#"
+              href={linkHrefMap[link] || "#"}
               className="rounded-sm transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
             >
               {link}
