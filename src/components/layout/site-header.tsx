@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { EvidenceMenu } from "@/components/layout/evidence-menu";
 import { Container } from "@/components/ui/container";
@@ -17,6 +20,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
   const isLight = variant === "light";
+  const pathname = usePathname();
 
   return (
     <header
@@ -46,20 +50,28 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
             <li>
               <EvidenceMenu variant={variant} />
             </li>
-            {navigation.map((item) => (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  className={`flex items-center gap-1 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 ${
-                    isLight
-                      ? "text-eri-grey-11 focus-visible:outline-eri-dark"
-                      : "focus-visible:outline-eri-white"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {navigation.map((item) => {
+              const isActive = item.href !== "#" && pathname === item.href;
+
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className={`flex items-center gap-1 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
+                      isActive
+                        ? isLight
+                          ? "text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[6px] focus-visible:outline-eri-dark"
+                          : "text-eri-grey-6 underline decoration-eri-grey-6 decoration-2 underline-offset-[6px] focus-visible:outline-eri-white"
+                        : isLight
+                          ? "text-eri-grey-11 hover:text-eri-dark focus-visible:outline-eri-dark"
+                          : "text-eri-white hover:text-eri-grey-6 focus-visible:outline-eri-white"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 

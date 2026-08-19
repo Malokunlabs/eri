@@ -59,12 +59,14 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
         aria-expanded={isOpen}
         aria-controls="evidence-menu"
         onClick={() => setIsOpen(true)}
-        className={`flex items-center gap-1.5 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-opacity hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4 ${
+        className={`flex items-center gap-1.5 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
           isLight
             ? isEvidenceActive
               ? "text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[6px] focus-visible:outline-eri-dark"
-              : "text-eri-grey-11 focus-visible:outline-eri-dark"
-            : "focus-visible:outline-eri-white"
+              : "text-eri-grey-11 hover:text-eri-dark focus-visible:outline-eri-dark"
+            : isEvidenceActive
+              ? "text-eri-grey-6 underline decoration-eri-grey-6 decoration-2 underline-offset-[6px] focus-visible:outline-eri-white"
+              : "text-eri-white hover:text-eri-grey-6 focus-visible:outline-eri-white"
         }`}
       >
         Evidence
@@ -95,8 +97,10 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={`block min-h-18 px-8 py-6 font-display text-[20px] leading-[1.2] text-eri-white transition-colors hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none ${
-                  isActive ? "bg-white/12" : index === 0 ? "bg-white/6" : ""
+                className={`block min-h-18 px-8 py-6 font-display text-[20px] leading-[1.2] transition-colors hover:bg-white/10 focus-visible:bg-white/10 focus-visible:outline-none ${
+                  isActive
+                    ? "bg-white/12 text-eri-coral"
+                    : "text-eri-white"
                 } ${index > 0 ? "border-t border-black/15" : ""}`}
               >
                 {link.label}
