@@ -29,6 +29,7 @@ const linkHrefMap: Record<string, string> = {
   "Case Studies": "/case-studies",
   Insights: "/insights",
   "Video Diaries": "/video-diaries",
+  Contact: "/contact",
 };
 
 function FooterLinkGroup({

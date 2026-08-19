@@ -85,7 +85,7 @@ export function CaseStudiesPageContent() {
       <SiteHeader variant="light" />
 
       <main id="main-content" className="pb-16 pt-8 lg:pb-24 lg:pt-12">
-        <Container className="max-w-[1160px]">
+        <Container size="insights">
           {/* Header section */}
           <div className="flex flex-col gap-5 border-b border-eri-grey-5 pb-7 sm:flex-row sm:items-end sm:justify-between lg:gap-10">
             <div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 
-export function VideoDiariesPage() {
+export function ContactPage() {
   return (
     <div className="bg-eri-grey-2">
       <SiteHeader variant="light" />
@@ -17,7 +17,7 @@ export function VideoDiariesPage() {
               </h1>
               <p className="mt-4 max-w-[420px] text-[15px] leading-[1.55] text-eri-grey-11">
                 Share what you&apos;re trying to learn and we&apos;ll show you
-                how video diaries can bring ground truth to your team.
+                how Eri can bring ground truth to your team.
               </p>
 
               <div className="relative mt-10 max-w-[420px]">
@@ -32,8 +32,8 @@ export function VideoDiariesPage() {
 
                 <figure className="relative rounded-[24px] border border-eri-grey-4 bg-eri-white p-6 shadow-[0_8px_24px_rgba(41,41,41,0.06)]">
                   <blockquote className="text-[14px] leading-[1.6] text-eri-grey-11">
-                    &ldquo;Eri&apos;s video diaries gave us a clear picture of
-                    what was actually happening in stores — not what we
+                    &ldquo;Eri&apos;s fieldwork gave us a clear picture of what
+                    was actually happening on the ground — not what we
                     assumed.&rdquo;
                   </blockquote>
 

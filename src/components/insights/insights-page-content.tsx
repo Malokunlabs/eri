@@ -6,10 +6,7 @@ import { useMemo, useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-import {
-  insightCategories,
-  insights,
-} from "@/lib/insights-data";
+import { insightCategories, insights } from "@/lib/insights-data";
 
 const INITIAL_VISIBLE = 6;
 

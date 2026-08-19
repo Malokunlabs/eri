@@ -8,6 +8,7 @@ const navigation = [
   { label: "Services", href: "#" },
   { label: "Reports", href: "#" },
   { label: "About", href: "#" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 type SiteHeaderProps = {
@@ -62,7 +63,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
           </ul>
         </nav>
 
-        <Link href="#" className="eri-pill eri-pill--header">
+        <Link href="/contact" className="eri-pill eri-pill--header">
           Book a Signal
         </Link>
       </Container>
