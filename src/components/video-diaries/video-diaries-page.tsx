@@ -40,7 +40,7 @@ export function VideoDiariesPage() {
                   <figcaption className="mt-6 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
                       <Image
-                        src="/images/insights-section/man-on-suit.png"
+                        src="/images/video-dairies/moniepoint-img.svg"
                         alt=""
                         width={40}
                         height={40}
@@ -57,7 +57,7 @@ export function VideoDiariesPage() {
                     </div>
 
                     <Image
-                      src="/icons/brand-icon/moniepoint.svg"
+                      src="/images/video-dairies/moniepoint-logo.svg"
                       alt=""
                       width={32}
                       height={32}

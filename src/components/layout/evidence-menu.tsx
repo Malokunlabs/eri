@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 const evidenceLinks = [
   { label: "Video Diaries", href: "/video-diaries" },
-  { label: "Insights", href: "#" },
+  { label: "Insights", href: "/insights" },
   { label: "Case Studies", href: "#" },
 ] as const;
 
