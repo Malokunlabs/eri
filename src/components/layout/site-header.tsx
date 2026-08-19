@@ -10,7 +10,7 @@ import { Container } from "@/components/ui/container";
 const navigation = [
   { label: "Services", href: "#" },
   { label: "Reports", href: "/reports" },
-  { label: "About", href: "#" },
+  { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
 

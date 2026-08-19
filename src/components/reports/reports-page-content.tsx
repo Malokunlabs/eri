@@ -53,34 +53,38 @@ export function ReportsPageContent() {
         className="py-16 sm:py-20 lg:py-28"
       >
         <Container size="insights">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
-            <div>
-              <h2
-                id="snapshot-heading"
-                className="font-display text-[38px] font-semibold leading-[1.06] tracking-[-0.025em] text-eri-dark sm:text-[46px] lg:text-[50px]"
-              >
-                The Nigerian Urban Consumer 2026 Snapshot Q1
-              </h2>
-              <p className="mt-5 max-w-[430px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
-                A selection of projects that show how organizations have used
-                ERI to answer important business and brand growth questions.
-              </p>
+          <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
+            <div className="flex flex-col justify-between py-0.5">
+              <div>
+                <h2
+                  id="snapshot-heading"
+                  className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-eri-dark sm:text-[38px] lg:text-[44px]"
+                >
+                  <span className="block whitespace-nowrap">The Nigerian Urban</span>
+                  <span className="block whitespace-nowrap">Consumer 2026</span>
+                  <span className="block whitespace-nowrap">Snapshot Q1</span>
+                </h2>
+                <p className="mt-4 max-w-[400px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
+                  A selection of projects that show how organizations have used
+                  ERI to answer important business and brand growth questions.
+                </p>
+              </div>
               <div className="mt-8">
                 <Link
                   href="#"
-                  className="eri-pill eri-pill--primary min-h-[42px] px-6 py-2.5 font-display text-[14px]"
+                  className="eri-pill eri-pill--primary min-h-[44px] px-6 py-2.5 font-display text-[14px]"
                 >
                   View Snapshot
                 </Link>
               </div>
             </div>
 
-            <div className="relative aspect-[552/340] w-full overflow-hidden rounded-[24px] shadow-[0_12px_36px_rgba(41,41,41,0.08)]">
+            <div className="relative h-full min-h-[340px] w-full self-stretch overflow-hidden rounded-[24px]">
               <Image
                 src="/images/report-page/Frame 2147208325.png"
                 alt="A consumer counting currency in Nigeria"
                 fill
-                sizes="(max-width: 1023px) 100vw, 552px"
+                sizes="(max-width: 1023px) 100vw, 540px"
                 className="object-cover"
               />
             </div>

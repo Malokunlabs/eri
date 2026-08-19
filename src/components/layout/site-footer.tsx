@@ -26,6 +26,7 @@ const socialLinks = [
 
 const linkHrefMap: Record<string, string> = {
   Home: "/",
+  About: "/about",
   "Case Studies": "/case-studies",
   Insights: "/insights",
   "Video Diaries": "/video-diaries",
