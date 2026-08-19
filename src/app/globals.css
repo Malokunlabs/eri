@@ -6,6 +6,7 @@
   --eri-color-coral-dark: #c94d21;
   --eri-color-coral-light: #fff7f4;
   --eri-color-purple: #f5a3f5;
+  --eri-color-mauve: #ac53ac;
   --eri-color-dark: #292929;
   --eri-color-menu: #211f1c;
   --eri-color-bone: #e9e3d6;
@@ -41,6 +42,7 @@
   --color-eri-coral-dark: var(--eri-color-coral-dark);
   --color-eri-coral-light: var(--eri-color-coral-light);
   --color-eri-purple: var(--eri-color-purple);
+  --color-eri-mauve: var(--eri-color-mauve);
   --color-eri-dark: var(--eri-color-dark);
   --color-eri-menu: var(--eri-color-menu);
   --color-eri-bone: var(--eri-color-bone);

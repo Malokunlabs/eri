@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Container } from "@/components/ui/container";
+
 type Brand = {
   name: string;
   src: string;
@@ -123,9 +125,9 @@ export function BrandsSection() {
   return (
     <section
       aria-labelledby="brands-heading"
-      className="bg-eri-white px-3 pb-10 pt-8 text-eri-dark sm:px-8 lg:py-[62px]"
+      className="bg-eri-white pb-10 pt-8 text-eri-dark lg:py-[62px]"
     >
-      <div className="mx-auto max-w-[978px]">
+      <Container size="brands">
         <h2
           id="brands-heading"
           className="max-w-[380px] font-display text-[clamp(34px,7.3vw,40px)] font-semibold leading-[1.05] tracking-[-0.02em] lg:mx-auto lg:max-w-none lg:text-center lg:text-[42px] lg:leading-tight"
@@ -177,7 +179,7 @@ export function BrandsSection() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

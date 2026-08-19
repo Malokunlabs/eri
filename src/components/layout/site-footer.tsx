@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Container } from "@/components/ui/container";
+
 const companyLinks = ["Home", "About", "Services", "FAQs"] as const;
 const exploreLinks = ["Case Studies", "Insights", "Reports"] as const;
 const socialLinks = [
@@ -53,7 +55,7 @@ function FooterLinkGroup({
 export function SiteFooter() {
   return (
     <footer className="relative mt-auto overflow-hidden bg-eri-coral text-eri-white">
-      <div className="mx-auto w-full max-w-[1120px] px-6">
+      <Container size="footer">
         <section
           aria-labelledby="newsletter-title"
           className="flex flex-col items-center pt-16 text-center lg:pt-24"
@@ -181,7 +183,7 @@ export function SiteFooter() {
             className="absolute left-1/2 top-[150px] z-20 h-auto w-[min(88vw,430px)] -translate-x-1/2 sm:top-[250px] sm:w-[600px] lg:left-[58%] lg:top-[400px] lg:w-[770px]"
           />
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
