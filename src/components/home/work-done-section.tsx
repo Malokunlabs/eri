@@ -76,10 +76,10 @@ export function WorkDoneSection() {
           </h2>
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            <Link href="#" className="eri-pill eri-pill--primary">
+            <Link href="/case-studies" className="eri-pill eri-pill--primary">
               View Case Studies
             </Link>
-            <Link href="#" className="eri-pill bg-eri-white px-4 py-[11px] text-eri-dark">
+            <Link href="/video-diaries" className="eri-pill bg-eri-white px-4 py-[11px] text-eri-dark">
               View Video Diaries
             </Link>
           </div>

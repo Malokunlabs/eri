@@ -5,45 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import { Container } from "@/components/ui/container";
-
-const insights = [
-  {
-    image: "/images/insights-section/man-on-suit.png",
-    tag: "Day in the Life",
-    title: "Digital Trends Shaping the Future of Retail Experiences",
-    date: "May 22, 2026",
-  },
-  {
-    image: "/images/insights-section/two-girls.png",
-    tag: "Consumer Signals",
-    title: "The Rise of Sustainable Fashion: Consumer Expectations in 2026",
-    date: "March 10, 2026",
-  },
-  {
-    image: "/images/insights-section/man-on-table.png",
-    tag: "Field Notes",
-    title: "Navigating the New Normal: Retail Insights Post-Pandemic",
-    date: "January 5, 2026",
-  },
-  {
-    image: "/images/insights-section/girl-on-desk.png",
-    tag: "Arguments",
-    title: "E-commerce Strategies for Success in Nigeria’s Digital Market",
-    date: "February 15, 2026",
-  },
-  {
-    image: "/images/insights-section/girl-on-yellow.png",
-    tag: "Market Pulse",
-    title: "What Nigeria’s Next Generation Expects from Everyday Brands",
-    date: "April 8, 2026",
-  },
-  {
-    image: "/images/insights-section/girl-on-blue.png",
-    tag: "Street Signals",
-    title: "How Young Nigerians Are Redefining Modern Convenience",
-    date: "June 2, 2026",
-  },
-] as const;
+import { insights } from "@/lib/insights-data";
 
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   return (
@@ -88,12 +50,20 @@ export function InsightsSection() {
         size="insights"
         className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
       >
-        <h2
-          id="insights-heading"
-          className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.025em] lg:text-[44px]"
-        >
-          Insights from across Nigeria
-        </h2>
+        <div>
+          <h2
+            id="insights-heading"
+            className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.025em] lg:text-[44px]"
+          >
+            Insights from across Nigeria
+          </h2>
+          <Link
+            href="/insights"
+            className="mt-3 inline-flex font-display text-[15px] font-semibold text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[5px] transition-opacity hover:opacity-75"
+          >
+            View all insights
+          </Link>
+        </div>
 
         <div className="flex shrink-0 self-end gap-3 sm:self-auto">
           <button
@@ -126,7 +96,7 @@ export function InsightsSection() {
               className="w-[calc(100vw-48px)] max-w-[342px] shrink-0 snap-start lg:w-[329px]"
               key={insight.image}
             >
-              <Link href="#" className="group block">
+              <Link href="/insights" className="group block">
                 <div className="relative aspect-[342/441] overflow-hidden rounded-lg bg-eri-grey-3">
                   <Image
                     src={insight.image}
