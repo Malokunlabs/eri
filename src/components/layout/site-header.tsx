@@ -8,11 +8,11 @@ import { EvidenceMenu } from "@/components/layout/evidence-menu";
 import { Container } from "@/components/ui/container";
 
 const navigation = [
-  { label: "Services", href: "#" },
+  { label: "Services", href: "/services" },
   { label: "Reports", href: "/reports" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-] as const;
+] satisfies { label: string; href: string }[];
 
 type SiteHeaderProps = {
   variant?: "dark" | "light";
@@ -51,7 +51,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
               <EvidenceMenu variant={variant} />
             </li>
             {navigation.map((item) => {
-              const isActive = item.href !== "#" && pathname === item.href;
+              const isActive = item.href !== "#" && item.href !== "" && pathname === item.href;
 
               return (
                 <li key={item.label}>
