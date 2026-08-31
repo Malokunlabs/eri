@@ -56,7 +56,7 @@ export function FaqSection() {
   return (
     <section
       aria-label="Frequently asked questions"
-      className="overflow-x-hidden bg-eri-white pb-0 pt-14 text-eri-dark lg:pb-0 lg:pt-37"
+      className="overflow-x-clip bg-eri-white pb-0 pt-14 text-eri-dark lg:pb-0 lg:pt-37"
     >
       <Container size="wide">
         <div className="mb-8 lg:hidden">
