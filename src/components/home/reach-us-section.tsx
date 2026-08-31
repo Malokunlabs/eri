@@ -15,7 +15,10 @@ const contactOptions = [
   },
   {
     title: "Message on WhatsApp",
-    description: ["Send a voice note if it's easier.", "We reply the same day."],
+    description: [
+      "Send a voice note if it's easier.",
+      "We reply the same day.",
+    ],
     action: "Text Us",
     image: "/images/reach-us/phone.svg",
     imageWidth: 328,
@@ -37,7 +40,7 @@ export function ReachUsSection() {
   return (
     <section
       aria-labelledby="reach-us-heading"
-      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-16"
+      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-7 "
     >
       <Container size="reach">
         <div className="flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
