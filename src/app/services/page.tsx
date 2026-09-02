@@ -4,9 +4,18 @@ import { ServicesPageContent } from "@/components/services/services-page-content
 import { BrandsSection } from "@/components/home/brands-section";
 
 export const metadata: Metadata = {
-  title: "Services | ERI",
+  title: "Services",
   description:
-    "Transform your market research and brand activations. ERI sends field teams into stores, markets and streets across Nigeria and reports back what they saw.",
+    "Transform your market research with boots on the ground. Eri deploys field teams into stores, markets, and communities across Nigeria to report verified evidence.",
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Services | Eri",
+    description:
+      "Transform your market research with boots on the ground. Eri deploys field teams into stores, markets, and communities across Nigeria to report verified evidence.",
+    url: "/services",
+  },
 };
 
 export default function Page() {

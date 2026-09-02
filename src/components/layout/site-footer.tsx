@@ -138,7 +138,7 @@ export function SiteFooter() {
             <div className="mt-3 space-y-3 text-[15px] leading-tight">
               <p>(234) 801 234 3678</p>
               <p>(234) 801 987 6543</p>
-              <p>hello@eri.africa</p>
+              <p>hello@useeri.africa</p>
             </div>
           </div>
 
