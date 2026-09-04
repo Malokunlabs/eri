@@ -9,7 +9,6 @@ import { Container } from "@/components/ui/container";
 import {
   videoCategories,
   videoDiaries,
-  type VideoCategory,
   type VideoDiary,
 } from "@/lib/video-diaries-data";
 
