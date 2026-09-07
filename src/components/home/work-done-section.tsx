@@ -29,7 +29,7 @@ const studies: Study[] = [
 
 function StudyFolder({ study }: { study: Study }) {
   return (
-    <article className="relative aspect-[244/232] w-full">
+    <article className="group/folder relative aspect-[244/232] w-full cursor-pointer transition-transform duration-300 ease-out hover:scale-105 hover:z-10">
       <Image
         src={study.folder}
         alt=""
@@ -38,17 +38,17 @@ function StudyFolder({ study }: { study: Study }) {
         className="object-contain"
       />
 
-      <div className="absolute inset-x-[8.5%] top-[43%] text-eri-white">
-        <h3 className="font-display text-[clamp(12px,3.4vw,20px)] font-semibold leading-tight tracking-[-0.01em]">
+      <div className="absolute inset-x-[8.5%] top-[38%] text-eri-white">
+        <h3 className="font-display text-[16px] font-semibold leading-tight tracking-[-0.01em] sm:text-[18px] lg:text-[20px]">
           {study.company}
         </h3>
-        <p className="mt-[3%] max-w-[195px] text-[clamp(7px,1.85vw,11px)] leading-[1.45]">
-          A selection of projects that show how organizations have taken care
-          of all.
+        <p className="mt-2 max-w-[195px] text-[10px] leading-[1.4] sm:text-[11px]">
+          A selection of projects that show how organizations have taken care of
+          all.
         </p>
         <Link
-          href="#"
-          className="mt-[7%] inline-flex min-h-5 items-center justify-center rounded-full border border-eri-white px-[7%] py-[3%] font-display text-[clamp(7px,1.85vw,11px)] leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white"
+          href="/case-studies"
+          className="mt-3 inline-flex min-h-5 items-center justify-center rounded-full border border-eri-white px-3.5 py-1 font-display text-[10px] leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white sm:text-[11px]"
         >
           Read The Study
         </Link>
@@ -65,36 +65,43 @@ export function WorkDoneSection() {
     >
       <Container
         size="work"
-        className="grid gap-5 lg:grid-cols-[470px_512px] lg:gap-[60px]"
+        className="grid gap-8 lg:grid-cols-[470px_512px] lg:items-end lg:justify-between lg:gap-15"
       >
-        <div className="lg:pt-7">
-          <h2
-            id="work-done-heading"
-            className="max-w-[470px] font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[40px] lg:text-[42px]"
-          >
-            Work we&apos;ve done, and what came back.
-          </h2>
+        <div className="w-full max-w-117.5 text-left">
+          <div>
+            <h2
+              id="work-done-heading"
+              className="w-full font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[40px] lg:text-[42px]"
+            >
+              Work we&apos;ve done, and
+              <br className="hidden sm:inline" /> what came back.
+            </h2>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <Link href="/case-studies" className="eri-pill eri-pill--primary">
-              View Case Studies
-            </Link>
-            <Link href="/video-diaries" className="eri-pill bg-eri-white px-4 py-[11px] text-eri-dark">
-              View Video Diaries
-            </Link>
+            <div className="mt-6 flex flex-wrap items-center gap-2">
+              <Link href="/case-studies" className="eri-pill eri-pill--primary">
+                View Case Studies
+              </Link>
+              <Link
+                href="/video-diaries"
+                className="eri-pill bg-eri-white px-4 py-[11px] text-eri-dark"
+              >
+                View Video Diaries
+              </Link>
+            </div>
           </div>
 
-          <Image
-            src="/images/workdone/workdone-image.png"
-            alt="A market researcher examining goods at a local market"
-            width={552}
-            height={331}
-            sizes="(max-width: 1023px) calc(100vw - 24px), 470px"
-            className="mt-8 h-auto w-full lg:mt-12 lg:w-[470px]"
-          />
+          <div className="relative mt-8 aspect-487/267 w-full overflow-hidden rounded-[18px] shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+            <Image
+              src="/images/workdone/workdone-image.png"
+              alt="A market researcher examining goods at a local market"
+              fill
+              sizes="(max-width: 1023px) 100vw, 470px"
+              className="object-cover"
+            />
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-3 gap-y-3 lg:gap-x-6 lg:gap-y-9">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-3 sm:gap-x-6 sm:gap-y-9">
           {studies.map((study) => (
             <StudyFolder key={study.company} study={study} />
           ))}

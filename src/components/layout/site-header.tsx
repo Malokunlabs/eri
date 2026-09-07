@@ -26,11 +26,11 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
     <header
       className={`relative z-40 h-20 ${isLight ? "bg-eri-grey-2 text-eri-dark" : "text-eri-white"}`}
     >
-      <Container className="flex h-full items-center justify-between">
+      <Container className="flex h-full items-center justify-between gap-3 px-4 sm:px-6 lg:gap-8 lg:px-8">
         <Link
           href="/"
           aria-label="Eri home"
-          className={`rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 ${
+          className={`shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 ${
             isLight
               ? "focus-visible:outline-eri-dark"
               : "focus-visible:outline-eri-white"
@@ -41,12 +41,13 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
             alt="Eri"
             width={91}
             height={32}
+            className="h-7 w-auto md:h-7.5 lg:h-8"
             loading="eager"
           />
         </Link>
 
         <nav aria-label="Primary navigation" className="hidden md:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-3.5 md:gap-4 lg:gap-6 xl:gap-8 2xl:gap-9">
             <li>
               <EvidenceMenu variant={variant} />
             </li>
@@ -57,7 +58,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
+                    className={`flex items-center gap-1 rounded-sm font-display text-[15px] font-semibold leading-[1.2] whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 lg:text-[16px] xl:text-[18px] ${
                       isActive
                         ? isLight
                           ? "text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[6px] focus-visible:outline-eri-dark"
@@ -75,7 +76,10 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
           </ul>
         </nav>
 
-        <Link href="/contact" className="eri-pill eri-pill--header">
+        <Link
+          href="/contact"
+          className="eri-pill eri-pill--header shrink-0 whitespace-nowrap px-3.5 py-2 text-[13px] md:min-h-9 md:px-4 md:py-2 md:text-[14px] lg:min-h-10.5 lg:px-4.5 lg:py-2.5 lg:text-[15px]"
+        >
           Book a Signal
         </Link>
       </Container>
