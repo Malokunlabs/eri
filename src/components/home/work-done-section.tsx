@@ -65,9 +65,9 @@ export function WorkDoneSection() {
     >
       <Container
         size="work"
-        className="grid gap-8 lg:grid-cols-[470px_512px] lg:items-end lg:justify-between lg:gap-15"
+        className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_512px] lg:items-end lg:justify-between lg:gap-15"
       >
-        <div className="w-full text-left">
+        <div className="w-full min-w-0 self-end text-left">
           <div>
             <h2
               id="work-done-heading"
@@ -90,18 +90,32 @@ export function WorkDoneSection() {
             </div>
           </div>
 
-          <div
-            className="relative mt-8 w-full overflow-hidden rounded-[18px]"
-            style={{ aspectRatio: '487 / 267' }}
+          <Link
+            href="/video-diaries"
+            aria-label="Watch video diaries"
+            className="group relative mt-8 block aspect-[487/267] w-full overflow-hidden rounded-[18px]"
           >
             <Image
               src="/images/workdone/workdone-image.png"
               alt="A market researcher examining goods at a local market"
               fill
-              sizes="(max-width: 1023px) 100vw, 470px"
-              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 1023px) 100vw, 50vw"
+              className="object-cover"
+              style={{ objectFit: "cover", objectPosition: "center" }}
             />
-          </div>
+
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="flex size-11 items-center justify-center rounded-full bg-white/40 backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-12">
+                <svg
+                  className="size-5 translate-x-0.5 fill-white drop-shadow-xs"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 gap-x-3 gap-y-3 sm:gap-x-6 sm:gap-y-9">
