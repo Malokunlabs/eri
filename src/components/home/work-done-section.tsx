@@ -67,7 +67,7 @@ export function WorkDoneSection() {
         size="work"
         className="grid gap-8 lg:grid-cols-[470px_512px] lg:items-end lg:justify-between lg:gap-15"
       >
-        <div className="w-full max-w-117.5 text-left">
+        <div className="w-full text-left">
           <div>
             <h2
               id="work-done-heading"
@@ -90,13 +90,16 @@ export function WorkDoneSection() {
             </div>
           </div>
 
-          <div className="relative mt-8 aspect-487/267 w-full overflow-hidden rounded-[18px] shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+          <div
+            className="relative mt-8 w-full overflow-hidden rounded-[18px]"
+            style={{ aspectRatio: '487 / 267' }}
+          >
             <Image
               src="/images/workdone/workdone-image.png"
               alt="A market researcher examining goods at a local market"
               fill
               sizes="(max-width: 1023px) 100vw, 470px"
-              className="object-cover"
+              style={{ objectFit: 'cover' }}
             />
           </div>
         </div>
