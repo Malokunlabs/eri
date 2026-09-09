@@ -12,7 +12,7 @@ import { WorkDoneSection } from "@/components/home/work-done-section";
 
 export const metadata: Metadata = {
   title:
-    "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria",
+    "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria and the world",
   description:
     "We go to the places our clients can't be, and report back verified ground truth. Field interviews, retail store audits, consumer evidence, and trade spend tracking across Nigeria.",
   alternates: {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria",
+      "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria and the world",
     description:
       "We go to the places our clients can't be, and report back verified ground truth across Nigeria.",
     url: "/",
