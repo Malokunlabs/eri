@@ -59,7 +59,7 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
         aria-expanded={isOpen}
         aria-controls="evidence-menu"
         onClick={() => setIsOpen(true)}
-        className={`flex items-center gap-1.5 rounded-sm font-display text-[18px] font-semibold leading-[1.2] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${
+        className={`flex items-center gap-1 rounded-sm font-display text-[15px] font-semibold leading-[1.2] whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 lg:text-[16px] xl:text-[18px] ${
           isLight
             ? isEvidenceActive
               ? "text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[6px] focus-visible:outline-eri-dark"
@@ -72,7 +72,7 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
         Evidence
         <span
           aria-hidden="true"
-          className={`text-[16px] leading-none transition-transform duration-200 ${
+          className={`text-[13px] leading-none transition-transform duration-200 lg:text-[14px] xl:text-[16px] ${
             isOpen ? "rotate-180" : ""
           }`}
         >
