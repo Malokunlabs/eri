@@ -37,7 +37,9 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
           }`}
         >
           <Image
-            src={isLight ? "/logo/header/logo-dark.svg" : "/logo/header/logo.svg"}
+            src={
+              isLight ? "/logo/header/logo-dark.svg" : "/logo/header/logo.svg"
+            }
             alt="Eri"
             width={91}
             height={32}
@@ -52,7 +54,8 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
               <EvidenceMenu variant={variant} />
             </li>
             {navigation.map((item) => {
-              const isActive = item.href !== "#" && item.href !== "" && pathname === item.href;
+              const isActive =
+                item.href !== "#" && item.href !== "" && pathname === item.href;
 
               return (
                 <li key={item.label}>
@@ -80,7 +83,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
           href="/contact"
           className="eri-pill eri-pill--header shrink-0 whitespace-nowrap px-3.5 py-2 text-[13px] md:min-h-9 md:px-4 md:py-2 md:text-[14px] lg:min-h-10.5 lg:px-4.5 lg:py-2.5 lg:text-[15px]"
         >
-          Book a Signal
+          Ask Eri
         </Link>
       </Container>
     </header>
