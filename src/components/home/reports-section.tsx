@@ -11,7 +11,7 @@ export function ReportsSection() {
     >
       <Container
         size="reports"
-        className="grid items-start gap-10 py-14 lg:grid-cols-[352px_minmax(0,1fr)] lg:gap-16 lg:pb-6 lg:pt-20"
+        className="grid items-start gap-10 py-12 lg:grid-cols-[352px_minmax(0,1fr)] lg:gap-16 lg:pb-2 lg:pt-12"
       >
         <div>
           <p className="font-display text-[16px] font-semibold leading-tight lg:text-[18px]">

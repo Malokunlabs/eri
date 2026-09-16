@@ -61,7 +61,7 @@ export function WorkDoneSection() {
   return (
     <section
       aria-labelledby="work-done-heading"
-      className="bg-eri-white py-12 text-eri-dark lg:pb-16 lg:pt-[108px]"
+      className="bg-eri-white py-12 text-eri-dark lg:pb-16 lg:pt-18"
     >
       <Container
         size="work"
