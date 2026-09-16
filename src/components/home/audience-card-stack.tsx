@@ -80,7 +80,7 @@ export function AudienceCardStack({ description }: AudienceCardStackProps) {
         className="relative mt-1 h-[240svh] lg:mt-0"
       >
         <div className="sticky top-0 flex flex-col overflow-hidden lg:h-svh">
-          <div className="relative mx-auto h-149 w-full max-w-96 shrink-0">
+          <div className="relative mx-auto h-[calc(min(304px,79.2vw)*596/304)] w-full max-w-96 shrink-0 lg:h-149">
             <div className={`${cardClassName} left-0`}>
               <Image
                 src="/images/this-for/director.svg"
@@ -127,7 +127,7 @@ export function AudienceCardStack({ description }: AudienceCardStackProps) {
             {description}
           </p>
 
-          <div className="mt-3 px-1 lg:hidden">
+          <div className="mt-2 px-1 lg:hidden">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeSlide}
@@ -147,7 +147,7 @@ export function AudienceCardStack({ description }: AudienceCardStackProps) {
 
             <div
               aria-label={`Audience ${activeSlide + 1} of ${audienceSlides.length}`}
-              className="mt-3 flex h-5 w-[100px] items-center justify-center gap-1.5 rounded-full bg-eri-bone/60"
+              className="mt-3 flex h-5 w-25 items-center justify-center gap-1.5 rounded-full bg-eri-bone/60"
               role="status"
             >
               {Array.from({ length: 5 }).map((_, index) => (
