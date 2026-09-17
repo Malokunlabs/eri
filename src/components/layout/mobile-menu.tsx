@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 
 const evidenceLinks = [
@@ -25,9 +26,14 @@ type MobileMenuProps = {
 
 export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(true);
   const pathname = usePathname();
   const isLight = variant === "light";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -98,173 +104,178 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
       </button>
 
       {/* Full-Screen Mobile Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            id="mobile-navigation"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile Navigation"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-eri-menu text-eri-white"
-          >
-            {/* Header row with logo and close button */}
-            <div className="flex h-20 shrink-0 items-center justify-between px-4 sm:px-6">
-              <Link
-                href="/"
-                onClick={() => setIsOpen(false)}
-                aria-label="Eri home"
-                className="shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                id="mobile-navigation"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile Navigation"
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="fixed inset-0 z-100 flex flex-col overflow-y-auto bg-eri-menu text-eri-white"
               >
-                <Image
-                  src="/logo/header/logo.svg"
-                  alt="Eri"
-                  width={91}
-                  height={32}
-                  className="h-7 w-auto"
-                  priority
-                />
-              </Link>
+                {/* Header row with logo and close button */}
+                <div className="flex h-20 shrink-0 items-center justify-between px-4 sm:px-6">
+                  <Link
+                    href="/"
+                    onClick={() => setIsOpen(false)}
+                    aria-label="Eri home"
+                    className="shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
+                  >
+                    <Image
+                      src="/logo/header/logo.svg"
+                      alt="Eri"
+                      width={91}
+                      height={32}
+                      className="h-7 w-auto"
+                      priority
+                    />
+                  </Link>
 
-              <button
-                type="button"
-                aria-label="Close navigation menu"
-                onClick={() => setIsOpen(false)}
-                className="flex size-10 items-center justify-center rounded-full text-eri-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M13.5 4.5L4.5 13.5M4.5 4.5L13.5 13.5"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* Navigation links */}
-            <div className="flex flex-1 flex-col justify-between px-6 py-6 sm:px-8">
-              <nav aria-label="Mobile primary navigation" className="space-y-6">
-                {/* Evidence Accordion / Group */}
-                <div className="border-b border-white/10 pb-5">
                   <button
                     type="button"
-                    onClick={() => setIsEvidenceOpen((prev) => !prev)}
-                    className="flex w-full items-center justify-between py-1 text-left font-display text-[26px] font-semibold leading-tight tracking-[-0.01em] text-eri-white transition-colors"
+                    aria-label="Close navigation menu"
+                    onClick={() => setIsOpen(false)}
+                    className="flex size-10 items-center justify-center rounded-full text-eri-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white"
                   >
-                    <span
-                      className={
-                        isEvidenceActive ? "text-eri-coral" : "text-eri-white"
-                      }
-                    >
-                      Evidence
-                    </span>
-                    <span
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
-                      className={`text-[16px] text-eri-grey-8 transition-transform duration-200 ${
-                        isEvidenceOpen ? "rotate-180" : ""
-                      }`}
                     >
-                      ⌄
-                    </span>
+                      <path
+                        d="M13.5 4.5L4.5 13.5M4.5 4.5L13.5 13.5"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </button>
-
-                  <AnimatePresence initial={false}>
-                    {isEvidenceOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="overflow-hidden"
-                      >
-                        <ul className="mt-3 space-y-3.5 pl-3">
-                          {evidenceLinks.map((link) => {
-                            const isActive = pathname === link.href;
-
-                            return (
-                              <li key={link.label}>
-                                <Link
-                                  href={link.href}
-                                  onClick={() => setIsOpen(false)}
-                                  className={`block font-display text-[18px] transition-colors ${
-                                    isActive
-                                      ? "font-semibold text-eri-coral"
-                                      : "text-eri-grey-6 hover:text-eri-white"
-                                  }`}
-                                >
-                                  {link.label}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
 
-                {/* Primary pages */}
-                <ul className="space-y-4 border-b border-white/10 pb-6">
-                  {navigationLinks.map((item) => {
-                    const isActive = pathname === item.href;
-
-                    return (
-                      <li key={item.label}>
-                        <Link
-                          href={item.href}
-                          onClick={() => setIsOpen(false)}
-                          className={`block py-1 font-display text-[26px] font-semibold leading-tight tracking-[-0.01em] transition-colors ${
-                            isActive
-                              ? "text-eri-coral underline decoration-eri-coral decoration-2 underline-offset-8"
-                              : "text-eri-white hover:text-eri-grey-6"
+                {/* Navigation links */}
+                <div className="flex flex-1 flex-col justify-between px-6 py-6 sm:px-8">
+                  <nav aria-label="Mobile primary navigation" className="space-y-6">
+                    {/* Evidence Accordion / Group */}
+                    <div className="border-b border-white/10 pb-5">
+                      <button
+                        type="button"
+                        onClick={() => setIsEvidenceOpen((prev) => !prev)}
+                        className="flex w-full items-center justify-between py-1 text-left font-display text-[26px] font-semibold leading-tight tracking-[-0.01em] text-eri-white transition-colors"
+                      >
+                        <span
+                          className={
+                            isEvidenceActive ? "text-eri-coral" : "text-eri-white"
+                          }
+                        >
+                          Evidence
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          className={`text-[16px] text-eri-grey-8 transition-transform duration-200 ${
+                            isEvidenceOpen ? "rotate-180" : ""
                           }`}
                         >
-                          {item.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
+                          ⌄
+                        </span>
+                      </button>
 
-              {/* Bottom Actions */}
-              <div className="mt-8 pt-4">
-                <Link
-                  href="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="eri-pill eri-pill--primary flex min-h-12 w-full items-center justify-center text-[16px] font-semibold"
-                >
-                  Book a Signal
-                </Link>
+                      <AnimatePresence initial={false}>
+                        {isEvidenceOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="overflow-hidden"
+                          >
+                            <ul className="mt-3 space-y-3.5 pl-3">
+                              {evidenceLinks.map((link) => {
+                                const isActive = pathname === link.href;
 
-                <div className="mt-6 flex items-center justify-between text-[13px] text-eri-grey-8">
-                  <span>Ground truth across Nigeria</span>
-                  <Link
-                    href="/contact"
-                    onClick={() => setIsOpen(false)}
-                    className="underline hover:text-eri-white"
-                  >
-                    Need assistance?
-                  </Link>
+                                return (
+                                  <li key={link.label}>
+                                    <Link
+                                      href={link.href}
+                                      onClick={() => setIsOpen(false)}
+                                      className={`block py-1 font-display text-[20px] font-medium transition-colors ${
+                                        isActive
+                                          ? "text-eri-coral"
+                                          : "text-eri-grey-6 hover:text-eri-white"
+                                      }`}
+                                    >
+                                      {link.label}
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Other primary links */}
+                    {navigationLinks.map((item) => {
+                      const isActive = pathname === item.href;
+
+                      return (
+                        <div
+                          key={item.label}
+                          className="border-b border-white/10 pb-5"
+                        >
+                          <Link
+                            href={item.href}
+                            onClick={() => setIsOpen(false)}
+                            className={`block py-1 font-display text-[26px] font-semibold leading-tight tracking-[-0.01em] transition-colors ${
+                              isActive
+                                ? "text-eri-coral"
+                                : "text-eri-white hover:text-eri-grey-6"
+                            }`}
+                          >
+                            {item.label}
+                          </Link>
+                        </div>
+                      );
+                    })}
+                  </nav>
+
+                  {/* Bottom CTAs */}
+                  <div className="pt-8">
+                    <Link
+                      href="/contact"
+                      onClick={() => setIsOpen(false)}
+                      className="eri-pill eri-pill--primary flex min-h-12 w-full items-center justify-center text-[16px] font-semibold"
+                    >
+                      Book a Signal
+                    </Link>
+
+                    <div className="mt-6 flex items-center justify-between text-[13px] text-eri-grey-8">
+                      <span>Ground truth across Nigeria</span>
+                      <Link
+                        href="/contact"
+                        onClick={() => setIsOpen(false)}
+                        className="underline hover:text-eri-white"
+                      >
+                        Need assistance?
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </div>
   );
 }

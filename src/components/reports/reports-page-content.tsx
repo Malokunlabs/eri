@@ -8,7 +8,7 @@ export function ReportsPageContent() {
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
-      <section className="relative min-h-[560px] w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-[620px] lg:min-h-[680px]">
+      <section className="relative min-h-140 w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-155 lg:min-h-170">
         {/* Background Hero Image */}
         <Image
           src="/images/report-page/Reports Hero.png"
@@ -53,39 +53,40 @@ export function ReportsPageContent() {
         className="py-16 sm:py-20 lg:py-28"
       >
         <Container size="insights">
-          <div className="grid items-stretch gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="flex flex-col justify-between py-0.5">
-              <div>
-                <h2
-                  id="snapshot-heading"
-                  className="font-display text-[32px] font-semibold leading-[1.1] tracking-[-0.025em] text-eri-dark sm:text-[38px] lg:text-[44px]"
-                >
-                  <span className="block whitespace-nowrap">The Nigerian Urban</span>
-                  <span className="block whitespace-nowrap">Consumer 2026</span>
-                  <span className="block whitespace-nowrap">Snapshot Q1</span>
-                </h2>
-                <p className="mt-4 max-w-[400px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
-                  A selection of projects that show how organizations have used
-                  ERI to answer important business and brand growth questions.
-                </p>
-              </div>
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-14">
+            <div>
+              <h2
+                id="snapshot-heading"
+                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.025em] text-eri-dark sm:text-[38px] lg:text-[44px]"
+              >
+                <span className="block">The Nigerian</span>
+                <span className="block">Urban Consumer</span>
+                <span className="block">2026 Snapshot Q1</span>
+              </h2>
+              <p className="mt-4 max-w-97.5 text-[13px] leading-[1.55] text-eri-grey-11 sm:text-[14px]">
+                57% of consumers had switched brands. 47% said they choose on
+                consistency, not price or advertising. From 244 retail
+                intercepts across Lagos, Abuja and Port Harcourt.
+              </p>
               <div className="mt-8">
                 <Link
                   href="#"
-                  className="eri-pill eri-pill--primary min-h-[44px] px-6 py-2.5 font-display text-[14px]"
+                  className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
                 >
-                  View Snapshot
+                  Download Report
                 </Link>
               </div>
             </div>
 
-            <div className="relative h-full min-h-[340px] w-full self-stretch overflow-hidden rounded-[24px]">
+            <div className="relative w-full">
               <Image
-                src="/images/report-page/Frame 2147208325.png"
-                alt="A consumer counting currency in Nigeria"
-                fill
-                sizes="(max-width: 1023px) 100vw, 540px"
-                className="object-cover"
+                src="/images/reports/reports-image.png"
+                alt="The Nigerian Urban Consumer 2026 Snapshot Q1 report preview"
+                width={723}
+                height={440}
+                sizes="(max-width: 1023px) 100vw, 580px"
+                className="h-auto w-full"
+                priority
               />
             </div>
           </div>
