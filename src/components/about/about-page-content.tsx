@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
@@ -33,6 +34,14 @@ export function AboutPageContent() {
                   Nigeria are not written down anywhere, and someone has to go
                   and see them.
                 </p>
+                <div className="mt-7 sm:mt-8">
+                  <Link
+                    href="/contact"
+                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-eri-dark bg-eri-coral-dark px-7 py-2.5 font-display text-[15px] font-medium text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    Book a Signal
+                  </Link>
+                </div>
               </div>
 
               <div className="flex justify-start lg:justify-end">
@@ -63,32 +72,32 @@ export function AboutPageContent() {
       {/* Section 2: What We Do */}
       <section
         aria-labelledby="what-we-do-heading"
-        className="relative overflow-hidden pt-20 pb-16 sm:pt-28 sm:pb-20 lg:pt-36 lg:pb-0"
+        className="relative overflow-x-clip pt-16 pb-0 -mb-0.5 sm:pt-24 sm:-mb-1 lg:pt-36 lg:mb-0"
       >
         <Container size="insights">
-          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
+          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
             {/* Left Column: Heading, intro, and stats grid */}
-            <div className="flex flex-col justify-center lg:pb-24 lg:pr-4">
+            <div className="flex min-w-0 flex-col justify-center lg:pb-20 lg:pr-4">
               <h2
                 id="what-we-do-heading"
-                className="font-display text-[38px] font-semibold leading-[1.06] tracking-[-0.025em] text-eri-dark sm:text-[48px] lg:text-[54px]"
+                className="font-display text-[38px] font-semibold leading-[1.06] tracking-tight text-eri-dark sm:text-[48px] lg:text-[54px]"
               >
                 What we do
               </h2>
-              <p className="mt-4 max-w-100 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
+              <p className="mt-4 max-w-85 text-[14px] leading-[1.55] text-eri-grey-11 sm:max-w-115 sm:text-[15px]">
                 We go to the places our clients can&apos;t be, and we report
                 back what we saw. Nothing is gathered by phone, or bought from a
                 panel.
               </p>
 
               {/* Stats Grid */}
-              <div className="mt-12 grid grid-cols-3 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-12">
+              <div className="mt-9 grid grid-cols-3 gap-x-2 gap-y-8.5 xs:gap-x-3.5 sm:mt-12 sm:gap-x-8 sm:gap-y-10">
                 {stats.map((stat, idx) => (
                   <div key={idx}>
-                    <p className="font-display text-[28px] font-bold leading-tight text-eri-dark sm:text-[34px] lg:text-[38px]">
+                    <p className="font-display text-[25px] font-bold leading-tight text-eri-dark xs:text-[27px] sm:text-[34px] lg:text-[38px]">
                       {stat.value}
                     </p>
-                    <p className="mt-1.5 whitespace-pre-line text-[12px] leading-snug text-eri-grey-11 sm:text-[13px]">
+                    <p className="mt-1.5 whitespace-pre-line text-[11px] leading-[1.3] text-eri-grey-11 xs:text-[11.5px] sm:text-[13px]">
                       {stat.label}
                     </p>
                   </div>
@@ -96,40 +105,39 @@ export function AboutPageContent() {
               </div>
             </div>
 
-            {/* Right Column: Folder with document text overlay */}
-            <div className="relative flex justify-end lg:-mr-12 xl:-mr-20 lg:translate-y-8 xl:translate-y-12">
-              <div className="relative aspect-783/640 w-full max-w-140 lg:max-w-165">
+            {/* Right Column: Folder positioned on the right and touching the bottom */}
+            <div className="relative flex min-w-0 justify-end self-end translate-y-0.5 sm:translate-y-1 lg:-mr-12 xl:-mr-20 lg:translate-y-8 xl:translate-y-12">
+              <div className="relative aspect-783/640 w-[110vw] shrink-0 -mr-[calc(0.75rem+18.2vw)] sm:mr-0 sm:w-125 lg:w-full lg:max-w-165">
                 <Image
                   src="/images/about/folder.png"
                   alt=""
                   fill
-                  sizes="(max-width: 1023px) 100vw, 660px"
+                  sizes="(max-width: 639px) 110vw, (max-width: 1023px) 500px, 660px"
                   className="pointer-events-none object-contain object-bottom"
                   priority
                 />
 
-                {/* Text overlay — mathematically locked to the beige paper inside folder.png
-                    Paper is from 5.75% to 83.52% horizontally, and visible before the flap from 0% to 50% vertically */}
+                {/* Text overlay — mathematically locked to the beige paper inside folder.png */}
                 <div
-                  className="absolute flex flex-col justify-center overflow-hidden"
+                  className="absolute flex flex-col justify-start overflow-hidden"
                   style={{
-                    left: "8%",
-                    width: "72%",
-                    top: "4%",
-                    height: "44%",
-                    padding: "clamp(10px, 1.8vw, 24px)",
+                    left: "7.5%",
+                    width: "73%",
+                    top: "2.5%",
+                    height: "48%",
+                    padding: "clamp(8px, 2.2vw, 20px)",
                   }}
                 >
                   <p
-                    className="font-sans font-normal leading-[1.55] text-eri-dark"
-                    style={{ fontSize: "clamp(12px, 1.15vw, 16px)" }}
+                    className="max-w-73.75 font-sans font-normal leading-[1.46] text-eri-dark sm:max-w-none"
+                    style={{ fontSize: "clamp(11px, 1.1vw, 15px)" }}
                   >
                     Brands ask us to prove things they can&apos;t prove from a
                     spreadsheet. Whether the users are real, whether the product
                     is on the shelf, whether the trade spend was actually spent,
                     whether the money reached the people it was meant for. Our
-                    people go out, look, and bring back evidence with a place and
-                    a time attached to it.
+                    people go out, look, and bring back evidence with a place
+                    and a time attached to it.
                   </p>
                 </div>
               </div>
