@@ -27,18 +27,23 @@ export function ServicesPageContent() {
           </h1>
 
           {/* Right: description + CTAs */}
-          <div className="flex flex-col items-end gap-8">
-            <p className="max-w-[380px] text-[15px] leading-relaxed text-eri-grey-6">
-              Empowering brands with rapid, data-driven{" "}
-              <br className="sm:hidden" /> insights and on-the-ground
-              activations, all backed by a vibrant community of skilled field
+          <div className="flex flex-col items-start gap-6 lg:items-end lg:gap-8">
+            <p className="max-w-115 text-[15px] leading-[1.55] text-eri-grey-6 sm:text-[16px] lg:max-w-95">
+              Empowering brands with rapid, data-driven insights and on-the-ground
+              activations, all backed by a vibrant community of skilled gig
               professionals.
             </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Link href="/contact" className="eri-pill eri-pill--primary">
+            <div className="grid w-full grid-cols-2 gap-3.5 sm:flex sm:w-auto sm:items-center sm:gap-3">
+              <Link
+                href="/contact"
+                className="flex min-h-12 items-center justify-center rounded-full border border-white bg-eri-coral-dark px-5 py-3 font-display text-[15px] font-medium whitespace-nowrap text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-7"
+              >
                 Get Free Plan
               </Link>
-              <Link href="/reports" className="eri-pill eri-pill--secondary">
+              <Link
+                href="/reports"
+                className="flex min-h-12 items-center justify-center rounded-full border border-transparent bg-eri-grey-8 px-5 py-3 font-display text-[15px] font-medium whitespace-nowrap text-eri-dark transition-all hover:bg-eri-grey-7 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-7"
+              >
                 View Pricing
               </Link>
             </div>

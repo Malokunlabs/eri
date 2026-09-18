@@ -18,25 +18,25 @@ const LOAD_MORE_STEP = 4;
 
 function CaseStudyCard({ study }: { study: CaseStudy }) {
   return (
-    <article className="group relative aspect-[244/232] w-full transition-transform duration-200 hover:-translate-y-1">
+    <article className="group relative aspect-244/290 w-full transition-transform duration-200 hover:-translate-y-1">
       <Image
         src={study.folder}
         alt={study.company}
         fill
-        sizes="(max-width: 639px) 100vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 260px"
+        sizes="(max-width: 639px) 50vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 260px"
         className="object-contain drop-shadow-sm"
       />
 
-      <div className="absolute inset-x-[8.5%] top-[43%] text-eri-white">
-        <h3 className="font-display text-[clamp(15px,2.2vw,20px)] font-semibold leading-tight tracking-[-0.01em]">
+      <div className="absolute inset-x-[8.5%] top-[40%] text-eri-white">
+        <h3 className="font-display text-[clamp(13px,3.5vw,20px)] font-semibold leading-tight tracking-[-0.01em]">
           {study.company}
         </h3>
-        <p className="mt-[3%] max-w-[200px] text-[clamp(9px,1.2vw,11px)] leading-[1.45] text-white/95">
+        <p className="mt-[3%] max-w-[200px] text-[clamp(8px,1.8vw,11px)] leading-[1.45] text-white/95">
           {study.description}
         </p>
         <Link
           href="#"
-          className="mt-[6%] inline-flex min-h-6 items-center justify-center rounded-full border border-eri-white px-[7%] py-[2.5%] font-display text-[clamp(9px,1.1vw,11px)] leading-none text-eri-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white"
+          className="mt-[6%] inline-flex min-h-6 items-center justify-center rounded-full border border-eri-white px-[7%] py-[2.5%] font-display text-[clamp(8px,1.6vw,11px)] leading-none text-eri-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white"
         >
           View Details
         </Link>
@@ -97,7 +97,7 @@ export function CaseStudiesPageContent() {
                 project gets built around that question.
               </p>
             </div>
-            <p className="max-w-[340px] text-[13px] leading-[1.5] text-eri-grey-11 sm:text-[14px] sm:text-right">
+            <p className="hidden max-w-[340px] text-[13px] leading-[1.5] text-eri-grey-11 sm:block sm:text-[14px] sm:text-right">
               We do not disclose confidential, classified, or sensitive detail
               about our work with brands.
             </p>
@@ -148,7 +148,7 @@ export function CaseStudiesPageContent() {
 
           {/* Grid section */}
           {visibleStudies.length > 0 ? (
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8">
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8">
               {visibleStudies.map((study) => (
                 <CaseStudyCard key={study.id} study={study} />
               ))}

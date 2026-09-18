@@ -99,13 +99,7 @@ const [quidax, chickenRepublic] = brandColumns[2];
 const [showmax, kora] = brandColumns[3];
 const [alara, cultureFoundry] = brandColumns[4];
 
-function BrandCard({
-  brand,
-  className,
-}: {
-  brand: Brand;
-  className: string;
-}) {
+function BrandCard({ brand, className }: { brand: Brand; className: string }) {
   return (
     <div
       className={`flex items-center justify-center overflow-hidden rounded-[20px] bg-eri-grey-3 px-3 ${className}`}
@@ -169,9 +163,7 @@ export function BrandsSection() {
                 <BrandCard
                   brand={brand}
                   className={
-                    brand.cardHeight === "tall"
-                      ? "h-[140px]"
-                      : "h-[92px]"
+                    brand.cardHeight === "tall" ? "h-[140px]" : "h-[92px]"
                   }
                   key={brand.name}
                 />

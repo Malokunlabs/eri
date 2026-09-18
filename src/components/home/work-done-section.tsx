@@ -38,17 +38,17 @@ function StudyFolder({ study }: { study: Study }) {
         className="object-contain"
       />
 
-      <div className="absolute inset-x-[8.5%] top-[38%] text-eri-white">
-        <h3 className="font-display text-[16px] font-semibold leading-tight tracking-[-0.01em] sm:text-[18px] lg:text-[20px]">
+      <div className="absolute inset-x-[6.5%] top-[33%] text-eri-white sm:inset-x-[8.5%] sm:top-[37%]">
+        <h3 className="font-display text-[12px] font-semibold leading-tight tracking-[-0.01em] xs:text-[13.5px] sm:text-[18px] lg:text-[20px]">
           {study.company}
         </h3>
-        <p className="mt-2 max-w-[195px] text-[10px] leading-[1.4] sm:text-[11px]">
+        <p className="mt-1 text-[8px] leading-tight text-white/90 xs:text-[9px] sm:mt-2 sm:max-w-48.75 sm:text-[11px] sm:leading-[1.4]">
           A selection of projects that show how organizations have taken care of
           all.
         </p>
         <Link
           href="/case-studies"
-          className="mt-3 inline-flex min-h-5 items-center justify-center rounded-full border border-eri-white px-3.5 py-1 font-display text-[10px] leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white sm:text-[11px]"
+          className="mt-1.5 inline-flex h-4.5 items-center justify-center rounded-full border border-eri-white px-2 py-0.5 font-display text-[8px] font-medium leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white xs:h-5 xs:px-2.5 xs:text-[9px] sm:mt-3 sm:h-auto sm:min-h-5 sm:px-3.5 sm:py-1 sm:text-[11px]"
         >
           Read The Study
         </Link>
@@ -61,7 +61,7 @@ export function WorkDoneSection() {
   return (
     <section
       aria-labelledby="work-done-heading"
-      className="bg-eri-white py-12 text-eri-dark lg:pb-16 lg:pt-[108px]"
+      className="bg-eri-white py-12 text-eri-dark lg:pb-16 lg:pt-18"
     >
       <Container
         size="work"
@@ -77,13 +77,16 @@ export function WorkDoneSection() {
               <br className="hidden sm:inline" /> what came back.
             </h2>
 
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              <Link href="/case-studies" className="eri-pill eri-pill--primary">
+            <div className="mt-6 flex flex-nowrap items-center gap-2">
+              <Link
+                href="/case-studies"
+                className="eri-pill eri-pill--primary min-h-8 whitespace-nowrap px-3 py-2 text-[12px] sm:min-h-[42px] sm:px-4 sm:py-[11px] sm:text-[15px]"
+              >
                 View Case Studies
               </Link>
               <Link
                 href="/video-diaries"
-                className="eri-pill bg-eri-white px-4 py-[11px] text-eri-dark"
+                className="eri-pill min-h-8 whitespace-nowrap bg-eri-white px-3 py-2 text-[12px] text-eri-dark sm:min-h-[42px] sm:px-4 sm:py-[11px] sm:text-[15px]"
               >
                 View Video Diaries
               </Link>
@@ -118,7 +121,7 @@ export function WorkDoneSection() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-3 gap-y-3 sm:gap-x-6 sm:gap-y-9">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-x-6 sm:gap-y-9">
           {studies.map((study) => (
             <StudyFolder key={study.company} study={study} />
           ))}

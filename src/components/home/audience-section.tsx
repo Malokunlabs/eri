@@ -18,9 +18,9 @@ export function AudienceSection() {
     >
       <Container
         size="audience"
-        className="grid gap-0 pb-12 pt-10 lg:grid-cols-[264px_384px_264px] lg:gap-x-[60px] lg:pb-0 lg:pt-0"
+        className="grid gap-0 pb-4 pt-10 lg:grid-cols-[264px_384px_264px] lg:gap-x-15 lg:pb-0 lg:pt-0"
       >
-        <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-[88px]">
+        <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-22">
           <h2
             id="audience-heading"
             className="font-display text-[30px] font-semibold leading-[1.02] tracking-[-0.02em] lg:text-[44px]"
@@ -32,7 +32,7 @@ export function AudienceSection() {
               Eri for?
             </span>
           </h2>
-          <p className="mt-4 max-w-[264px] text-[12px] leading-[1.55] text-eri-coral-light lg:text-[15px]">
+          <p className="mt-4 max-w-66 text-[12px] leading-[1.55] text-eri-coral-light lg:text-[15px]">
             {audienceDescription}
           </p>
           <Link

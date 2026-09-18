@@ -11,15 +11,15 @@ export function ReportsSection() {
     >
       <Container
         size="reports"
-        className="grid items-start gap-10 py-14 lg:grid-cols-[352px_minmax(0,1fr)] lg:gap-16 lg:pb-6 lg:pt-20"
+        className="grid items-start gap-10 py-12 lg:grid-cols-[352px_minmax(0,1fr)] lg:gap-16 lg:pb-2 lg:pt-12"
       >
-        <div>
+        <div className="w-full lg:max-w-88">
           <p className="font-display text-[16px] font-semibold leading-tight lg:text-[18px]">
             Reports by Eri
           </p>
           <h2
             id="reports-heading"
-            className="mt-3 max-w-[352px] font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.02em] lg:text-[40px] lg:tracking-[-0.035em]"
+            className="mt-3 w-full font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[44px] lg:max-w-88 lg:text-[40px] lg:tracking-[-0.035em]"
           >
             <span className="lg:hidden">
               The Nigerian Urban Consumer 2026 Snapshot Q1
@@ -32,7 +32,7 @@ export function ReportsSection() {
               2026 Snapshot Q1
             </span>
           </h2>
-          <p className="mt-3 max-w-[352px] text-[13px] leading-[1.55] text-eri-coral-light">
+          <p className="mt-3 w-full text-[13px] leading-[1.55] text-eri-coral-light sm:text-[15px] lg:max-w-88">
             57% of consumers had switched brands. 47% said they choose on
             consistency, not price or advertising. From 244 retail intercepts
             across Lagos, Abuja and Port Harcourt.
@@ -45,14 +45,16 @@ export function ReportsSection() {
           </Link>
         </div>
 
-        <Image
-          src="/images/reports/reports-image.png"
-          alt="A motion-blurred street scene featuring a yellow and green vehicle"
-          width={714}
-          height={434}
-          sizes="(max-width: 1023px) calc(100vw - 24px), 680px"
-          className="h-auto w-full lg:-ml-12 lg:w-[calc(100%+128px)] lg:max-w-none"
-        />
+        <div className="w-full">
+          <Image
+            src="/images/reports/reports-image.png"
+            alt="A motion-blurred street scene featuring a yellow and green vehicle"
+            width={714}
+            height={434}
+            sizes="(max-width: 1023px) 100vw, 680px"
+            className="ml-[-6.42%] h-auto w-[113.15%] max-w-none lg:-ml-12 lg:w-[calc(100%+128px)]"
+          />
+        </div>
       </Container>
     </section>
   );
