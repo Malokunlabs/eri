@@ -152,37 +152,30 @@ export function AboutPageContent() {
         <div className="bg-eri-coral py-16 text-white sm:py-20 lg:py-28">
           <Container size="insights">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className="relative aspect-[450/420] w-full max-w-[460px] overflow-hidden ">
-                <Image
-                  src="/images/about/manonleft.png"
-                  alt="Lola Talabi-Oni"
-                  fill
-                  sizes="(max-width: 1023px) 100vw, 460px"
-                  className="object-cover"
-                />
+              <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
+                <div className="relative aspect-464/513 w-full max-w-115">
+                  <Image
+                    src="/images/about/manonleft.png"
+                    alt="Lola Talabi-Oni"
+                    fill
+                    sizes="(max-width: 1023px) 100vw, 460px"
+                    className="pointer-events-none object-contain"
+                  />
+                </div>
               </div>
 
-              <div>
+              <div className="order-1 lg:order-2">
                 <p className="text-[14px] font-medium tracking-wide text-white/90">
                   Meet The Founder
                 </p>
                 <h3 className="mt-2 font-display text-[38px] font-semibold leading-[1.06] tracking-[-0.02em] text-white sm:text-[48px] lg:text-[56px]">
                   Lola Talabi-Oni
                 </h3>
-                <div className="mt-5 space-y-4 max-w-[460px] text-[14px] leading-[1.65] text-white/90 sm:text-[15px]">
-                  <p>
-                    A selection of projects that show how organizations have
-                    used ERI to answer important business and brand growth
-                    questions.
-                  </p>
-                  <p>
-                    A selection of projects that show how organizations have
-                    used ERI to answer important business and brand growth
-                    questions. A selection of projects that show how
-                    organizations have used ERI to answer important business and
-                    brand growth questions.
-                  </p>
-                </div>
+                <p className="mt-4 max-w-115 text-[15px] leading-[1.55] text-white/90 sm:mt-5 sm:text-[16px] sm:leading-[1.65]">
+                  57% of consumers had switched brands. 47% said they choose on
+                  consistency, not price or advertising. From 244 retail
+                  intercepts across Lagos, Abuja and Port Harcourt.
+                </p>
               </div>
             </div>
           </Container>
@@ -192,37 +185,28 @@ export function AboutPageContent() {
         <div className="bg-[#9F45B6] py-16 text-white sm:py-20 lg:py-28">
           <Container size="insights">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              <div className="order-2 lg:order-1">
+              <div className="order-1">
                 <p className="text-[14px] font-medium tracking-wide text-white/90">
                   Meet The Founder
                 </p>
                 <h3 className="mt-2 font-display text-[38px] font-semibold leading-[1.06] tracking-[-0.02em] text-white sm:text-[48px] lg:text-[56px]">
                   Logor Oluwamuyiwa
                 </h3>
-                <div className="mt-5 space-y-4 max-w-[460px] text-[14px] leading-[1.65] text-white/90 sm:text-[15px]">
-                  <p>
-                    A selection of projects that show how organizations have
-                    used ERI to answer important business and brand growth
-                    questions.
-                  </p>
-                  <p>
-                    A selection of projects that show how organizations have
-                    used ERI to answer important business and brand growth
-                    questions. A selection of projects that show how
-                    organizations have used ERI to answer important business and
-                    brand growth questions.
-                  </p>
-                </div>
+                <p className="mt-4 max-w-115 text-[15px] leading-[1.55] text-white/90 sm:mt-5 sm:text-[16px] sm:leading-[1.65]">
+                  57% of consumers had switched brands. 47% said they choose on
+                  consistency, not price or advertising. From 244 retail
+                  intercepts across Lagos, Abuja and Port Harcourt.
+                </p>
               </div>
 
-              <div className="order-1 lg:order-2 flex justify-start lg:justify-end">
-                <div className="relative aspect-[450/420] w-full max-w-[460px] overflow-hidden ">
+              <div className="order-2 flex justify-center lg:justify-end">
+                <div className="relative aspect-464/513 w-full max-w-115">
                   <Image
                     src="/images/about/manonright.png"
                     alt="Logor Oluwamuyiwa"
                     fill
                     sizes="(max-width: 1023px) 100vw, 460px"
-                    className="object-cover"
+                    className="pointer-events-none object-contain"
                   />
                 </div>
               </div>
