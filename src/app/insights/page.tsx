@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { InsightsPageContent } from "@/components/insights/insights-page-content";
 import { FaqSection } from "@/components/home/faq-section";
 import { ReachUsSection } from "@/components/home/reach-us-section";
+import { getAllInsights, getStudioCategories } from "@/lib/content-api";
 
 export const metadata: Metadata = {
   title: "Insights",
@@ -19,10 +20,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const [insights, categories] = await Promise.all([
+    getAllInsights("eri"),
+    getStudioCategories("eri"),
+  ]);
+
   return (
     <>
-      <InsightsPageContent />
+      <InsightsPageContent
+        initialInsights={insights}
+        initialCategories={categories}
+      />
       <FaqSection />
       <ReachUsSection />
     </>

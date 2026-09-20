@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 import { Container } from "@/components/ui/container";
-import { insights } from "@/lib/insights-data";
+import type { Insight } from "@/lib/insights-data";
 
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   return (
@@ -26,8 +26,16 @@ function ArrowIcon({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-export function InsightsSection() {
+type InsightsSectionProps = {
+  insights?: Insight[];
+};
+
+export function InsightsSection({ insights = [] }: InsightsSectionProps) {
   const railRef = useRef<HTMLDivElement>(null);
+
+  if (insights.length === 0) {
+    return null;
+  }
 
   function moveRail(direction: -1 | 1) {
     const rail = railRef.current;
@@ -96,7 +104,7 @@ export function InsightsSection() {
               className="w-[calc(100vw-48px)] max-w-[342px] shrink-0 snap-start lg:w-[329px]"
               key={insight.image}
             >
-              <Link href="/insights" className="group block">
+              <Link href={`/insights/${insight.slug}`} className="group block">
                 <div className="relative aspect-[342/441] overflow-hidden rounded-lg bg-eri-grey-3">
                   <Image
                     src={insight.image}
