@@ -10,6 +10,8 @@ import { ReportsSection } from "@/components/home/reports-section";
 import { VideoDiariesSection } from "@/components/home/video-diaries-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
 
+import { getStudioInsights } from "@/lib/content-api";
+
 export const metadata: Metadata = {
   title:
     "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria and the world",
@@ -27,7 +29,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const insights = await getStudioInsights("eri");
+
   return (
     <main id="main-content">
       <HeroSection />
@@ -36,7 +40,7 @@ export default function Home() {
       <AudienceSection />
       <ReportsSection />
       <VideoDiariesSection />
-      <InsightsSection />
+      <InsightsSection insights={insights} />
       <FaqSection />
       <ReachUsSection />
     </main>
