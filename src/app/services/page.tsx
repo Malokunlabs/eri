@@ -22,7 +22,8 @@ export default function Page() {
   return (
     <>
       <ServicesPageContent />
-      <BrandsSection />
+
+      {/* <BrandsSection /> */}
     </>
   );
 }
