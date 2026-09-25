@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 
 import { ServicesPageContent } from "@/components/services/services-page-content";
+import { CoreServicesSection } from "@/components/services/core-services-section";
 import { BrandsSection } from "@/components/home/brands-section";
+import { AudienceSection } from "@/components/home/audience-section";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -22,8 +24,9 @@ export default function Page() {
   return (
     <>
       <ServicesPageContent />
-
-      {/* <BrandsSection /> */}
+      <AudienceSection />
+      <CoreServicesSection />
+      <BrandsSection />
     </>
   );
 }
