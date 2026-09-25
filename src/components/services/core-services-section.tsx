@@ -58,7 +58,11 @@ function NotchedBars({ color }: { color: string }) {
   const step = w / tabs;
 
   const makePath = (yTop: number) => {
-    const d: string[] = [`M 0 ${yTop}`, `L ${w} ${yTop}`, `L ${w - 4} ${yTop + h}`];
+    const d: string[] = [
+      `M 0 ${yTop}`,
+      `L ${w} ${yTop}`,
+      `L ${w - 4} ${yTop + h}`,
+    ];
     for (let i = tabs - 1; i > 0; i--) {
       const x = i * step;
       d.push(`L ${(x + 3.5).toFixed(1)} ${yTop + h}`);
@@ -75,12 +79,24 @@ function NotchedBars({ color }: { color: string }) {
       viewBox="0 0 260 34"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="h-auto w-full max-w-[240px] sm:max-w-[260px]"
+      className="h-auto w-full max-w-60 sm:max-w-65"
       aria-hidden="true"
     >
-      <path d={makePath(0)} fill={color} className="transition-colors duration-500" />
-      <path d={makePath(12)} fill={color} className="transition-colors duration-500" />
-      <path d={makePath(24)} fill={color} className="transition-colors duration-500" />
+      <path
+        d={makePath(0)}
+        fill={color}
+        className="transition-colors duration-500"
+      />
+      <path
+        d={makePath(12)}
+        fill={color}
+        className="transition-colors duration-500"
+      />
+      <path
+        d={makePath(24)}
+        fill={color}
+        className="transition-colors duration-500"
+      />
     </svg>
   );
 }
@@ -159,7 +175,10 @@ export function CoreServicesSection() {
 
     if (!isCur && !isOld) {
       return {
-        transform: direction === "next" ? "translate3d(0, 100%, 0)" : "translate3d(0, -100%, 0)",
+        transform:
+          direction === "next"
+            ? "translate3d(0, 100%, 0)"
+            : "translate3d(0, -100%, 0)",
         opacity: 0,
         zIndex: 0,
         pointerEvents: "none" as const,
@@ -171,14 +190,19 @@ export function CoreServicesSection() {
         transform: "translate3d(0, 0%, 0)",
         opacity: 1,
         zIndex: 2,
-        transition: animating ? "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)" : "none",
+        transition: animating
+          ? "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)"
+          : "none",
         pointerEvents: "auto" as const,
       };
     }
 
     // isOld (exiting)
     return {
-      transform: direction === "next" ? "translate3d(0, -100%, 0)" : "translate3d(0, 100%, 0)",
+      transform:
+        direction === "next"
+          ? "translate3d(0, -100%, 0)"
+          : "translate3d(0, 100%, 0)",
       opacity: 1,
       zIndex: 1,
       transition: "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)",
@@ -193,7 +217,10 @@ export function CoreServicesSection() {
 
     if (!isCur && !isOld) {
       return {
-        transform: direction === "next" ? "translate3d(100%, 0, 0)" : "translate3d(-100%, 0, 0)",
+        transform:
+          direction === "next"
+            ? "translate3d(100%, 0, 0)"
+            : "translate3d(-100%, 0, 0)",
         opacity: 0,
         zIndex: 0,
         pointerEvents: "none" as const,
@@ -205,14 +232,19 @@ export function CoreServicesSection() {
         transform: "translate3d(0%, 0, 0)",
         opacity: 1,
         zIndex: 2,
-        transition: animating ? "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)" : "none",
+        transition: animating
+          ? "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)"
+          : "none",
         pointerEvents: "auto" as const,
       };
     }
 
     // isOld (exiting)
     return {
-      transform: direction === "next" ? "translate3d(-100%, 0, 0)" : "translate3d(100%, 0, 0)",
+      transform:
+        direction === "next"
+          ? "translate3d(-100%, 0, 0)"
+          : "translate3d(100%, 0, 0)",
       opacity: 1,
       zIndex: 1,
       transition: "transform 500ms cubic-bezier(0.32, 0.72, 0, 1)",
@@ -223,7 +255,7 @@ export function CoreServicesSection() {
   return (
     <section
       aria-labelledby="core-services-heading"
-      className="bg-eri-grey-2 py-8 text-eri-dark sm:py-10 lg:py-12"
+      className="bg-eri-grey-2 py-4 text-eri-dark sm:py-4 lg:py-6"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -243,13 +275,13 @@ export function CoreServicesSection() {
         </div>
 
         {/* ── Desktop layout ─────────────────────────────────────────── */}
-        <div className="hidden lg:grid lg:grid-cols-12 lg:items-center lg:gap-10 xl:gap-14">
+        <div className="hidden lg:flex lg:items-start lg:gap-2.5">
           {/* Left panel: capsule slider icon + Title + 3 Notched bars */}
-          <div className="col-span-5 flex flex-col justify-center">
+          <div className="w-70 shrink-0 pt-1">
             <div className="flex items-start gap-3.5">
               {/* Vertical pill capsule indicator */}
               <div
-                className="mt-2 flex w-[12px] flex-col items-center gap-1.5 rounded-full bg-black/[0.05] px-1 py-1.5 shadow-inner"
+                className="mt-1 flex w-3 flex-col items-center gap-1.5 rounded-full bg-black/5 px-1 py-1.5 shadow-inner"
                 role="tablist"
                 aria-label="Service slide selector"
               >
@@ -277,10 +309,12 @@ export function CoreServicesSection() {
               </div>
 
               {/* Title with smooth crossfade */}
-              <div className="min-h-[92px]">
+              <div className="min-h-23">
                 <h3
                   className={`font-display text-[32px] font-semibold leading-[1.12] tracking-[-0.02em] text-eri-dark whitespace-pre-line transition-all duration-300 xl:text-[36px] ${
-                    animating ? "translate-y-1 opacity-0" : "translate-y-0 opacity-100"
+                    animating
+                      ? "translate-y-1 opacity-0"
+                      : "translate-y-0 opacity-100"
                   }`}
                 >
                   {current.title}
@@ -294,21 +328,21 @@ export function CoreServicesSection() {
             </div>
           </div>
 
-          {/* Right panel: image card with vertical slide animation */}
-          <div className="col-span-7">
-            <div className="relative aspect-[791/438] w-full overflow-hidden rounded-2xl bg-eri-grey-3 shadow-md">
+          {/* Right panel: image card taking full width of container up to page boundary */}
+          <div className="min-w-0 flex-1">
+            <div className="relative aspect-706/358 w-full overflow-hidden rounded-[20px] isolate">
               {services.map((s, i) => (
                 <div
                   key={s.id}
-                  className="absolute inset-0 will-change-transform"
+                  className="absolute inset-0 overflow-hidden rounded-[20px] will-change-transform"
                   style={getDesktopStyle(i)}
                 >
                   <Image
                     src={s.image}
                     alt={s.imageAlt}
                     fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 55vw, 100vw"
+                    className="rounded-[20px] object-cover"
+                    sizes="(min-width: 1024px) 70vw, 100vw"
                     priority={i === 0}
                   />
                 </div>
@@ -322,7 +356,7 @@ export function CoreServicesSection() {
           {/* Header text with vertical capsule slider icon */}
           <div className="flex items-start gap-3">
             <div
-              className="mt-1.5 flex w-[12px] flex-col items-center gap-1.5 rounded-full bg-black/[0.05] px-1 py-1.5 shadow-inner"
+              className="mt-1.5 flex w-3 flex-col items-center gap-1.5 rounded-full bg-black/5 px-1 py-1.5 shadow-inner"
               role="tablist"
               aria-label="Service slide selector"
             >
@@ -337,9 +371,7 @@ export function CoreServicesSection() {
                     aria-label={`Go to ${s.title.replace("\n", " ")}`}
                     onClick={() => goTo(i, i > active ? "next" : "prev")}
                     className={`rounded-full transition-all duration-300 focus-visible:outline-none ${
-                      isActive
-                        ? "h-3.5 w-1.5"
-                        : "h-1.5 w-1.5 bg-black/25"
+                      isActive ? "h-3.5 w-1.5" : "h-1.5 w-1.5 bg-black/25"
                     }`}
                     style={{
                       backgroundColor: isActive ? s.accentColor : undefined,
@@ -349,10 +381,12 @@ export function CoreServicesSection() {
               })}
             </div>
 
-            <div className="min-h-[70px]">
+            <div className="min-h-17.5">
               <h3
                 className={`font-display text-[26px] font-semibold leading-[1.15] tracking-[-0.02em] text-eri-dark whitespace-pre-line transition-all duration-300 sm:text-[30px] ${
-                  animating ? "translate-y-1 opacity-0" : "translate-y-0 opacity-100"
+                  animating
+                    ? "translate-y-1 opacity-0"
+                    : "translate-y-0 opacity-100"
                 }`}
               >
                 {current.title}
@@ -367,21 +401,21 @@ export function CoreServicesSection() {
 
           {/* Image card with horizontal side-by-side slide animation & touch swipe */}
           <div
-            className="relative mt-6 aspect-[791/438] w-full overflow-hidden rounded-2xl bg-eri-grey-3 shadow-md"
+            className="relative mt-6 aspect-706/358 w-full overflow-hidden rounded-[20px] isolate"
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
             {services.map((s, i) => (
               <div
                 key={s.id}
-                className="absolute inset-0 will-change-transform"
+                className="absolute inset-0 overflow-hidden rounded-[20px] will-change-transform"
                 style={getMobileStyle(i)}
               >
                 <Image
                   src={s.image}
                   alt={s.imageAlt}
                   fill
-                  className="object-cover"
+                  className="rounded-[20px] object-cover"
                   sizes="100vw"
                   priority={i === 0}
                 />
