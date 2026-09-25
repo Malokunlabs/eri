@@ -49,6 +49,24 @@ export function ServicesPageContent() {
             </div>
           </div>
         </Container>
+
+        {/* Bottom tally-mark illustration — mobile image on small screens, desktop on lg+ */}
+        <div className="w-full overflow-hidden">
+          <img
+            src="/images/services-page/mobile-services-hero.PNG"
+            alt=""
+            aria-hidden="true"
+            className="block w-full mix-blend-screen lg:hidden"
+            style={{ filter: "invert(1) hue-rotate(180deg)" }}
+          />
+          <img
+            src="/images/services-page/desktop-services-hero.PNG"
+            alt=""
+            aria-hidden="true"
+            className="hidden w-full mix-blend-screen lg:block"
+            style={{ filter: "invert(1) hue-rotate(180deg)" }}
+          />
+        </div>
       </section>
     </>
   );
