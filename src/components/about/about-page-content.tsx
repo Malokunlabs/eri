@@ -75,7 +75,7 @@ export function AboutPageContent() {
         className="relative overflow-x-clip pt-16 pb-0 -mb-0.5 sm:pt-24 sm:-mb-1 lg:pt-36 lg:mb-0"
       >
         <Container size="insights">
-          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14">
+          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-8">
             {/* Left Column: Heading, intro, and stats grid */}
             <div className="flex min-w-0 flex-col justify-center lg:pb-20 lg:pr-4">
               <h2
@@ -105,18 +105,19 @@ export function AboutPageContent() {
               </div>
             </div>
 
-            {/* Right Column: Folder positioned on the right and touching the bottom */}
-            <div className="relative flex min-w-0 justify-end self-end translate-y-0.5 sm:translate-y-1 lg:-mr-12 xl:-mr-20 lg:translate-y-8 xl:translate-y-12">
-              <div className="relative aspect-783/640 w-[110vw] shrink-0 -mr-[calc(0.75rem+18.2vw)] sm:mr-0 sm:w-125 lg:w-full lg:max-w-165">
+            {/* Right Column: Mobile uses folder.png, desktop uses rightside-desktop.svg */}
+
+            {/* Mobile only: folder.png with text overlay */}
+            <div className="relative flex min-w-0 justify-end self-end translate-y-0.5 sm:translate-y-1 lg:hidden">
+              <div className="relative aspect-783/640 w-[110vw] shrink-0 -mr-[calc(0.75rem+18.2vw)] sm:mr-0 sm:w-125">
                 <Image
                   src="/images/about/folder.png"
                   alt=""
                   fill
-                  sizes="(max-width: 639px) 110vw, (max-width: 1023px) 500px, 660px"
+                  sizes="(max-width: 639px) 110vw, 500px"
                   className="pointer-events-none object-contain object-bottom"
                   priority
                 />
-
                 {/* Text overlay — mathematically locked to the beige paper inside folder.png */}
                 <div
                   className="absolute flex flex-col justify-start overflow-hidden"
@@ -142,9 +143,28 @@ export function AboutPageContent() {
                 </div>
               </div>
             </div>
+
+            {/* Desktop only: rightside-desktop.svg bleeding to the right edge */}
+            <div className="relative hidden self-end lg:block">
+              {/* Negative right margin bleeds SVG to the viewport right edge */}
+              <div
+                className="relative"
+                style={{ marginRight: "calc(-1 * max(0px, (100vw - 1096px) / 2 + 32px))" }}
+              >
+                <Image
+                  src="/images/about/rightside-desktop.svg"
+                  alt="What we do — Brands ask us to prove things they can't prove from a spreadsheet"
+                  width={652}
+                  height={457}
+                  className="h-auto w-full"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </Container>
       </section>
+
 
       {/* Section 3: Meet The Founders */}
       <section aria-label="Meet The Founders">
