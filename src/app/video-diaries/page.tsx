@@ -3,6 +3,11 @@ import type { Metadata } from "next";
 import { VideoDiariesPageContent } from "@/components/video-diaries/video-diaries-page-content";
 import { ReachUsSection } from "@/components/home/reach-us-section";
 
+import {
+  getStudioVideoCategories,
+  getStudioVideoDiaries,
+} from "@/lib/content-api";
+
 export const metadata: Metadata = {
   title: "Video Diaries",
   description:
@@ -18,10 +23,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const [videos, categories] = await Promise.all([
+    getStudioVideoDiaries("eri"),
+    getStudioVideoCategories("eri"),
+  ]);
+
   return (
     <>
-      <VideoDiariesPageContent />
+      <VideoDiariesPageContent
+        initialVideos={videos}
+        initialCategories={categories}
+      />
       <ReachUsSection />
     </>
   );

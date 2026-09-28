@@ -1,4 +1,7 @@
 import type { Insight, InsightSection } from "@/lib/insights-data";
+import {
+  type VideoDiary,
+} from "@/lib/video-diaries-data";
 
 export const STUDIO_API_KEY =
   process.env.STUDIO_API_KEY ||
@@ -46,6 +49,11 @@ export type StudioDocument = {
     heading?: string;
     paragraphs?: string[];
   }>;
+  youtubeUrl?: string | null;
+  videoEmbedUrl?: string | null;
+  videoThumbnail?: string | null;
+  mediaType?: string | null;
+  description?: string;
 };
 
 export type FetchContentOptions = {
@@ -314,4 +322,153 @@ export async function getStudioCategories(space = "eri"): Promise<string[]> {
  */
 export async function getAllInsights(space = "eri"): Promise<Insight[]> {
   return await getStudioInsights(space);
+}
+
+/**
+ * Maps a raw Studio document to a VideoDiary data structure.
+ */
+export function mapStudioDocToVideoDiary(
+  doc: StudioDocument,
+  allDocs?: StudioDocument[],
+): VideoDiary {
+  let authorName = "Scout By Eri";
+  if (typeof doc.author === "object" && doc.author?.title) {
+    authorName = doc.author.title;
+  } else if (typeof doc.author === "string" && doc.author) {
+    const matchingAuthor = allDocs?.find(
+      (d) =>
+        d.contentType === "author" &&
+        (d.id === doc.author || d.slug === doc.author),
+    );
+    authorName = matchingAuthor ? matchingAuthor.title : doc.author;
+  }
+
+  let categoryTitle = "Vox Pops";
+  if (doc.category && allDocs) {
+    const matchingCat = allDocs.find(
+      (d) =>
+        (d.contentType === "video-diary-category" ||
+          d.contentType === "category") &&
+        (d.id === doc.category || d.slug === doc.category),
+    );
+    if (matchingCat) categoryTitle = matchingCat.title;
+  } else if (doc.tags && doc.tags.length > 0) {
+    const firstTag = doc.tags[0];
+    categoryTitle =
+      typeof firstTag === "object" && firstTag?.title
+        ? firstTag.title
+        : String(firstTag);
+  }
+
+  const image =
+    doc.videoThumbnail ||
+    doc.coverImage ||
+    doc.featuredImage ||
+    "/images/video-dairies/older-woman.png";
+
+  return {
+    id: doc.id,
+    slug: doc.slug,
+    image,
+    category: categoryTitle,
+    title: doc.title,
+    brand: authorName,
+    date: formatPublishDate(doc.publishDate || doc.createdAt),
+    youtubeUrl: doc.youtubeUrl || undefined,
+    videoEmbedUrl: doc.videoEmbedUrl || undefined,
+    videoThumbnail: doc.videoThumbnail || undefined,
+    author: authorName,
+    excerpt: doc.excerpt || "",
+    body: doc.body || "",
+  };
+}
+
+/**
+ * Fetch all video diaries under the specified space (default: 'eri') from the Studio API.
+ */
+export async function getStudioVideoDiaries(
+  space = "eri",
+): Promise<VideoDiary[]> {
+  try {
+    const docs = await fetchStudioContent<StudioDocument[]>({ space });
+    const videoDocs = docs.filter(
+      (d) => d.status === "published" && d.contentType === "video-diary",
+    );
+
+    const seenSlugs = new Set<string>();
+    const studioVideos: VideoDiary[] = [];
+
+    for (const doc of videoDocs) {
+      let slug = doc.slug?.trim() || "";
+      if (!slug || seenSlugs.has(slug)) {
+        const suffix = doc.id ? doc.id.slice(0, 8) : Math.random().toString(36).slice(2, 6);
+        slug = slug ? `${slug}-${suffix}` : `video-${suffix}`;
+      }
+      seenSlugs.add(slug);
+
+      const mapped = mapStudioDocToVideoDiary(doc, docs);
+      mapped.slug = slug;
+      studioVideos.push(mapped);
+    }
+
+    return studioVideos;
+  } catch (error) {
+    console.error("Failed to fetch video diaries from Studio API:", error);
+    return [];
+  }
+}
+
+/**
+ * Fetch a single video diary by slug under the specified space (default: 'eri').
+ */
+export async function getStudioVideoDiaryBySlug(
+  slug: string,
+  space = "eri",
+): Promise<VideoDiary | undefined> {
+  try {
+    const allVideos = await getStudioVideoDiaries(space);
+    const videoMatch = allVideos.find(
+      (v) =>
+        v.slug === slug ||
+        v.id === slug ||
+        (v.id && slug.includes(v.id.slice(0, 8))),
+    );
+    if (videoMatch) {
+      return videoMatch;
+    }
+
+    if (slug === "video" && allVideos.length > 0) {
+      return allVideos[0];
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error(`Failed to fetch video diary with slug '${slug}':`, error);
+    return undefined;
+  }
+}
+
+/**
+ * Fetch all video categories under the specified space (default: 'eri') from the Studio API.
+ */
+export async function getStudioVideoCategories(
+  space = "eri",
+): Promise<string[]> {
+  try {
+    const docs = await fetchStudioContent<StudioDocument[]>({ space });
+    const categoryDocs = docs.filter(
+      (d) =>
+        (d.contentType === "video-diary-category" ||
+          d.contentType === "category") &&
+        d.status === "published",
+    );
+    const titles = categoryDocs.map((c) => c.title).filter(Boolean);
+    if (titles.length > 0) {
+      return Array.from(new Set(["All", ...titles]));
+    }
+    return ["All"];
+  } catch (error) {
+    console.error("Failed to fetch studio video categories:", error);
+    return ["All"];
+  }
 }

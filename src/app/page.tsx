@@ -10,7 +10,7 @@ import { ReportsSection } from "@/components/home/reports-section";
 import { VideoDiariesSection } from "@/components/home/video-diaries-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
 
-import { getStudioInsights } from "@/lib/content-api";
+import { getStudioInsights, getStudioVideoDiaries } from "@/lib/content-api";
 
 export const metadata: Metadata = {
   title:
@@ -30,7 +30,10 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const insights = await getStudioInsights("eri");
+  const [insights, videoDiaries] = await Promise.all([
+    getStudioInsights("eri"),
+    getStudioVideoDiaries("eri"),
+  ]);
 
   return (
     <main id="main-content">
@@ -39,7 +42,7 @@ export default async function Home() {
       <WorkDoneSection />
       <AudienceSection />
       <ReportsSection />
-      <VideoDiariesSection />
+      <VideoDiariesSection videos={videoDiaries} />
       <InsightsSection insights={insights} />
       <FaqSection />
       <ReachUsSection />
