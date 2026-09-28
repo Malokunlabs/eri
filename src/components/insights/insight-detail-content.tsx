@@ -179,7 +179,7 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
 
               {/* Intro paragraphs */}
               {insight.intro.length > 0 && (
-                <div className="mt-8 space-y-6 text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
+                <div className="mt-8 space-y-6 text-justify [text-align:justify] [text-justify:inter-word] text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
                   {insight.intro.map((paragraph, idx) => (
                     <p key={idx}>{paragraph}</p>
                   ))}
@@ -196,11 +196,11 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
                       className="scroll-mt-20 lg:scroll-mt-24"
                     >
                       {section.heading?.trim() && (
-                        <h2 className="font-sans text-[20px] font-semibold leading-[1.3] tracking-[-0.015em] text-eri-dark sm:text-[22px] lg:text-[24px]">
+                        <h2 className="font-sans text-[20px] font-semibold leading-[1.3] tracking-[-0.015em] text-eri-dark sm:text-[22px] lg:text-[24px] text-justify [text-align:justify] [text-justify:inter-word]">
                           {section.heading}
                         </h2>
                       )}
-                      <div className="mt-4 space-y-5 text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
+                      <div className="mt-4 space-y-5 text-justify [text-align:justify] [text-justify:inter-word] text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
                         {section.paragraphs.map((paragraph, pIdx) => (
                           <p key={pIdx}>{paragraph}</p>
                         ))}

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getStudioInsights } from "@/lib/content-api";
+import { getStudioInsights, getStudioVideoDiaries } from "@/lib/content-api";
 import { siteConfig } from "@/lib/site-config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -15,12 +15,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/contact", changeFrequency: "monthly" as const, priority: 0.8 },
   ];
 
-  const studioInsights = await getStudioInsights("eri");
+  const [studioInsights, studioVideos] = await Promise.all([
+    getStudioInsights("eri"),
+    getStudioVideoDiaries("eri"),
+  ]);
 
   const insightRoutes = studioInsights.map((insight) => {
     const parsed = new Date(insight.date);
     return {
       url: `${siteConfig.url}/insights/${insight.slug}`,
+      lastModified: Number.isNaN(parsed.getTime()) ? new Date() : parsed,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    };
+  });
+
+  const videoRoutes = studioVideos.map((video) => {
+    const parsed = new Date(video.date);
+    return {
+      url: `${siteConfig.url}/video-diaries/${video.slug}`,
       lastModified: Number.isNaN(parsed.getTime()) ? new Date() : parsed,
       changeFrequency: "weekly" as const,
       priority: 0.8,
@@ -34,5 +47,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  return [...standardRoutes, ...insightRoutes];
+  return [...standardRoutes, ...insightRoutes, ...videoRoutes];
 }

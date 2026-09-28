@@ -85,7 +85,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
             href="/contact"
             className="eri-pill eri-pill--header shrink-0 whitespace-nowrap px-3.5 py-2 text-[13px] md:min-h-9 md:px-4 md:py-2 md:text-[14px] lg:min-h-10.5 lg:px-4.5 lg:py-2.5 lg:text-[15px]"
           >
-            Ask Eri
+            Book a Signal
           </Link>
 
           <MobileMenu variant={variant} />
