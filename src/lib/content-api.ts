@@ -2,6 +2,11 @@ import type { Insight, InsightSection } from "@/lib/insights-data";
 import {
   type VideoDiary,
 } from "@/lib/video-diaries-data";
+import {
+  caseStudies,
+  caseStudyCategories,
+  type CaseStudy,
+} from "@/lib/case-studies-data";
 
 export const STUDIO_API_KEY =
   process.env.STUDIO_API_KEY ||
@@ -54,6 +59,7 @@ export type StudioDocument = {
   videoThumbnail?: string | null;
   mediaType?: string | null;
   description?: string;
+  logo?: string | null;
 };
 
 export type FetchContentOptions = {
@@ -64,11 +70,34 @@ export type FetchContentOptions = {
   published?: boolean;
 };
 
+// In-memory cache & in-flight promise deduplication to mitigate concurrent DNS spikes
+const inFlightRequests = new Map<string, Promise<unknown>>();
+const memoryCache = new Map<string, unknown>();
+
+function isTransientNetworkError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const cause = (error as { cause?: { code?: string; errno?: number; message?: string } }).cause;
+  const code = cause?.code || (error as { code?: string }).code;
+  const message = (error as Error).message || cause?.message || "";
+  return (
+    code === "EAI_AGAIN" ||
+    code === "ENOTFOUND" ||
+    code === "ECONNRESET" ||
+    code === "ETIMEDOUT" ||
+    code === "UND_ERR_CONNECT_TIMEOUT" ||
+    message.includes("fetch failed") ||
+    message.includes("getaddrinfo")
+  );
+}
+
 /**
- * Fetch raw content from the Studio content API.
+ * Fetch raw content from the Studio content API with automatic retry for transient DNS/network errors,
+ * request deduplication, and in-memory fallback.
  */
 export async function fetchStudioContent<T = StudioDocument[]>(
   options: FetchContentOptions = {},
+  retries = 2,
+  backoffMs = 300,
 ): Promise<T> {
   const url = new URL(STUDIO_API_URL);
 
@@ -80,20 +109,61 @@ export async function fetchStudioContent<T = StudioDocument[]>(
     url.searchParams.set("published", String(options.published));
   }
 
-  const response = await fetch(url.toString(), {
-    headers: {
-      apikey: STUDIO_API_KEY,
-    },
-    next: { revalidate: 60 },
-  });
+  const cacheKey = url.toString();
 
-  if (!response.ok) {
-    throw new Error(
-      `Studio API error: ${response.status} ${response.statusText}`,
-    );
+  // Deduplicate identical in-flight requests (e.g. concurrent calls in Promise.all)
+  if (inFlightRequests.has(cacheKey)) {
+    return inFlightRequests.get(cacheKey) as Promise<T>;
   }
 
-  return (await response.json()) as T;
+  const fetchPromise = (async () => {
+    let lastError: unknown;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      try {
+        if (attempt > 0) {
+          await new Promise((resolve) => setTimeout(resolve, backoffMs * attempt));
+        }
+
+        const response = await fetch(url.toString(), {
+          headers: {
+            apikey: STUDIO_API_KEY,
+          },
+          next: { revalidate: 60 },
+        });
+
+        if (!response.ok) {
+          throw new Error(
+            `Studio API error: ${response.status} ${response.statusText}`,
+          );
+        }
+
+        const data = (await response.json()) as T;
+        memoryCache.set(cacheKey, data);
+        return data;
+      } catch (error) {
+        lastError = error;
+        if (!isTransientNetworkError(error)) {
+          throw error;
+        }
+      }
+    }
+
+    // If all retries failed due to network/DNS glitches, serve stale in-memory cache if available
+    if (memoryCache.has(cacheKey)) {
+      console.warn(
+        `[Studio API] Network/DNS resolution failed for ${cacheKey}. Serving stale cached data.`,
+      );
+      return memoryCache.get(cacheKey) as T;
+    }
+
+    throw lastError;
+  })().finally(() => {
+    inFlightRequests.delete(cacheKey);
+  });
+
+  inFlightRequests.set(cacheKey, fetchPromise);
+  return fetchPromise as Promise<T>;
 }
 
 /**
@@ -188,9 +258,10 @@ function slugify(text: string): string {
 }
 
 function formatPublishDate(dateStr?: string): string {
-  if (!dateStr) return "March 20, 2026";
+  if (!dateStr) return "";
   try {
     const date = new Date(dateStr);
+    if (Number.isNaN(date.getTime())) return dateStr;
     return date.toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -469,6 +540,160 @@ export async function getStudioVideoCategories(
     return ["All"];
   } catch (error) {
     console.error("Failed to fetch studio video categories:", error);
+    return ["All"];
+  }
+}
+
+/**
+ * Maps a raw Studio document to a CaseStudy data structure.
+ */
+export function mapStudioDocToCaseStudy(
+  doc: StudioDocument,
+  allDocs?: StudioDocument[],
+  index = 0,
+): CaseStudy {
+  const rawContent = doc.body || doc.excerpt || "";
+  const paragraphs = extractParagraphs(rawContent);
+
+  let authorName: string | undefined = undefined;
+  if (typeof doc.author === "object" && doc.author?.title) {
+    authorName = doc.author.title;
+  } else if (typeof doc.author === "string" && doc.author) {
+    const matchingAuthor = allDocs?.find(
+      (d) =>
+        d.contentType === "author" &&
+        (d.id === doc.author || d.slug === doc.author),
+    );
+    authorName = matchingAuthor ? matchingAuthor.title : doc.author;
+  }
+
+  let categoryName = "General";
+  if (doc.category && allDocs) {
+    const matchingCat = allDocs.find(
+      (d) =>
+        (d.contentType === "case-study-category" ||
+          d.contentType === "category") &&
+        (d.id === doc.category || d.slug === doc.category),
+    );
+    if (matchingCat) categoryName = matchingCat.title;
+  } else if (doc.tags && doc.tags.length > 0) {
+    const firstTag = doc.tags[0];
+    categoryName =
+      typeof firstTag === "object" && firstTag?.title
+        ? firstTag.title
+        : String(firstTag);
+  }
+
+  const folderImages = [
+    "/images/small-folders/orange-file1.svg",
+    "/images/small-folders/purple-folder1.png",
+    "/images/small-folders/orange-folder2.svg",
+    "/images/small-folders/purple-folder2.svg",
+  ];
+  const folder = folderImages[index % folderImages.length];
+
+  const company = doc.title || "Case Study";
+  const title = doc.title || "";
+  const description = (doc.description || doc.excerpt || "").trim();
+
+  let readTimeStr: string | undefined = undefined;
+  if (doc.readTime) {
+    readTimeStr = `${doc.readTime}min read`;
+  } else if (paragraphs.length > 0) {
+    const wordCount = paragraphs.join(" ").split(/\s+/).length;
+    readTimeStr = `${Math.max(1, Math.ceil(wordCount / 200))}min read`;
+  }
+
+  return {
+    id: doc.id,
+    company,
+    title,
+    slug: doc.slug,
+    category: categoryName,
+    folder,
+    description,
+    body: doc.body || "",
+    paragraphs,
+    date: formatPublishDate(doc.publishDate || doc.createdAt),
+    author: authorName,
+    readTime: readTimeStr,
+    logo: doc.logo || doc.featuredImage || null,
+  };
+}
+
+/**
+ * Fetch all case studies under the specified space (default: 'eri') from the Studio API.
+ */
+export async function getStudioCaseStudies(
+  space = "eri",
+): Promise<CaseStudy[]> {
+  try {
+    const docs = await fetchStudioContent<StudioDocument[]>({ space });
+    const rawDocs = Array.isArray(docs) ? docs : [];
+    const caseDocs = rawDocs.filter(
+      (d) => d.status === "published" && d.contentType === "case-study",
+    );
+
+    return caseDocs.map((doc, idx) =>
+      mapStudioDocToCaseStudy(doc, rawDocs, idx),
+    );
+  } catch (error) {
+    console.error("Failed to fetch case studies from Studio API:", error);
+    return [];
+  }
+}
+
+/**
+ * Fetch a single case study by slug under the specified space (default: 'eri').
+ */
+export async function getStudioCaseStudyBySlug(
+  slug: string,
+  space = "eri",
+): Promise<CaseStudy | undefined> {
+  try {
+    const all = await getStudioCaseStudies(space);
+    const match = all.find((cs) => cs.slug === slug || cs.id === slug);
+    if (match) return match;
+
+    const raw = await fetchStudioContent<StudioDocument | StudioDocument[]>({
+      space,
+      slug,
+      type: "case-study",
+    });
+    const doc = Array.isArray(raw) ? raw[0] : raw;
+    if (doc && doc.id) {
+      const allDocs = await fetchStudioContent<StudioDocument[]>({ space });
+      return mapStudioDocToCaseStudy(doc, Array.isArray(allDocs) ? allDocs : []);
+    }
+
+    return undefined;
+  } catch (error) {
+    console.error(`Failed to fetch case study '${slug}':`, error);
+    return undefined;
+  }
+}
+
+/**
+ * Fetch all case study categories under the specified space (default: 'eri') from the Studio API.
+ */
+export async function getStudioCaseStudyCategories(
+  space = "eri",
+): Promise<string[]> {
+  try {
+    const docs = await fetchStudioContent<StudioDocument[]>({ space });
+    const rawDocs = Array.isArray(docs) ? docs : [];
+    const catDocs = rawDocs.filter(
+      (d) =>
+        (d.contentType === "case-study-category" ||
+          d.contentType === "category") &&
+        d.status === "published",
+    );
+
+    const apiTitles = catDocs.map((c) => c.title).filter(Boolean);
+    const unique = Array.from(new Set(["All", ...apiTitles]));
+    return unique;
+  } catch (error) {
+    console.error("Failed to fetch case study categories:", error);
     return ["All"];
   }
 }

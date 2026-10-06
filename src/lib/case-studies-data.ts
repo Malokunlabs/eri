@@ -1,117 +1,60 @@
 export const caseStudyCategories = [
   "All",
-  "Fintech",
-  "Multi-national",
-  "Restaurant",
-  "Commodity",
 ] as const;
 
-export type CaseStudyCategory = (typeof caseStudyCategories)[number];
+export type CaseStudyCategory = (typeof caseStudyCategories)[number] | string;
 
 export type CaseStudy = {
   id: string;
   company: string;
-  category: Exclude<CaseStudyCategory, "All">;
+  title?: string;
+  category: string;
   folder: string;
   description: string;
-  slug?: string;
+  slug: string;
+  date?: string;
+  author?: string;
+  readTime?: string;
+  body?: string;
+  paragraphs?: string[];
+  logo?: string | null;
 };
 
-export const caseStudies: CaseStudy[] = [
-  {
-    id: "moniepoint-1",
-    company: "Moniepoint",
-    category: "Fintech",
-    folder: "/images/small-folders/orange-file1.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "quidax-1",
-    company: "Quidax",
-    category: "Fintech",
-    folder: "/images/small-folders/purple-folder1.png",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "moniepoint-2",
-    company: "Moniepoint",
-    category: "Fintech",
-    folder: "/images/small-folders/orange-file1.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "quidax-2",
-    company: "Quidax",
-    category: "Fintech",
-    folder: "/images/small-folders/purple-folder1.png",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "martell-1",
-    company: "Martell",
-    category: "Multi-national",
-    folder: "/images/small-folders/purple-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "chicken-republic-1",
-    company: "Chicken Republic",
-    category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "martell-2",
-    company: "Martell",
-    category: "Multi-national",
-    folder: "/images/small-folders/purple-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "chicken-republic-2",
-    company: "Chicken Republic",
-    category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "alara-1",
-    company: "Alara",
-    category: "Multi-national",
-    folder: "/images/small-folders/purple-folder1.png",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "dangote-1",
-    company: "Commodity Exchange",
-    category: "Commodity",
-    folder: "/images/small-folders/orange-file1.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "kora-1",
-    company: "Kora",
-    category: "Fintech",
-    folder: "/images/small-folders/purple-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-  {
-    id: "tasty-fried-1",
-    company: "Fast Food Express",
-    category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
-    description:
-      "A selection of projects that show how organizations have taken care of all.",
-  },
-];
+export function getCaseStudyLogo(study: CaseStudy): string | null {
+  if (study.logo) return study.logo;
+
+  const name = (study.company || "").toLowerCase();
+  const slug = (study.slug || "").toLowerCase();
+
+  if (name.includes("moniepoint") || slug.includes("moniepoint")) {
+    return "/icons/brand-icon/moniepoint.svg";
+  }
+  if (name.includes("quidax") || slug.includes("quidax")) {
+    return "/icons/brand-icon/Quidax.svg";
+  }
+  if (name.includes("martell") || slug.includes("martell")) {
+    return "/icons/brand-icon/martell.svg";
+  }
+  if (name.includes("chicken") || slug.includes("chicken")) {
+    return "/icons/brand-icon/Chicken_Republic.svg";
+  }
+  if (name.includes("alara") || slug.includes("alara")) {
+    return "/icons/brand-icon/Alara.svg";
+  }
+  if (name.includes("kora") || slug.includes("kora")) {
+    return "/icons/brand-icon/kora.svg";
+  }
+  if (name.includes("landmark") || slug.includes("landmark")) {
+    return "/icons/brand-icon/Landmark.svg";
+  }
+  if (name.includes("showmax") || slug.includes("showmax")) {
+    return "/icons/brand-icon/Showmax.svg";
+  }
+  if (name.includes("google") || slug.includes("google")) {
+    return "/icons/brand-icon/Google.svg";
+  }
+
+  return null;
+}
+
+export const caseStudies: CaseStudy[] = [];
