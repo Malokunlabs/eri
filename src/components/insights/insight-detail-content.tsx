@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
@@ -16,11 +16,38 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
   const [activeSectionId, setActiveSectionId] = useState<string>(
     insight.sections[0]?.id ?? "",
   );
+  const asideRef = useRef<HTMLElement>(null);
+  const [stickyTop, setStickyTop] = useState<number>(32);
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Calculate sticky offset so as the user scrolls the whole page,
+  // the sidebar scrolls along until all subheadings are fully in view, then sticks.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateStickyTop = () => {
+      if (!asideRef.current) return;
+      const asideHeight = asideRef.current.offsetHeight;
+      const vh = window.innerHeight;
+      if (asideHeight + 64 > vh) {
+        setStickyTop(vh - asideHeight - 32);
+      } else {
+        setStickyTop(32);
+      }
+    };
+
+    updateStickyTop();
+    window.addEventListener("resize", updateStickyTop);
+    return () => window.removeEventListener("resize", updateStickyTop);
+  }, [insight.sections]);
 
   useEffect(() => {
     if (typeof window === "undefined" || insight.sections.length === 0) return;
 
     const handleScroll = () => {
+      if (isClickScrollingRef.current) return;
+
       const sectionElements = insight.sections
         .map((s) => ({ id: s.id, el: document.getElementById(s.id) }))
         .filter((item): item is { id: string; el: HTMLElement } => item.el !== null);
@@ -35,11 +62,11 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
         return;
       }
 
-      const scrollPosition = window.scrollY + 180;
-
       let currentId = sectionElements[0].id;
       for (const { id, el } of sectionElements) {
-        if (el.offsetTop <= scrollPosition) {
+        const rect = el.getBoundingClientRect();
+        // Activate section when its top edge enters the reading zone
+        if (rect.top <= 240) {
           currentId = id;
         } else {
           break;
@@ -50,7 +77,10 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
   }, [insight.sections]);
 
   const handleTocClick = (
@@ -60,6 +90,12 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
     e.preventDefault();
     const target = document.getElementById(id);
     if (target) {
+      isClickScrollingRef.current = true;
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      clickTimeoutRef.current = setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 800);
+
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       setActiveSectionId(id);
       window.history.pushState(null, "", `#${id}`);
@@ -98,8 +134,12 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
 
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[330px_1fr] lg:gap-14 xl:gap-20">
             {/* Left Column: Featured Image + Table of Contents (Sticky on desktop) */}
-            <aside className="lg:sticky lg:top-8 lg:self-start">
-              <div className="relative aspect-[330/420] w-full max-w-[340px] overflow-hidden rounded-[20px] bg-eri-grey-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+            <aside
+              ref={asideRef}
+              className="lg:sticky lg:self-start"
+              style={{ top: `${stickyTop}px` }}
+            >
+              <div className="relative aspect-[330/360] w-full max-w-[340px] shrink-0 overflow-hidden rounded-[20px] bg-eri-grey-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)] xl:aspect-[330/400]">
                 <Image
                   src={insight.image}
                   alt={insight.title}
@@ -118,7 +158,7 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
                 insight.sections.some((s) => s.heading?.trim()) && (
                   <nav
                     aria-label="Table of contents"
-                    className="mt-8 flex flex-col space-y-4 lg:mt-9"
+                    className="mt-6 flex flex-col space-y-3 pb-8 lg:mt-7"
                   >
                     <span className="sr-only">Table of contents</span>
                     {insight.sections
@@ -128,18 +168,29 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
                         return (
                           <div
                             key={section.id}
-                            className="border-b border-eri-grey-5 pb-3.5"
+                            data-section-id={section.id}
+                            className={`border-b pb-3.5 transition-colors duration-200 ${
+                              isActive ? "border-eri-dark" : "border-eri-grey-5"
+                            }`}
                           >
                             <a
                               href={`#${section.id}`}
                               onClick={(e) => handleTocClick(e, section.id)}
-                              className={`block font-sans text-[15px] leading-[1.4] transition-colors duration-150 lg:text-[16px] ${
+                              className={`flex items-start gap-2.5 font-sans text-[15px] leading-[1.4] transition-colors duration-150 lg:text-[16px] ${
                                 isActive
                                   ? "font-medium text-eri-dark"
                                   : "font-normal text-eri-grey-11 hover:text-eri-dark"
                               }`}
                             >
-                              {section.heading}
+                              <span
+                                className={`mt-1.5 size-1.5 shrink-0 rounded-full transition-all duration-200 ${
+                                  isActive
+                                    ? "bg-eri-coral scale-100 opacity-100"
+                                    : "bg-transparent scale-0 opacity-0"
+                                }`}
+                                aria-hidden="true"
+                              />
+                              <span className="flex-1">{section.heading}</span>
                             </a>
                           </div>
                         );
