@@ -11,6 +11,55 @@ type CaseStudyDetailContentProps = {
   study: CaseStudy;
 };
 
+function formatCaseStudyBody(html: string): string {
+  if (!html) return "";
+  let clean = html.replace(/\r\n|\r/g, "\n");
+
+  // Fix <h2> containing long intro text + <br><br> + heading
+  clean = clean.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (match, inner) => {
+    if (inner.includes("<br")) {
+      const parts = inner
+        .split(/<br\s*\/?>/gi)
+        .map((s: string) => s.trim())
+        .filter(Boolean);
+      if (parts.length > 1) {
+        const heading = parts.pop();
+        const intro = parts.join("<br>");
+        return `<p>${intro}</p><h2>${heading}</h2>`;
+      }
+    }
+    return match;
+  });
+
+  // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
+  clean = clean.replace(
+    /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
+    (match, inner) => {
+      const text = inner.replace(/<[^>]+>/g, "").trim();
+      if (text.length > 0 && text.length < 120) {
+        return `<h2>${text}</h2>`;
+      }
+      return match;
+    },
+  );
+
+  // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
+  clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
+    const text = inner.trim();
+    if (
+      text.length > 3 &&
+      text.length < 80 &&
+      !/[.!?]$/.test(text) &&
+      !text.includes(". ")
+    ) {
+      return `<h2>${text}</h2>`;
+    }
+    return match;
+  });
+
+  return clean;
+}
+
 export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
   const logoSrc = getCaseStudyLogo(study);
 
@@ -59,13 +108,13 @@ export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
               {/* Brand logo placed inside the folder paper slot, replacing baked-in logo */}
               <div className="pointer-events-none absolute left-[12.3%] top-[19.4%] flex size-[9.8%] items-center justify-center overflow-hidden rounded-full border border-[#E3E1DD] bg-white shadow-xs">
                 {logoSrc ? (
-                  <div className="relative size-full">
+                  <div className="relative size-full overflow-hidden rounded-full">
                     <Image
                       src={logoSrc}
                       alt=""
                       fill
                       sizes="32px"
-                      className="object-contain p-0.5"
+                      className="size-full rounded-full object-cover object-center"
                     />
                   </div>
                 ) : (
@@ -114,17 +163,19 @@ export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
               )}
             </header>
 
-            {/* Content Paragraphs */}
-            <div className="mt-8 space-y-6 text-justify [text-align:justify] [text-justify:inter-word] text-[15px] leading-[1.8] text-eri-dark sm:mt-10 sm:text-[16px]">
-              {study.paragraphs && study.paragraphs.length > 0 ? (
+            {/* Content Body */}
+            <div className="mt-8 space-y-6 text-justify [text-align:justify] [text-justify:inter-word] text-[15px] leading-[1.8] text-eri-dark sm:mt-10 sm:text-[16px] [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:block [&_h2]:font-sans [&_h2]:text-[20px] [&_h2]:font-bold sm:[&_h2]:text-[24px] lg:[&_h2]:text-[26px] [&_h2]:leading-[1.25] [&_h2]:tracking-[-0.015em] [&_h2]:text-eri-dark [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:block [&_h3]:font-sans [&_h3]:text-[18px] [&_h3]:font-bold sm:[&_h3]:text-[21px] [&_h3]:leading-[1.3] [&_h3]:tracking-[-0.01em] [&_h3]:text-eri-dark [&_h4]:mt-6 [&_h4]:mb-2 [&_h4]:block [&_h4]:font-sans [&_h4]:text-[16px] [&_h4]:font-bold sm:[&_h4]:text-[18px] [&_h4]:leading-[1.3] [&_h4]:text-eri-dark [&_strong]:font-bold [&_strong]:text-eri-dark [&_b]:font-bold [&_b]:text-eri-dark [&_p]:leading-[1.8] [&_p]:text-eri-dark [&_p:has(>strong:only-child)]:mt-8 [&_p:has(>strong:only-child)]:mb-3 [&_p:has(>strong:only-child)]:font-bold [&_p:has(>strong:only-child)]:text-[20px] sm:[&_p:has(>strong:only-child)]:text-[22px]">
+              {study.body ? (
+                <div
+                  className="space-y-6"
+                  dangerouslySetInnerHTML={{
+                    __html: formatCaseStudyBody(study.body),
+                  }}
+                />
+              ) : study.paragraphs && study.paragraphs.length > 0 ? (
                 study.paragraphs.map((paragraph, idx) => (
                   <p key={idx}>{paragraph}</p>
                 ))
-              ) : study.body ? (
-                <div
-                  className="space-y-6"
-                  dangerouslySetInnerHTML={{ __html: study.body }}
-                />
               ) : study.description ? (
                 <p>{study.description}</p>
               ) : null}

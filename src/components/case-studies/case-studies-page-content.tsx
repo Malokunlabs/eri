@@ -9,7 +9,6 @@ import { Container } from "@/components/ui/container";
 import {
   getCaseStudyLogo,
   type CaseStudy,
-  type CaseStudyCategory,
 } from "@/lib/case-studies-data";
 
 const INITIAL_VISIBLE = 8;
@@ -40,13 +39,13 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
       {/* Brand logo placed inside the folder paper slot, replacing baked-in logo */}
       <div className="pointer-events-none absolute left-[12.3%] top-[19.4%] flex size-[9.8%] items-center justify-center overflow-hidden rounded-full border border-[#E3E1DD] bg-white shadow-xs">
         {logoSrc ? (
-          <div className="relative size-full">
+          <div className="relative size-full overflow-hidden rounded-full">
             <Image
               src={logoSrc}
               alt=""
               fill
               sizes="24px"
-              className="object-contain p-0.5"
+              className="size-full rounded-full object-cover object-center"
             />
           </div>
         ) : (
