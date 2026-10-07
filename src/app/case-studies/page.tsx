@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 
 import { CaseStudiesPageContent } from "@/components/case-studies/case-studies-page-content";
 import { ReachUsSection } from "@/components/home/reach-us-section";
+import {
+  getStudioCaseStudies,
+  getStudioCaseStudyCategories,
+} from "@/lib/content-api";
 
 export const metadata: Metadata = {
   title: "Case Studies",
@@ -18,10 +22,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default async function Page() {
+  const [caseStudies, categories] = await Promise.all([
+    getStudioCaseStudies("eri"),
+    getStudioCaseStudyCategories("eri"),
+  ]);
+
   return (
     <>
-      <CaseStudiesPageContent />
+      <CaseStudiesPageContent
+        initialStudies={caseStudies}
+        categories={categories}
+      />
       <ReachUsSection />
     </>
   );
