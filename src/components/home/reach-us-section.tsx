@@ -26,8 +26,11 @@ const contactOptions = [
     background: "bg-[#f5c7f5]",
   },
   {
-    title: "Call Our Phone Lines",
-    description: ["Fastest way to reach someone.", "Weekdays, 9 to 6."],
+    title: "Send Us an Email",
+    description: [
+      "Drop us a note anytime.",
+      "We reply within 24 hours.",
+    ],
     action: "Email Us",
     image: "/images/reach-us/Monitor.svg",
     imageWidth: 340,
