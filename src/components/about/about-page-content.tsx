@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useRef } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
@@ -13,7 +16,111 @@ const stats = [
   { value: "5", label: "Years actively\nin the field" },
 ] as const;
 
+const teamMembers = [
+  {
+    name: "Paula Unegbu",
+    role: "Head of Operations",
+    image: "/images/about/paula.svg",
+  },
+  {
+    name: "Dorcas Animasaun",
+    role: "Social Media Manager",
+    image: "/images/about/dorcas.svg",
+  },
+  {
+    name: "Michael Ogundipe",
+    role: "Project Manager",
+    image: "/images/about/michael.svg",
+  },
+  {
+    name: "Chidinma Okwuoha",
+    role: "Full Stack Developer",
+    image: "/images/about/chidinma.svg",
+  },
+  {
+    name: "Heritage Osunniyi",
+    role: "Market Research & Insights Associate",
+    image: "/images/about/heritage.svg",
+  },
+  {
+    name: "James Ojunibare",
+    role: "Design Associate",
+    image: "/images/about/james.svg",
+  },
+  {
+    name: "Kate Chukwu",
+    role: "Project Management & Product Ops Associate",
+    image: "/images/about/kate.svg",
+  },
+  {
+    name: "Mercy Adebiyi",
+    role: "Social Media Manager",
+    image: "/images/about/mercy.svg",
+  },
+  {
+    name: "Promise Owojori",
+    role: "Finance and Operations Associate",
+    image: "/images/about/promise.svg",
+  },
+  {
+    name: "Tobiloba Oluwagbemi",
+    role: "Design Associate",
+    image: "/images/about/tobi.svg",
+  },
+] as const;
+
+function TeamArrowIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={`size-6 ${direction === "left" ? "rotate-180" : ""}`}
+      fill="none"
+    >
+      <path
+        d="M5 12h14m-5-5 5 5-5 5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  );
+}
+
 export function AboutPageContent() {
+  const railRef = useRef<HTMLDivElement>(null);
+  const isPaused = useRef(false);
+
+  const moveRail = useCallback((direction: -1 | 1, wrap = false) => {
+    const rail = railRef.current;
+
+    if (!rail) return;
+
+    const card = rail.querySelector<HTMLElement>("[data-team-card]");
+    const gap = Number.parseFloat(getComputedStyle(rail).columnGap) || 20;
+    const distance = (card?.offsetWidth ?? rail.clientWidth * 0.85) + gap;
+    const maxScroll = rail.scrollWidth - rail.clientWidth;
+
+    if (wrap && direction === 1 && rail.scrollLeft >= maxScroll - 4) {
+      rail.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    rail.scrollBy({ left: distance * direction, behavior: "smooth" });
+  }, []);
+
+  // Auto-advance every 2 seconds; pauses while the user interacts.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const id = window.setInterval(() => {
+      if (!isPaused.current) moveRail(1, true);
+    }, 2000);
+
+    return () => window.clearInterval(id);
+  }, [moveRail]);
+
   return (
     <div className="bg-eri-white overflow-x-hidden">
       {/* Section 1: Hero Section */}
@@ -149,7 +256,10 @@ export function AboutPageContent() {
               {/* Negative right margin bleeds SVG to the viewport right edge */}
               <div
                 className="relative"
-                style={{ marginRight: "calc(-1 * max(0px, (100vw - 1096px) / 2 + 32px))" }}
+                style={{
+                  marginRight:
+                    "calc(-1 * max(0px, (100vw - 1096px) / 2 + 32px))",
+                }}
               >
                 <Image
                   src="/images/about/rightside-desktop.svg"
@@ -164,7 +274,6 @@ export function AboutPageContent() {
           </div>
         </Container>
       </section>
-
 
       {/* Section 3: Meet The Founders */}
       <section aria-label="Meet The Founders">
@@ -232,6 +341,82 @@ export function AboutPageContent() {
               </div>
             </div>
           </Container>
+        </div>
+      </section>
+
+      {/* Section 4: Meet The Team */}
+      <section
+        aria-labelledby="meet-the-team-heading"
+        className="overflow-hidden bg-eri-white py-16 text-eri-dark sm:py-20 lg:py-28"
+      >
+        <Container
+          size="insights"
+          className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        >
+          <h2
+            id="meet-the-team-heading"
+            className="font-display text-[38px] font-semibold leading-[1.06] tracking-tight text-eri-dark sm:text-[48px] lg:text-[54px]"
+          >
+            Meet The Team
+          </h2>
+          <div className="flex items-center gap-5 sm:gap-6">
+            <p className="max-w-65 text-[14px] leading-[1.4] text-eri-grey-11 sm:text-right">
+              The people who plan the
+              <br className="hidden sm:inline" /> work and answer for it.
+            </p>
+            <div className="flex shrink-0 gap-3">
+              <button
+                type="button"
+                aria-label="Show previous team members"
+                className="flex h-10 w-[54px] items-center justify-center rounded-full border border-eri-dark transition-colors hover:bg-eri-dark hover:text-eri-white"
+                onClick={() => moveRail(-1)}
+              >
+                <TeamArrowIcon direction="left" />
+              </button>
+              <button
+                type="button"
+                aria-label="Show next team members"
+                className="flex h-10 w-[54px] items-center justify-center rounded-full border border-eri-dark transition-colors hover:bg-eri-dark hover:text-eri-white"
+                onClick={() => moveRail(1)}
+              >
+                <TeamArrowIcon direction="right" />
+              </button>
+            </div>
+          </div>
+        </Container>
+
+        <div
+          className="relative left-1/2 mt-8 w-screen -translate-x-1/2 sm:mt-12 lg:mt-14"
+          onMouseEnter={() => (isPaused.current = true)}
+          onMouseLeave={() => (isPaused.current = false)}
+          onFocus={() => (isPaused.current = true)}
+          onBlur={() => (isPaused.current = false)}
+          onTouchStart={() => (isPaused.current = true)}
+          onTouchEnd={() => (isPaused.current = false)}
+        >
+          <div
+            ref={railRef}
+            className="flex snap-x snap-proximity scroll-pl-3 gap-5 overflow-x-auto scroll-smooth pl-3 pr-3 [scrollbar-width:none] sm:scroll-pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pr-[max(32px,calc((100vw-1096px)/2+32px))] lg:gap-6 [&::-webkit-scrollbar]:hidden"
+          >
+            {teamMembers.map((member) => (
+              <article
+                key={member.name}
+                data-team-card
+                className="w-[calc(100vw-48px)] max-w-[342px] shrink-0 snap-start sm:w-[320px] lg:w-[342px]"
+              >
+                <div className="relative aspect-[342/456] w-full overflow-hidden rounded-[24px]">
+                  <Image
+                    src={member.image}
+                    alt={`${member.name} - ${member.role}`}
+                    fill
+                    draggable={false}
+                    sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) 320px, 342px"
+                    className="pointer-events-none object-contain"
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </div>
