@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 export function HeroSection() {
   return (
@@ -23,9 +24,14 @@ export function HeroSection() {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-2">
-            <Link href="#" className="eri-pill eri-pill--primary">
+            <a
+              href={siteConfig.contact.websiteHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="eri-pill eri-pill--primary"
+            >
               Book a Signal
-            </Link>
+            </a>
             <Link href="#" className="eri-pill eri-pill--secondary">
               View Reports
             </Link>
@@ -39,7 +45,7 @@ export function HeroSection() {
             width={571}
             height={518}
             preload
-            className="h-auto w-full max-w-[720px]"
+            className="eri-float h-auto w-full max-w-[720px]"
           />
         </div>
       </Container>

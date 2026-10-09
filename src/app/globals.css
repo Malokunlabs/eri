@@ -200,3 +200,24 @@ html {
     resize: vertical;
   }
 }
+
+@keyframes eri-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.eri-float {
+  animation: eri-float 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eri-float {
+    animation: none;
+  }
+}

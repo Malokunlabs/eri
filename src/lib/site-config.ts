@@ -27,5 +27,15 @@ export const siteConfig = {
   ],
   creator: "Eri",
   twitterHandle: "@useeri_africa",
+  contact: {
+    address: "97 Adeola Odeku Street, Victoria Island, Lagos",
+    phoneDisplay: "+234 814 297 0965",
+    phoneHref: "tel:+2348142970965",
+    whatsappHref: "https://wa.me/2348142970965",
+    email: "info@malokunlabs.com",
+    emailHref: "mailto:info@malokunlabs.com",
+    websiteLabel: "sales.malokunlabs.com",
+    websiteHref: "https://sales.malokunlabs.com",
+  },
 } as const;
 

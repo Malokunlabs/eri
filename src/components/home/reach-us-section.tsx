@@ -1,13 +1,17 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
+
+const { contact } = siteConfig;
 
 const contactOptions = [
   {
     title: "Call Our Phone Lines",
     description: ["Fastest way to reach someone.", "Weekdays, 9 to 6."],
     action: "Call Us",
+    href: contact.phoneHref,
+    external: false,
     image: "/images/reach-us/Landline.svg",
     imageWidth: 340,
     imageHeight: 302,
@@ -20,6 +24,8 @@ const contactOptions = [
       "We reply the same day.",
     ],
     action: "Text Us",
+    href: contact.whatsappHref,
+    external: true,
     image: "/images/reach-us/phone.svg",
     imageWidth: 328,
     imageHeight: 270,
@@ -32,6 +38,8 @@ const contactOptions = [
       "We reply within 24 hours.",
     ],
     action: "Email Us",
+    href: contact.emailHref,
+    external: false,
     image: "/images/reach-us/Monitor.svg",
     imageWidth: 340,
     imageHeight: 313,
@@ -53,12 +61,14 @@ export function ReachUsSection() {
           >
             Tell us the question. We&apos;ll go and find out for you.
           </h2>
-          <Link
-            href="#"
+          <a
+            href={contact.websiteHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="eri-pill eri-pill--primary min-h-[40px] shrink-0 px-4 py-2.5 text-[14px]"
           >
             Book a Signal
-          </Link>
+          </a>
         </div>
 
         <div className="mt-10 grid gap-5 lg:grid-cols-3 lg:gap-[22px]">
@@ -78,12 +88,15 @@ export function ReachUsSection() {
                     </span>
                   ))}
                 </p>
-                <Link
-                  href="#"
+                <a
+                  href={option.href}
+                  {...(option.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="eri-pill mt-5 min-h-[38px] bg-transparent px-4 py-2 text-[14px] hover:bg-eri-dark hover:text-eri-white"
                 >
                   {option.action}
-                </Link>
+                </a>
               </div>
 
               <Image
