@@ -11,7 +11,7 @@ export function ReportsPageContent() {
       <section className="relative min-h-140 w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-155 lg:min-h-170">
         {/* Background Hero Image */}
         <Image
-          src="/images/report-page/Reports Hero.png"
+          src="/images/report-page/new-bg.png"
           alt="Woman carrying a tray in a Nigerian rural setting"
           fill
           priority
