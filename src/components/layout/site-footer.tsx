@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 const companyLinks = ["Home", "About", "Services", "FAQs"] as const;
 const exploreLinks = ["Case Studies", "Insights", "Reports"] as const;
@@ -123,9 +124,14 @@ export function SiteFooter() {
             <p className="mt-5 max-w-[225px] text-[15px] leading-[1.5] text-eri-coral-light">
               We gather field intelligence on the ground across Nigeria.
             </p>
-            <Link href="#" className="eri-pill eri-pill--footer mt-6">
+            <a
+              href={siteConfig.contact.websiteHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="eri-pill eri-pill--footer mt-6"
+            >
               Book a Signal
-            </Link>
+            </a>
           </div>
 
           <FooterLinkGroup title="Company" links={companyLinks} />
@@ -136,9 +142,33 @@ export function SiteFooter() {
               Contact
             </h3>
             <div className="mt-3 space-y-3 text-[15px] leading-tight">
-              <p>(234) 801 234 3678</p>
-              <p>(234) 801 987 6543</p>
-              <p>hello@useeri.africa</p>
+              <p>{siteConfig.contact.address}</p>
+              <p>
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {siteConfig.contact.phoneDisplay}
+                </a>
+              </p>
+              <p>
+                <a
+                  href={siteConfig.contact.emailHref}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {siteConfig.contact.email}
+                </a>
+              </p>
+              <p>
+                <a
+                  href={siteConfig.contact.websiteHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {siteConfig.contact.websiteLabel}
+                </a>
+              </p>
             </div>
           </div>
 
@@ -146,7 +176,14 @@ export function SiteFooter() {
             {socialLinks.map((social) => (
               <Link
                 key={social.label}
-                href="#"
+                href={
+                  social.label === "WhatsApp"
+                    ? siteConfig.contact.whatsappHref
+                    : "#"
+                }
+                {...(social.label === "WhatsApp"
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 aria-label={social.label}
                 className="flex size-10 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
               >

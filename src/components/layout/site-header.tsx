@@ -39,7 +39,9 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
         >
           <Image
             src={
-              isLight ? "/logo/header/logo-dark.svg" : "/logo/header/logo.svg"
+              isLight
+                ? "/logo/header/formallyMalokunlabs-logo-orange.svg"
+                : "/logo/header/FormallyMalokunlabslogo-white.svg"
             }
             alt="Eri"
             width={91}

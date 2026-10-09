@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { AudienceCardStack } from "@/components/home/audience-card-stack";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 const audienceDescription =
   "Eri is for the people who have to prove something is real on the ground—to a board, an investor, a regulator, or their own P&L. We are the witness: verified, evidenced, and un-farmable.";
@@ -35,12 +35,14 @@ export function AudienceSection() {
           <p className="mt-4 max-w-66 text-[12px] leading-[1.55] text-eri-coral-light lg:text-[15px]">
             {audienceDescription}
           </p>
-          <Link
-            href="#"
+          <a
+            href={siteConfig.contact.websiteHref}
+            target="_blank"
+            rel="noopener noreferrer"
             className="eri-pill eri-pill--primary mt-6 min-h-8 px-3 py-2 text-[12px] lg:min-h-[42px] lg:px-4 lg:py-[11px] lg:text-[15px]"
           >
             Book a Signal
-          </Link>
+          </a>
 
           <Image
             src="/images/this-for/2lines.svg"
