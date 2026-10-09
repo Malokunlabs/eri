@@ -585,10 +585,10 @@ export function mapStudioDocToCaseStudy(
   }
 
   const folderImages = [
-    "/images/small-folders/orange-file1.svg",
-    "/images/small-folders/purple-folder1.png",
-    "/images/small-folders/orange-folder2.svg",
-    "/images/small-folders/purple-folder2.svg",
+    "/images/small-folders/orange-folder.svg",
+    "/images/small-folders/purple-file (1).svg",
+    "/images/small-folders/orange-folder.svg",
+    "/images/small-folders/purple-file (1).svg",
   ];
   const folder = folderImages[index % folderImages.length];
 

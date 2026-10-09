@@ -10,7 +10,11 @@ import { ReportsSection } from "@/components/home/reports-section";
 import { VideoDiariesSection } from "@/components/home/video-diaries-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
 
-import { getStudioInsights, getStudioVideoDiaries } from "@/lib/content-api";
+import {
+  getStudioCaseStudies,
+  getStudioInsights,
+  getStudioVideoDiaries,
+} from "@/lib/content-api";
 
 export const metadata: Metadata = {
   title:
@@ -30,16 +34,24 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const [insights, videoDiaries] = await Promise.all([
+  const [insights, videoDiaries, caseStudies] = await Promise.all([
     getStudioInsights("eri"),
     getStudioVideoDiaries("eri"),
+    getStudioCaseStudies("eri"),
   ]);
 
   return (
     <main id="main-content">
       <HeroSection />
       <BrandsSection />
-      <WorkDoneSection />
+      <WorkDoneSection
+        caseStudies={caseStudies}
+        video={
+          videoDiaries.find((v) =>
+            v.title?.toLowerCase().includes("danfo"),
+          ) || videoDiaries[0]
+        }
+      />
       <AudienceSection />
       <ReportsSection />
       <VideoDiariesSection videos={videoDiaries} />
