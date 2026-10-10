@@ -6,6 +6,7 @@ import {
   caseStudies,
   caseStudyCategories,
   type CaseStudy,
+  type CaseStudySection,
 } from "@/lib/case-studies-data";
 
 export const STUDIO_API_KEY =
@@ -237,6 +238,64 @@ export function parseHtmlContent(rawHtml: string): {
     intro: allParagraphs,
     sections: [],
   };
+}
+
+/**
+ * Parses Case Study HTML content, normalizing headings and splitting into intro and sections.
+ */
+export function parseCaseStudyHtml(rawHtml: string): {
+  intro: string[];
+  sections: CaseStudySection[];
+} {
+  if (!rawHtml || typeof rawHtml !== "string") {
+    return { intro: [], sections: [] };
+  }
+
+  let clean = rawHtml.replace(/\r\n|\r/g, "\n");
+
+  // Fix <h2>/<h3> containing long intro text + <br><br> + heading
+  clean = clean.replace(/<h[2-4][^>]*>([\s\S]*?)<\/h[2-4]>/gi, (match, inner) => {
+    if (inner.includes("<br")) {
+      const parts = inner
+        .split(/<br\s*\/?>/gi)
+        .map((s: string) => s.trim())
+        .filter(Boolean);
+      if (parts.length > 1) {
+        const heading = parts.pop();
+        const introText = parts.join("<br>");
+        return `<p>${introText}</p><h2>${heading}</h2>`;
+      }
+    }
+    return match;
+  });
+
+  // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
+  clean = clean.replace(
+    /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
+    (match, inner) => {
+      const text = inner.replace(/<[^>]+>/g, "").trim();
+      if (text.length > 0 && text.length < 120) {
+        return `<h2>${text}</h2>`;
+      }
+      return match;
+    },
+  );
+
+  // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
+  clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
+    const text = inner.trim();
+    if (
+      text.length > 3 &&
+      text.length < 80 &&
+      !/[.!?]$/.test(text) &&
+      !text.includes(". ")
+    ) {
+      return `<h2>${text}</h2>`;
+    }
+    return match;
+  });
+
+  return parseHtmlContent(clean);
 }
 
 function extractParagraphs(htmlSnippet: string): string[] {
@@ -553,9 +612,10 @@ export function mapStudioDocToCaseStudy(
   index = 0,
 ): CaseStudy {
   const rawContent = doc.body || doc.excerpt || "";
-  const paragraphs = extractParagraphs(rawContent);
+  const { intro, sections } = parseCaseStudyHtml(rawContent);
+  const paragraphs = intro.length > 0 ? intro : extractParagraphs(rawContent);
 
-  let authorName: string | undefined = undefined;
+  let authorName = "Eri Field Team";
   if (typeof doc.author === "object" && doc.author?.title) {
     authorName = doc.author.title;
   } else if (typeof doc.author === "string" && doc.author) {
@@ -614,6 +674,8 @@ export function mapStudioDocToCaseStudy(
     description,
     body: doc.body || "",
     paragraphs,
+    intro,
+    sections,
     date: formatPublishDate(doc.publishDate || doc.createdAt),
     author: authorName,
     readTime: readTimeStr,
