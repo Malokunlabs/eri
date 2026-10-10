@@ -4,6 +4,12 @@ export const caseStudyCategories = [
 
 export type CaseStudyCategory = (typeof caseStudyCategories)[number] | string;
 
+export type CaseStudySection = {
+  id: string;
+  heading: string;
+  paragraphs: string[];
+};
+
 export type CaseStudy = {
   id: string;
   company: string;
@@ -17,6 +23,8 @@ export type CaseStudy = {
   readTime?: string;
   body?: string;
   paragraphs?: string[];
+  intro?: string[];
+  sections?: CaseStudySection[];
   logo?: string | null;
 };
 
