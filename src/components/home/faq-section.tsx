@@ -72,7 +72,71 @@ export function FaqSection() {
           </p>
         </div>
 
-        <div className="relative -mb-16 min-h-170 w-full lg:mb-[-12%] lg:-ml-16 lg:aspect-1354/1240 lg:min-h-0 lg:w-[calc(100%+128px)]">
+        {/* Mobile: cards inside the folder */}
+        <div className="flex w-full flex-col pb-2 lg:hidden">
+          <div className="relative w-full">
+            <Image
+              src="/images/large-folder/mobile-folder-back.svg"
+              alt=""
+              fill
+              sizes="calc(100vw - 24px)"
+              unoptimized
+              className="pointer-events-none object-fill"
+            />
+            <div className="relative z-10 px-[3.5%] pb-[7.5%] pt-[16%]">
+              {faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+
+                return (
+                  <div
+                    className={`relative -mt-px overflow-hidden rounded-lg first:mt-0 ${faq.color}`}
+                    key={faq.question}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-mobile-${index}`}
+                      className="flex min-h-11 w-full items-center justify-between gap-3 px-3.5 py-2 text-left font-display text-[13px] font-semibold leading-tight"
+                      onClick={() => setOpenIndex(index)}
+                    >
+                      <span>{faq.question}</span>
+                      <span
+                        aria-hidden="true"
+                        className={`relative block size-5 shrink-0 transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}
+                      >
+                        <span className="absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 -translate-y-1/2 bg-current" />
+                        <span className="absolute left-1/2 top-1/2 h-4 w-px -translate-x-1/2 -translate-y-1/2 bg-current" />
+                      </span>
+                    </button>
+                    <div
+                      id={`faq-answer-mobile-${index}`}
+                      className={`grid transition-[grid-template-rows] duration-300 ease-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="px-3.5 pb-3 text-[12px] leading-normal opacity-85">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="relative z-20 mt-[-9%] aspect-358/115 w-full">
+            <Image
+              src="/images/large-folder/mobile-folder-front.svg"
+              alt=""
+              fill
+              sizes="calc(100vw - 24px)"
+              unoptimized
+              className="pointer-events-none object-fill"
+            />
+          </div>
+        </div>
+
+        {/* Desktop */}
+        <div className="relative hidden w-full lg:mb-[-12%] lg:-ml-16 lg:block lg:aspect-1354/1240 lg:w-[calc(100%+128px)]">
           <Image
             src="/images/large-folder/cover-folder.svg"
             alt=""
@@ -86,7 +150,7 @@ export function FaqSection() {
             alt=""
             fill
             sizes="1354px"
-            className="pointer-events-none z-20 hidden object-fill [clip-path:inset(55.5%_0_0_0)] lg:block"
+            className="pointer-events-none z-20 object-fill [clip-path:inset(55.5%_0_0_0)]"
           />
 
           <div className="absolute left-1/2 top-0 hidden w-[38%] items-start justify-between lg:flex">
