@@ -7,9 +7,6 @@ import { siteConfig } from "@/lib/site-config";
 const audienceDescription =
   "Eri is for the people who have to prove something is real on the ground—to a board, an investor, a regulator, or their own P&L. We are the witness: verified, evidenced, and un-farmable.";
 
-const activationDescription =
-  "You’re measured on active users, but sign-ups can be farmed, and everyone knows it. Eri delivers activation you can defend: real people, onboarded by someone they already trust, every action stamped with place, time and proof. Traction that survives diligence.";
-
 export function AudienceSection() {
   return (
     <section
@@ -18,7 +15,7 @@ export function AudienceSection() {
     >
       <Container
         size="audience"
-        className="grid gap-0 pb-4 pt-10 lg:grid-cols-[264px_384px_264px] lg:gap-x-15 lg:pb-0 lg:pt-0"
+        className="grid gap-0 pb-4 pt-10 lg:grid-cols-[264px_384px_264px] lg:gap-x-10 xl:gap-x-12 lg:pb-0 lg:pt-0"
       >
         <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-22">
           <h2
@@ -53,7 +50,7 @@ export function AudienceSection() {
           />
         </div>
 
-        <AudienceCardStack description={activationDescription} />
+        <AudienceCardStack />
       </Container>
     </section>
   );
