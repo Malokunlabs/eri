@@ -284,7 +284,7 @@ export function AboutPageContent() {
               <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
                 <div className="relative aspect-464/513 w-full max-w-115">
                   <Image
-                    src="/images/about/manonleft.png"
+                    src="/images/about/logor-img.png"
                     alt="Logo Oluwamuyiwa"
                     fill
                     sizes="(max-width: 1023px) 100vw, 460px"
@@ -313,8 +313,8 @@ export function AboutPageContent() {
                     conventional datasets can see.
                   </p>
                   <p>
-                    He founded Malokun Labs, a research and intelligence
-                    company working across financial services, consumer goods,
+                    He founded Malokun Labs, a research and intelligence company
+                    working across financial services, consumer goods,
                     public-sector and development contexts in Nigeria. That
                     experience led to ERI: infrastructure for capturing,
                     structuring and preserving permissioned evidence from real
