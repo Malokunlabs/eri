@@ -77,10 +77,10 @@ export function ReportsPageContent() {
         <div className="relative z-10 flex min-h-[460px] items-center pb-20 pt-8 sm:min-h-[520px] lg:min-h-[580px]">
           <Container size="insights">
             <div className="max-w-[560px]">
-              <h1 className="font-display text-[44px] font-semibold leading-[1.04] tracking-[-0.025em] text-eri-white sm:text-[54px] lg:text-[62px]">
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-white sm:text-[48px] lg:text-[56px]">
                 Reports by Eri
               </h1>
-              <p className="mt-5 max-w-[460px] text-[15px] leading-[1.55] text-eri-white/90 sm:text-[16px]">
+              <p className="mt-5 max-w-[460px] text-[14px] leading-[1.55] text-eri-white/90 sm:text-[15px] lg:text-[16px]">
                 Eri publishes its own field research, gathered by our people in
                 markets and stores across Nigeria, and every report is free to
                 read.
@@ -100,13 +100,13 @@ export function ReportsPageContent() {
             <div>
               <h2
                 id="snapshot-heading"
-                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.025em] text-eri-dark sm:text-[38px] lg:text-[44px]"
+                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
               >
                 <span className="block">The Nigerian</span>
                 <span className="block">Urban Consumer</span>
                 <span className="block">2026 Snapshot Q1</span>
               </h2>
-              <p className="mt-4 max-w-97.5 text-[13px] leading-[1.55] text-eri-grey-11 sm:text-[14px]">
+              <p className="mt-4 max-w-97.5 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
                 57% of consumers had switched brands. 47% said they choose on
                 consistency, not price or advertising. From 244 retail
                 intercepts across Lagos, Abuja and Port Harcourt.
@@ -146,7 +146,7 @@ export function ReportsPageContent() {
           <div className="text-left sm:text-center">
             <h2
               id="indexes-heading"
-              className="font-display text-[34px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[46px] lg:text-[52px]"
+              className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
             >
               Living Intelligence Indexes
             </h2>

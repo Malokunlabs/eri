@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
+
+const emptySubscribe = () => () => {};
 
 const evidenceLinks = [
   { label: "Video Diaries", href: "/video-diaries" },
@@ -26,14 +28,20 @@ type MobileMenuProps = {
 
 export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(true);
   const pathname = usePathname();
   const isLight = variant === "light";
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setIsOpen(false);
+  }
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -46,11 +54,6 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   // Close on Escape key
   useEffect(() => {

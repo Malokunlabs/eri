@@ -62,11 +62,11 @@ export function FaqSection() {
         <div className="mb-8 lg:hidden">
           <h2
             id="faq-heading"
-            className="font-display text-[40px] font-semibold leading-none tracking-tight"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px]"
           >
             FAQs
           </h2>
-          <p className="mt-3 max-w-77.5 text-[13px] leading-normal text-eri-grey-9">
+          <p className="mt-3 max-w-77.5 text-[14px] leading-[1.55] text-eri-grey-9 sm:text-[15px]">
             A selection of projects that show how organizations ERI to answer
             important questions.
           </p>
@@ -156,11 +156,11 @@ export function FaqSection() {
           <div className="absolute left-1/2 top-0 hidden w-[38%] items-start justify-between lg:flex">
             <h2
               id="faq-heading-desktop"
-              className="font-display text-[48px] font-semibold leading-none tracking-tight"
+              className="font-display text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] lg:text-[44px]"
             >
               FAQs
             </h2>
-            <p className="mt-1 max-w-62.5 text-[14px] leading-normal text-eri-grey-9">
+            <p className="mt-1 max-w-62.5 text-[14px] leading-[1.55] text-eri-grey-9 sm:text-[15px]">
               A selection of projects that show how organizations ERI to answer
               important questions.
             </p>

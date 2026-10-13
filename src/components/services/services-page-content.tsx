@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { SiteHeader } from "@/components/layout/site-header";
@@ -21,14 +22,14 @@ export function ServicesPageContent() {
           {/* Left: big heading */}
           <h1
             id="services-hero-heading"
-            className="font-display text-[40px] font-semibold leading-[1.04] tracking-[-0.02em] sm:text-[50px] lg:text-[56px]"
+            className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight sm:text-[48px] lg:text-[56px]"
           >
             Transform Your Market Research &amp; Brand Activations
           </h1>
 
           {/* Right: description + CTAs */}
           <div className="flex flex-col items-start gap-6 lg:items-end lg:gap-8">
-            <p className="max-w-115 text-[15px] leading-[1.55] text-eri-grey-6 sm:text-[16px] lg:max-w-95">
+            <p className="max-w-115 text-[14px] leading-[1.55] text-eri-grey-6 sm:text-[15px] lg:max-w-95 lg:text-[16px]">
               Empowering brands with rapid, data-driven insights and on-the-ground
               activations, all backed by a vibrant community of skilled gig
               professionals.
@@ -52,18 +53,22 @@ export function ServicesPageContent() {
 
         {/* Bottom tally-mark illustration — mobile image on small screens, desktop on lg+ */}
         <div className="w-full overflow-hidden">
-          <img
+          <Image
             src="/images/services-page/mobile-services-hero.PNG"
             alt=""
             aria-hidden="true"
-            className="block w-full mix-blend-screen lg:hidden"
+            width={1560}
+            height={1677}
+            className="block h-auto w-full mix-blend-screen lg:hidden"
             style={{ filter: "invert(1) hue-rotate(180deg)" }}
           />
-          <img
+          <Image
             src="/images/services-page/desktop-services-hero.PNG"
             alt=""
             aria-hidden="true"
-            className="hidden w-full mix-blend-screen lg:block"
+            width={5120}
+            height={1312}
+            className="hidden h-auto w-full mix-blend-screen lg:block"
             style={{ filter: "invert(1) hue-rotate(180deg)" }}
           />
         </div>

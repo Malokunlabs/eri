@@ -74,13 +74,13 @@ export function SiteFooter() {
         >
           <h2
             id="newsletter-title"
-            className="max-w-[650px] font-display text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[42px]"
+            className="max-w-[650px] font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Get Ground-level
             <br />
             Intelligence, in your inbox
           </h2>
-          <p className="mt-4 text-[15px] leading-[1.5] text-eri-coral-light">
+          <p className="mt-4 text-[14px] leading-[1.55] text-eri-coral-light sm:text-[15px]">
             We send Signals, field observations and consumer trends from across
             Nigeria.
           </p>

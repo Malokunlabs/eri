@@ -277,7 +277,7 @@ export function AudienceCardStack() {
                 <h3 className="font-display text-[22px] font-semibold leading-[1.08] tracking-[-0.02em]">
                   {currentSlide.title.join(" ")}
                 </h3>
-                <p className="mt-2 text-[12px] leading-[1.55] text-eri-coral-light">
+                <p className="mt-2 text-[13px] leading-[1.55] text-eri-coral-light">
                   {currentSlide.roles}
                 </p>
               </motion.div>
@@ -285,7 +285,7 @@ export function AudienceCardStack() {
 
             <div
               aria-label={`Audience ${activeSlide + 1} of ${audienceSlides.length}`}
-              className="mt-3 flex h-5 w-25 items-center justify-center gap-1.5 rounded-full bg-eri-bone/60"
+              className="mt-3 flex h-5 w-25 items-center justify-center gap-1.5 rounded-full bg-white/20 backdrop-blur-xs"
               role="status"
             >
               {dots}
@@ -294,7 +294,7 @@ export function AudienceCardStack() {
             <AnimatePresence mode="wait" initial={false}>
               <motion.p
                 key={activeSlide}
-                className="mt-3 min-h-32 text-[12px] leading-[1.55] text-eri-coral-light"
+                className="mt-3 min-h-32 text-[13px] leading-[1.55] text-eri-coral-light"
                 initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
@@ -333,7 +333,7 @@ export function AudienceCardStack() {
 
           <div
             aria-label={`Audience ${activeSlide + 1} of ${audienceSlides.length}`}
-            className="mt-4 flex h-5 w-[100px] items-center justify-center gap-1.5 rounded-full bg-eri-bone/60"
+            className="mt-4 flex h-5 w-[100px] items-center justify-center gap-1.5 rounded-full bg-white/20 backdrop-blur-xs"
             role="status"
           >
             {dots}

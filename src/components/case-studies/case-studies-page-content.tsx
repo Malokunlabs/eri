@@ -125,7 +125,7 @@ export function CaseStudiesPageContent({
           {/* Header section */}
           <div className="flex flex-col gap-5 border-b border-eri-grey-5 pb-7 sm:flex-row sm:items-end sm:justify-between lg:gap-10">
             <div>
-              <h1 className="font-display text-[38px] font-semibold leading-[1.05] tracking-[-0.025em] text-eri-dark sm:text-[44px] lg:text-[48px]">
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
                 Case Studies
               </h1>
               <p className="mt-3 max-w-[480px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">

@@ -255,7 +255,7 @@ export function CoreServicesSection() {
   return (
     <section
       aria-labelledby="core-services-heading"
-      className="bg-eri-grey-2 py-4 text-eri-dark sm:py-4 lg:py-6"
+      className="bg-eri-white py-4 text-eri-dark sm:py-4 lg:py-6"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -264,11 +264,11 @@ export function CoreServicesSection() {
         <div className="mb-8 text-center sm:mb-10 lg:mb-12">
           <h2
             id="core-services-heading"
-            className="font-display text-[30px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[36px] lg:text-[42px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Our Core Services
           </h2>
-          <p className="mx-auto mt-2.5 max-w-sm text-[13px] leading-[1.55] text-eri-grey-11 sm:max-w-md sm:text-[14px] lg:text-[15px]">
+          <p className="mx-auto mt-2.5 max-w-sm text-[14px] leading-[1.55] text-eri-grey-11 sm:max-w-md sm:text-[15px]">
             Comprehensive solutions that combine data-driven methodologies with
             cultural intelligence to deliver impactful results
           </p>

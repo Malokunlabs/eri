@@ -200,7 +200,7 @@ export function VideoDiariesPageContent({
             <div>
               <h1
                 id="video-diaries-hero-heading"
-                className="font-display text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-eri-dark sm:text-[50px] lg:text-[58px]"
+                className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]"
               >
                 Ground truth,
                 <br />
