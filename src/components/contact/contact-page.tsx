@@ -109,10 +109,10 @@ export function ContactPage() {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
             {/* Header text: order-1 on mobile, Col 1 Row 1 on desktop */}
             <div className="order-1 lg:order-0 lg:col-start-1 lg:row-start-1">
-              <h1 className="max-w-[480px] font-display text-[34px] font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[40px] lg:text-[44px]">
+              <h1 className="max-w-[480px] font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
                 Tell us about your next project
               </h1>
-              <p className="mt-4 max-w-[420px] text-[15px] leading-[1.55] text-white/70">
+              <p className="mt-4 max-w-[420px] text-[14px] leading-[1.55] text-white/70 sm:text-[15px]">
                 Tell us what you need to find out. We&apos;ll come back within
                 one working day with what it would take to answer it.
               </p>

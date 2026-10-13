@@ -13,10 +13,10 @@ export function HeroSection() {
       <Container className="grid min-h-[640px] items-center gap-12 py-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-0 lg:py-0">
         <div className="flex flex-col items-start lg:pb-14">
           <div className="max-w-[536px]">
-            <h1 className="font-display text-[43px] font-semibold leading-none tracking-[-0.02em] sm:text-[52px] lg:text-[57px]">
+            <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight sm:text-[48px] lg:text-[56px]">
               Ground truth, gathered in person across Nigeria.
             </h1>
-            <p className="mt-4 max-w-[425px] text-[15px] leading-[1.5] tracking-[-0.01em] text-eri-coral-light">
+            <p className="mt-4 max-w-[425px] text-[14px] leading-[1.55] tracking-[-0.01em] text-eri-coral-light sm:text-[15px] lg:text-[16px]">
               Eri sends field teams into stores, markets and streets across
               Nigeria, then reports back what they saw. Mystery shopping,
               intercept surveys, verification and market research.

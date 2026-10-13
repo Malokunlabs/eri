@@ -131,7 +131,7 @@ export function VideoDiariesSection() {
         <div className="flex items-end justify-between gap-6 border-b border-eri-grey-6 pb-5">
           <h2
             id="home-video-diaries-heading"
-            className="font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.025em] sm:text-[40px] lg:text-[44px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Video Diaries
           </h2>

@@ -76,17 +76,17 @@ export function InsightsPageContent() {
   }
 
   return (
-    <div className="bg-eri-grey-2">
+    <div className="bg-eri-white">
       <SiteHeader variant="light" />
 
       <main id="main-content" className="pb-16 pt-10 lg:pb-24 lg:pt-12">
         <Container size="insights">
           <div className="flex flex-col gap-6 border-b border-eri-grey-5 pb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div>
-              <h1 className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.025em] text-eri-dark lg:text-[44px]">
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
                 Insights
               </h1>
-              <p className="mt-3 max-w-[520px] text-[14px] leading-[1.55] text-eri-grey-11">
+              <p className="mt-3 max-w-[520px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
                 What our people see in the field, and what it means for the
                 brands buying from them.
               </p>

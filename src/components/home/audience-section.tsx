@@ -20,7 +20,7 @@ export function AudienceSection() {
         <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-22">
           <h2
             id="audience-heading"
-            className="font-display text-[30px] font-semibold leading-[1.02] tracking-[-0.02em] lg:text-[44px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             <span className="lg:hidden">Who is Eri for?</span>
             <span className="hidden lg:inline">
@@ -29,7 +29,7 @@ export function AudienceSection() {
               Eri for?
             </span>
           </h2>
-          <p className="mt-4 max-w-66 text-[12px] leading-[1.55] text-eri-coral-light lg:text-[15px]">
+          <p className="mt-4 max-w-66 text-[13px] leading-[1.55] text-eri-coral-light sm:text-[14px] lg:text-[15px]">
             {audienceDescription}
           </p>
           <a

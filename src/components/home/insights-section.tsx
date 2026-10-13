@@ -53,7 +53,7 @@ export function InsightsSection() {
         <div>
           <h2
             id="insights-heading"
-            className="font-display text-[40px] font-semibold leading-[1.05] tracking-[-0.025em] lg:text-[44px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Insights from across Nigeria
           </h2>

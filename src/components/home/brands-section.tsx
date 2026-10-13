@@ -124,7 +124,7 @@ export function BrandsSection() {
       <Container size="brands">
         <h2
           id="brands-heading"
-          className="max-w-[380px] font-display text-[clamp(34px,7.3vw,40px)] font-semibold leading-[1.05] tracking-[-0.02em] lg:mx-auto lg:max-w-none lg:text-center lg:text-[42px] lg:leading-tight"
+          className="max-w-[380px] font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:mx-auto lg:max-w-none lg:text-center lg:text-[44px]"
         >
           Brands we&apos;ve been in the field for.
         </h2>

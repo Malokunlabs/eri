@@ -71,7 +71,7 @@ export function WorkDoneSection() {
           <div>
             <h2
               id="work-done-heading"
-              className="w-full font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.02em] sm:text-[40px] lg:text-[42px]"
+              className="w-full font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
             >
               Work we&apos;ve done, and
               <br className="hidden sm:inline" /> what came back.

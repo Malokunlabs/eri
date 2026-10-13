@@ -14,12 +14,12 @@ export function ReportsSection() {
         className="grid items-start gap-10 py-12 lg:grid-cols-[352px_minmax(0,1fr)] lg:gap-16 lg:pb-2 lg:pt-12"
       >
         <div className="w-full lg:max-w-88">
-          <p className="font-display text-[16px] font-semibold leading-tight lg:text-[18px]">
+          <p className="font-display text-[15px] font-semibold leading-tight sm:text-[16px]">
             Reports by Eri
           </p>
           <h2
             id="reports-heading"
-            className="mt-3 w-full font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[44px] lg:max-w-88 lg:text-[40px] lg:tracking-[-0.035em]"
+            className="mt-3 w-full font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:max-w-88 lg:text-[44px]"
           >
             <span className="lg:hidden">
               The Nigerian Urban Consumer 2026 Snapshot Q1
@@ -32,7 +32,7 @@ export function ReportsSection() {
               2026 Snapshot Q1
             </span>
           </h2>
-          <p className="mt-3 w-full text-[13px] leading-[1.55] text-eri-coral-light sm:text-[15px] lg:max-w-88">
+          <p className="mt-3 w-full text-[14px] leading-[1.55] text-eri-coral-light sm:text-[15px] lg:max-w-88">
             57% of consumers had switched brands. 47% said they choose on
             consistency, not price or advertising. From 244 retail intercepts
             across Lagos, Abuja and Port Harcourt.
