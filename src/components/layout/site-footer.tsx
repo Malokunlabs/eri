@@ -209,7 +209,7 @@ export function SiteFooter() {
             className="absolute left-0 top-0 h-auto w-full"
           />
 
-          <div className="absolute inset-x-0 bottom-5 z-30 flex items-center justify-between border-b border-eri-bone pb-4 font-display text-[10px] sm:bottom-12 sm:z-10 sm:text-[14px] lg:bottom-auto lg:top-[650px]">
+          <div className="absolute inset-x-0 bottom-5 z-30 hidden items-center justify-between border-b border-eri-bone pb-4 font-display text-[10px] sm:bottom-12 sm:z-10 sm:text-[14px] lg:bottom-auto lg:top-[650px] lg:flex">
             <div className="flex items-center gap-4 sm:gap-8">
               <span>© {new Date().getFullYear()} ERI</span>
               <Link href="#" className="transition-opacity hover:opacity-70">
@@ -229,7 +229,7 @@ export function SiteFooter() {
             alt="A folder highlighting Eri's network of over 12,000 active field agents"
             width={770}
             height={500}
-            className="pointer-events-none absolute left-1/2 top-[calc((100vw-24px)*0.38)] z-20 h-auto w-[85%] -translate-x-1/2 sm:top-[250px] sm:w-[600px] lg:left-[58%] lg:top-[400px] lg:w-[770px]"
+            className="pointer-events-none absolute left-[54%] top-[calc((100vw-24px)*0.38)] z-20 h-auto w-[85%] -translate-x-1/2 sm:left-1/2 sm:top-[250px] sm:w-[600px] lg:left-[58%] lg:top-[400px] lg:w-[770px]"
           />
         </div>
       </Container>
