@@ -19,7 +19,7 @@ export function ReportsSection() {
           </p>
           <h2
             id="reports-heading"
-            className="mt-3 w-full font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:max-w-88 lg:text-[44px]"
+            className="mt-3 w-full font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:max-w-88 lg:text-[44px]"
           >
             <span className="lg:hidden">
               The Nigerian Urban Consumer 2026 Snapshot Q1
