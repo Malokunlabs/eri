@@ -17,7 +17,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      'Eri\'s fieldwork gave us a clear picture of what was actually happening on the ground — not what we assumed."',
+      "Eri's fieldwork gave us a clear picture of what was actually happening on the ground — not what we assumed.\"",
     name: "Amina Yusuf",
     company: "Flutterwave",
     avatar: "/images/video-dairies/girlonglasses.png",
@@ -25,7 +25,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      'The depth of insight we got from Eri\'s ground-level research completely changed how we approach new markets. Exceptional work."',
+      "The depth of insight we got from Eri's ground-level research completely changed how we approach new markets. Exceptional work.\"",
     name: "Chidi Eze",
     company: "Paystack",
     avatar: "/images/video-dairies/manonorange.png",
@@ -38,6 +38,89 @@ type AnimPhase = "stacked" | "fanning" | "transitioning";
 export function ContactPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [phase, setPhase] = useState<AnimPhase>("stacked");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (status === "error") {
+      setStatus("idle");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMsg("");
+
+    const accessKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+      "59cb37c1-c48f-4a5f-86f8-40bf7ed949ef";
+
+    try {
+      const payload = new FormData();
+      payload.append("access_key", accessKey);
+      payload.append(
+        "name",
+        `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+      );
+      payload.append("email", formData.email.trim());
+      payload.append("message", formData.message.trim());
+      payload.append(
+        "subject",
+        `New Project Inquiry from ${formData.firstName.trim()} [Eri]`,
+      );
+      payload.append("from_name", "Eri Website");
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: payload,
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.success) {
+        if (res.status === 403) {
+          throw new Error(
+            data.message ||
+              "Domain not whitelisted in Web3Forms. Please add 'localhost' (or your production domain) under Form Settings in Web3Forms.",
+          );
+        }
+        throw new Error(
+          data.message || "Failed to submit form. Please try again.",
+        );
+      }
+
+      setStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please reach out to info@useeri.com directly.",
+      );
+    }
+  };
 
   useEffect(() => {
     // Total cycle: 6 000 ms
@@ -152,7 +235,7 @@ export function ContactPage() {
             <div className="order-2 lg:col-start-2 lg:h-full">
               <div className="flex h-full flex-col justify-between rounded-[28px] border border-eri-grey-4/80 bg-eri-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:p-7 lg:p-8 xl:p-9">
                 <form
-                  action="#"
+                  onSubmit={handleSubmit}
                   className="flex h-full flex-col justify-between gap-3.5 sm:gap-4"
                 >
                   <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
@@ -164,6 +247,9 @@ export function ContactPage() {
                         id="first-name"
                         name="firstName"
                         type="text"
+                        required
+                        value={formData.firstName}
+                        onChange={handleChange}
                         autoComplete="given-name"
                         placeholder="Enter your First Name"
                         className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
@@ -177,6 +263,8 @@ export function ContactPage() {
                         id="last-name"
                         name="lastName"
                         type="text"
+                        value={formData.lastName}
+                        onChange={handleChange}
                         autoComplete="family-name"
                         placeholder="Enter your Last Name"
                         className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
@@ -192,6 +280,9 @@ export function ContactPage() {
                       id="work-email"
                       name="email"
                       type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
                       autoComplete="email"
                       placeholder="Enter your work email"
                       className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
@@ -206,17 +297,40 @@ export function ContactPage() {
                       id="message"
                       name="message"
                       rows={5}
+                      required
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="What do you need to find out?"
                       className="eri-field eri-field--textarea h-full min-h-[125px] w-full resize-none rounded-[14px] border border-eri-grey-5 bg-white p-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
                     />
                   </div>
 
+                  {status === "success" && (
+                    <div
+                      role="status"
+                      className="rounded-[14px] border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-[13px] text-emerald-800"
+                    >
+                      ✓ Thank you! We&apos;ve received your inquiry and will be
+                      in touch within one working day.
+                    </div>
+                  )}
+
+                  {status === "error" && (
+                    <div
+                      role="alert"
+                      className="rounded-[14px] border border-rose-200 bg-rose-50 px-4 py-2.5 text-[13px] text-rose-800"
+                    >
+                      {errorMsg}
+                    </div>
+                  )}
+
                   <div>
                     <button
                       type="submit"
-                      className="eri-pill eri-pill--primary min-h-[46px] w-full rounded-full bg-eri-coral-dark px-7 py-3 text-[14.5px] font-semibold text-white shadow-sm transition-colors hover:bg-[#b04018] sm:w-auto sm:self-start"
+                      disabled={status === "submitting"}
+                      className="eri-pill eri-pill--primary min-h-[46px] w-full rounded-full bg-eri-coral-dark px-7 py-3 text-[14.5px] font-semibold text-white shadow-sm transition-colors hover:bg-[#b04018] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:self-start"
                     >
-                      Book a Signal
+                      {status === "submitting" ? "Sending..." : "Book a Signal"}
                     </button>
                   </div>
                 </form>
