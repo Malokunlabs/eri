@@ -3,8 +3,6 @@ import {
   type VideoDiary,
 } from "@/lib/video-diaries-data";
 import {
-  caseStudies,
-  caseStudyCategories,
   type CaseStudy,
   type CaseStudySection,
 } from "@/lib/case-studies-data";
@@ -646,9 +644,9 @@ export function mapStudioDocToCaseStudy(
 
   const folderImages = [
     "/images/small-folders/orange-folder.svg",
-    "/images/small-folders/purple-file (1).svg",
+    "/images/small-folders/purple-file.svg",
     "/images/small-folders/orange-folder.svg",
-    "/images/small-folders/purple-file (1).svg",
+    "/images/small-folders/purple-file.svg",
   ];
   const folder = folderImages[index % folderImages.length];
 

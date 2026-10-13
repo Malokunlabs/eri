@@ -40,13 +40,6 @@ export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
   const isClickScrollingRef = useRef(false);
   const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Sync active section id when sections change
-  useEffect(() => {
-    if (sections[0]?.id && !activeSectionId) {
-      setActiveSectionId(sections[0].id);
-    }
-  }, [sections, activeSectionId]);
-
   // Calculate sticky offset so as the user scrolls the whole page,
   // the sidebar scrolls along until all subheadings are fully in view, then sticks.
   useEffect(() => {
