@@ -11,19 +11,19 @@ type Study = {
 const studies: Study[] = [
   {
     company: "Moniepoint",
-    folder: "/images/small-folders/orange-file1.svg",
+    folder: "/images/small-folders/orange-folder.svg",
   },
   {
     company: "Quidax",
-    folder: "/images/small-folders/purple-folder1.png",
+    folder: "/images/small-folders/purple-file.svg",
   },
   {
     company: "Martell",
-    folder: "/images/small-folders/purple-folder2.svg",
+    folder: "/images/small-folders/purple-file.svg",
   },
   {
     company: "Chicken Republic",
-    folder: "/images/small-folders/orange-folder2.svg",
+    folder: "/images/small-folders/orange-folder.svg",
   },
 ];
 
@@ -38,17 +38,17 @@ function StudyFolder({ study }: { study: Study }) {
         className="object-contain"
       />
 
-      <div className="absolute inset-x-[6.5%] top-[33%] text-eri-white sm:inset-x-[8.5%] sm:top-[37%]">
-        <h3 className="font-display text-[12px] font-semibold leading-tight tracking-[-0.01em] xs:text-[13.5px] sm:text-[18px] lg:text-[20px]">
+      <div className="absolute inset-x-[9%] bottom-[6%] top-[40%] flex flex-col items-start justify-center text-eri-white max-[360px]:top-[34%]">
+        <h3 className="whitespace-nowrap font-display text-[clamp(12px,3.8vw,18px)] font-semibold leading-tight tracking-[-0.01em] max-[360px]:text-[11px] sm:text-[18px] lg:text-[20px]">
           {study.company}
         </h3>
-        <p className="mt-1 text-[8px] leading-tight text-white/90 xs:text-[9px] sm:mt-2 sm:max-w-48.75 sm:text-[11px] sm:leading-[1.4]">
+        <p className="mt-1 text-[clamp(8px,2.1vw,10px)] leading-[1.4] text-white/90 sm:mt-2 sm:max-w-48.75 sm:text-[11px]">
           A selection of projects that show how organizations have taken care of
           all.
         </p>
         <Link
           href="/case-studies"
-          className="mt-1.5 inline-flex h-4.5 items-center justify-center rounded-full border border-eri-white px-2 py-0.5 font-display text-[8px] font-medium leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white xs:h-5 xs:px-2.5 xs:text-[9px] sm:mt-3 sm:h-auto sm:min-h-5 sm:px-3.5 sm:py-1 sm:text-[11px]"
+          className="mt-2 inline-flex shrink-0 items-center justify-center rounded-full border border-eri-white px-2.5 py-1 font-display text-[clamp(9px,2.3vw,11px)] font-medium leading-none transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white max-[360px]:mt-1 max-[360px]:py-0.5 sm:mt-3 sm:px-3.5 sm:text-[11px]"
         >
           Read The Study
         </Link>
@@ -65,7 +65,7 @@ export function WorkDoneSection() {
     >
       <Container
         size="work"
-        className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_512px] lg:items-end lg:justify-between lg:gap-15"
+        className="grid gap-8 max-sm:px-5 lg:grid-cols-[minmax(0,1fr)_512px] lg:items-end lg:justify-between lg:gap-15"
       >
         <div className="w-full min-w-0 self-end text-left">
           <div>
@@ -121,7 +121,7 @@ export function WorkDoneSection() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-x-6 sm:gap-y-9">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-9">
           {studies.map((study) => (
             <StudyFolder key={study.company} study={study} />
           ))}
