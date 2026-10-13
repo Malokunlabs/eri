@@ -22,7 +22,7 @@ export const caseStudies: CaseStudy[] = [
     id: "moniepoint-1",
     company: "Moniepoint",
     category: "Fintech",
-    folder: "/images/small-folders/orange-file1.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -30,7 +30,7 @@ export const caseStudies: CaseStudy[] = [
     id: "quidax-1",
     company: "Quidax",
     category: "Fintech",
-    folder: "/images/small-folders/purple-folder1.png",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -38,7 +38,7 @@ export const caseStudies: CaseStudy[] = [
     id: "moniepoint-2",
     company: "Moniepoint",
     category: "Fintech",
-    folder: "/images/small-folders/orange-file1.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -46,7 +46,7 @@ export const caseStudies: CaseStudy[] = [
     id: "quidax-2",
     company: "Quidax",
     category: "Fintech",
-    folder: "/images/small-folders/purple-folder1.png",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -54,7 +54,7 @@ export const caseStudies: CaseStudy[] = [
     id: "martell-1",
     company: "Martell",
     category: "Multi-national",
-    folder: "/images/small-folders/purple-folder2.svg",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -62,7 +62,7 @@ export const caseStudies: CaseStudy[] = [
     id: "chicken-republic-1",
     company: "Chicken Republic",
     category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
     id: "martell-2",
     company: "Martell",
     category: "Multi-national",
-    folder: "/images/small-folders/purple-folder2.svg",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -78,7 +78,7 @@ export const caseStudies: CaseStudy[] = [
     id: "chicken-republic-2",
     company: "Chicken Republic",
     category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -86,7 +86,7 @@ export const caseStudies: CaseStudy[] = [
     id: "alara-1",
     company: "Alara",
     category: "Multi-national",
-    folder: "/images/small-folders/purple-folder1.png",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -94,7 +94,7 @@ export const caseStudies: CaseStudy[] = [
     id: "dangote-1",
     company: "Commodity Exchange",
     category: "Commodity",
-    folder: "/images/small-folders/orange-file1.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -102,7 +102,7 @@ export const caseStudies: CaseStudy[] = [
     id: "kora-1",
     company: "Kora",
     category: "Fintech",
-    folder: "/images/small-folders/purple-folder2.svg",
+    folder: "/images/small-folders/purple-file.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
@@ -110,7 +110,7 @@ export const caseStudies: CaseStudy[] = [
     id: "tasty-fried-1",
     company: "Fast Food Express",
     category: "Restaurant",
-    folder: "/images/small-folders/orange-folder2.svg",
+    folder: "/images/small-folders/orange-folder.svg",
     description:
       "A selection of projects that show how organizations have taken care of all.",
   },
