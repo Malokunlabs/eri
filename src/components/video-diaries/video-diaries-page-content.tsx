@@ -8,17 +8,51 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 import {
   videoCategories,
-  videoDiaries,
   type VideoDiary,
 } from "@/lib/video-diaries-data";
+
+function getYouTubeEmbedUrl(url?: string): string | null {
+  if (!url) return null;
+  if (url.includes("/embed/")) return url;
+
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname.includes("youtube.com")) {
+      const v = parsed.searchParams.get("v");
+      if (v) return `https://www.youtube.com/embed/${v}`;
+    }
+    if (parsed.hostname.includes("youtu.be")) {
+      const id = parsed.pathname.slice(1);
+      if (id) return `https://www.youtube.com/embed/${id}`;
+    }
+  } catch {
+    const match = url.match(/(?:youtu\.be\/|watch\?v=)([\w-]+)/);
+    if (match?.[1]) return `https://www.youtube.com/embed/${match[1]}`;
+  }
+
+  return url;
+}
+
+const defaultHeroVideo: VideoDiary = {
+  id: "c3ac1ff5-3235-48d6-b994-cc445babb972",
+  title: "The Danfo",
+  slug: "the-danfo",
+  category: "Interviews",
+  brand: "Danfo Experience",
+  date: "Oct 2026",
+  image: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+  youtubeUrl: "https://www.youtube.com/watch?v=hNY1f4MbLqQ",
+  videoEmbedUrl: "https://www.youtube.com/embed/hNY1f4MbLqQ",
+  videoThumbnail: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+};
 
 const INITIAL_VISIBLE = 9;
 const LOAD_MORE_STEP = 3;
 
-function VideoDiaryCard({ video }: { video: VideoDiary }) {
+export function VideoDiaryCard({ video }: { video: VideoDiary }) {
   return (
     <article className="group cursor-pointer">
-      <Link href="#" className="block">
+      <Link href={`/video-diaries/${video.slug}`} className="block">
         {/* Video Thumbnail with Play Button */}
         <div className="relative aspect-[336/200] w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
           <Image
@@ -74,33 +108,75 @@ function VideoDiaryCard({ video }: { video: VideoDiary }) {
   );
 }
 
-export function VideoDiariesPageContent() {
-  const [activeCategory, setActiveCategory] =
-    useState<(typeof videoCategories)[number]>("All");
+type VideoDiariesPageContentProps = {
+  initialVideos?: VideoDiary[];
+  initialCategories?: string[];
+};
+
+export function VideoDiariesPageContent({
+  initialVideos = [],
+  initialCategories = [],
+}: VideoDiariesPageContentProps = {}) {
+  const categoriesList = useMemo(() => {
+    if (initialCategories.length > 0) {
+      return Array.from(new Set(["All", ...initialCategories]));
+    }
+    const tags = Array.from(
+      new Set(initialVideos.map((v) => v.category).filter(Boolean)),
+    );
+    if (tags.length > 0) {
+      return ["All", ...tags];
+    }
+    return videoCategories as readonly string[];
+  }, [initialCategories, initialVideos]);
+
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [isHeroPlaying, setIsHeroPlaying] = useState(false);
+
+  const heroVideo = useMemo(() => {
+    return (
+      initialVideos.find((v) => v.title?.toLowerCase().includes("danfo")) ||
+      initialVideos[0] ||
+      defaultHeroVideo
+    );
+  }, [initialVideos]);
+
+  const heroEmbedUrl = useMemo(() => {
+    return (
+      getYouTubeEmbedUrl(heroVideo.videoEmbedUrl) ||
+      getYouTubeEmbedUrl(heroVideo.youtubeUrl)
+    );
+  }, [heroVideo]);
+
+  const heroThumbnail =
+    heroVideo.videoThumbnail ||
+    heroVideo.image ||
+    "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg";
 
   const filteredVideos = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return videoDiaries.filter((video) => {
+    return initialVideos.filter((video) => {
       const matchesCategory =
-        activeCategory === "All" || video.category === activeCategory;
+        activeCategory === "All" ||
+        video.category?.toLowerCase() === activeCategory.toLowerCase();
       const matchesQuery =
         normalizedQuery.length === 0 ||
         video.title.toLowerCase().includes(normalizedQuery) ||
         video.brand.toLowerCase().includes(normalizedQuery) ||
-        video.category.toLowerCase().includes(normalizedQuery) ||
+        video.category?.toLowerCase().includes(normalizedQuery) ||
         video.date.toLowerCase().includes(normalizedQuery);
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [initialVideos, activeCategory, query]);
 
   const visibleVideos = filteredVideos.slice(0, visibleCount);
   const canLoadMore = visibleCount < filteredVideos.length;
 
-  function handleCategoryChange(category: (typeof videoCategories)[number]) {
+  function handleCategoryChange(category: string) {
     setActiveCategory(category);
     setVisibleCount(INITIAL_VISIBLE);
   }
@@ -138,15 +214,76 @@ export function VideoDiariesPageContent() {
               </p>
             </div>
 
-            <div className="relative aspect-[552/331] w-full overflow-hidden rounded-[24px] shadow-[0_8px_30px_rgba(41,41,41,0.06)]">
-              <Image
-                src="/images/workdone/workdone-image.png"
-                alt="Field researcher examining goods at a market"
-                fill
-                priority
-                sizes="(max-width: 1023px) 100vw, 552px"
-                className="object-cover"
-              />
+            <div className="relative aspect-[552/331] w-full overflow-hidden rounded-[24px] bg-black shadow-[0_8px_30px_rgba(41,41,41,0.06)]">
+              {isHeroPlaying && heroEmbedUrl ? (
+                <>
+                  <iframe
+                    src={`${heroEmbedUrl}${heroEmbedUrl.includes("?") ? "&" : "?"}autoplay=1&rel=0`}
+                    title={heroVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0 size-full border-0"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setIsHeroPlaying(false)}
+                    className="absolute right-3.5 top-3.5 z-10 flex size-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-white"
+                    aria-label="Close video"
+                  >
+                    <svg
+                      className="size-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </>
+              ) : (
+                <div className="group relative size-full cursor-pointer">
+                  <Image
+                    src={heroThumbnail}
+                    alt={heroVideo.title || "Video diary"}
+                    fill
+                    priority
+                    sizes="(max-width: 1023px) 100vw, 552px"
+                    className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setIsHeroPlaying(true)}
+                    aria-label={`Play video: ${heroVideo.title || "video diary"}`}
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <div className="flex size-14 items-center justify-center rounded-full bg-white/40 shadow-md backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-16">
+                      <svg
+                        className="size-6 translate-x-0.5 fill-white text-white drop-shadow-xs sm:size-7"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </button>
+                  {heroVideo.title && (
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4 sm:p-5">
+                      <p className="font-display text-[15px] font-semibold text-white drop-shadow-xs sm:text-[17px]">
+                        {heroVideo.title}
+                      </p>
+                      {heroVideo.brand && (
+                        <p className="mt-0.5 text-[12px] text-white/80">
+                          {heroVideo.brand}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </section>
 
@@ -162,7 +299,7 @@ export function VideoDiariesPageContent() {
             {/* Filter and Search Bar */}
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-wrap gap-2">
-                {videoCategories.map((category) => {
+                {categoriesList.map((category) => {
                   const isActive = activeCategory === category;
 
                   return (
@@ -214,7 +351,7 @@ export function VideoDiariesPageContent() {
             ) : (
               <div className="mt-16 text-center">
                 <p className="text-[16px] text-eri-grey-11">
-                  No videos match your search. Try another category or keyword.
+                  No video diaries match your search. Try another category or keyword.
                 </p>
               </div>
             )}

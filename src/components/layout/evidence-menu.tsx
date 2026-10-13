@@ -19,7 +19,9 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isLight = variant === "light";
-  const isEvidenceActive = evidenceLinks.some((link) => link.href === pathname);
+  const isEvidenceActive = evidenceLinks.some(
+    (link) => pathname === link.href || pathname.startsWith(`${link.href}/`),
+  );
 
   useEffect(() => {
     if (!isOpen) {
@@ -90,7 +92,8 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
       >
         <div className="overflow-hidden rounded-[28px] border-2 border-black bg-eri-menu shadow-[0_18px_30px_rgba(77,26,8,0.3)]">
           {evidenceLinks.map((link, index) => {
-            const isActive = pathname === link.href;
+            const isActive =
+              pathname === link.href || pathname.startsWith(`${link.href}/`);
 
             return (
               <Link

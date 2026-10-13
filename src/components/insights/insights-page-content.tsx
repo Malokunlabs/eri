@@ -6,14 +6,14 @@ import { useMemo, useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-import { insightCategories, insights } from "@/lib/insights-data";
+import type { Insight } from "@/lib/insights-data";
 
 const INITIAL_VISIBLE = 6;
 
-function InsightCard({ insight }: { insight: (typeof insights)[number] }) {
+function InsightCard({ insight }: { insight: Insight }) {
   return (
     <article>
-      <Link href="#" className="group block">
+      <Link href={`/insights/${insight.slug}`} className="group block">
         <div className="relative aspect-[342/441] overflow-hidden rounded-lg bg-eri-grey-3">
           <Image
             src={insight.image}
@@ -40,16 +40,31 @@ function InsightCard({ insight }: { insight: (typeof insights)[number] }) {
   );
 }
 
-export function InsightsPageContent() {
-  const [activeCategory, setActiveCategory] =
-    useState<(typeof insightCategories)[number]>("All");
+export function InsightsPageContent({
+  initialInsights = [],
+  initialCategories,
+}: {
+  initialInsights?: Insight[];
+  initialCategories?: string[];
+}) {
+  const currentInsights = initialInsights;
+
+  const availableCategories = useMemo(() => {
+    if (initialCategories && initialCategories.length > 0) {
+      return ["All", ...Array.from(new Set(initialCategories))];
+    }
+    const tags = Array.from(new Set(currentInsights.map((i) => i.tag)));
+    return ["All", ...tags];
+  }, [initialCategories, currentInsights]);
+
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
   const filteredInsights = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return insights.filter((insight) => {
+    return currentInsights.filter((insight) => {
       const matchesCategory =
         activeCategory === "All" || insight.tag === activeCategory;
       const matchesQuery =
@@ -60,12 +75,12 @@ export function InsightsPageContent() {
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [activeCategory, query, currentInsights]);
 
   const visibleInsights = filteredInsights.slice(0, visibleCount);
   const canLoadMore = visibleCount < filteredInsights.length;
 
-  function handleCategoryChange(category: (typeof insightCategories)[number]) {
+  function handleCategoryChange(category: string) {
     setActiveCategory(category);
     setVisibleCount(INITIAL_VISIBLE);
   }
@@ -99,7 +114,7 @@ export function InsightsPageContent() {
 
           <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-wrap gap-2">
-              {insightCategories.map((category) => {
+              {availableCategories.map((category) => {
                 const isActive = activeCategory === category;
 
                 return (
@@ -142,7 +157,7 @@ export function InsightsPageContent() {
           {visibleInsights.length > 0 ? (
             <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
               {visibleInsights.map((insight) => (
-                <InsightCard insight={insight} key={insight.image} />
+                <InsightCard insight={insight} key={insight.slug || insight.image} />
               ))}
             </div>
           ) : (

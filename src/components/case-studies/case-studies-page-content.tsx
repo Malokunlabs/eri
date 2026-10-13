@@ -7,18 +7,27 @@ import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 import {
-  caseStudies,
-  caseStudyCategories,
+  getCaseStudyLogo,
   type CaseStudy,
-  type CaseStudyCategory,
 } from "@/lib/case-studies-data";
 
 const INITIAL_VISIBLE = 8;
 const LOAD_MORE_STEP = 4;
 
-function CaseStudyCard({ study }: { study: CaseStudy }) {
+export function CaseStudyCard({ study }: { study: CaseStudy }) {
+  const href = `/case-studies/${study.slug || study.id}`;
+  const logoSrc = getCaseStudyLogo(study);
+
   return (
     <article className="group relative aspect-[244/232] w-full [container-type:inline-size] transition-transform duration-200 hover:-translate-y-1">
+      <Link
+        href={href}
+        className="absolute inset-0 z-10 block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-dark"
+        aria-label={`View case study: ${study.company}`}
+      >
+        <span className="sr-only">View case study {study.company}</span>
+      </Link>
+
       <Image
         src={study.folder}
         alt=""
@@ -27,7 +36,26 @@ function CaseStudyCard({ study }: { study: CaseStudy }) {
         className="object-contain drop-shadow-sm"
       />
 
-      <div className="absolute inset-x-[9%] bottom-[6%] top-[40%] flex flex-col items-start justify-center text-eri-white max-[360px]:top-[34%]">
+      {/* Brand logo placed inside the folder paper slot, replacing baked-in logo */}
+      <div className="pointer-events-none absolute left-[12.3%] top-[19.4%] flex size-[9.8%] items-center justify-center overflow-hidden rounded-full border border-[#E3E1DD] bg-white shadow-xs">
+        {logoSrc ? (
+          <div className="relative size-full overflow-hidden rounded-full">
+            <Image
+              src={logoSrc}
+              alt=""
+              fill
+              sizes="24px"
+              className="size-full rounded-full object-cover object-center"
+            />
+          </div>
+        ) : (
+          <span className="font-display text-[9px] font-bold text-eri-dark">
+            {study.company.charAt(0)}
+          </span>
+        )}
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-[9%] bottom-[6%] top-[40%] flex flex-col items-start justify-center text-eri-white max-[360px]:top-[34%]">
         <h3
           className={`whitespace-nowrap font-display font-semibold leading-tight tracking-[-0.01em] ${
             study.company.length > 16
@@ -37,46 +65,54 @@ function CaseStudyCard({ study }: { study: CaseStudy }) {
         >
           {study.company}
         </h3>
-        <p className="mt-1 max-w-[200px] text-[clamp(8px,5.1cqw,11px)] leading-[1.4] text-white/90 sm:mt-2">
-          {study.description}
-        </p>
-        <Link
-          href="#"
-          className="mt-2 inline-flex shrink-0 items-center justify-center rounded-full border border-eri-white px-2.5 py-1 font-display text-[clamp(9px,5.5cqw,11px)] leading-none text-eri-white transition-colors hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-white max-[360px]:mt-1 max-[360px]:py-0.5 sm:mt-3 sm:px-3.5"
-        >
+        {study.description ? (
+          <p className="mt-1 line-clamp-2 max-w-[200px] text-[clamp(8px,5.1cqw,11px)] leading-[1.4] text-white/90 sm:mt-2">
+            {study.description}
+          </p>
+        ) : null}
+        <span className="mt-2 inline-flex shrink-0 items-center justify-center rounded-full border border-eri-white px-2.5 py-1 font-display text-[clamp(9px,5.5cqw,11px)] leading-none text-eri-white transition-colors group-hover:bg-white/20 max-[360px]:mt-1 max-[360px]:py-0.5 sm:mt-3 sm:px-3.5">
           View Details
-        </Link>
+        </span>
       </div>
     </article>
   );
 }
 
-export function CaseStudiesPageContent() {
-  const [activeCategory, setActiveCategory] =
-    useState<CaseStudyCategory>("All");
+type CaseStudiesPageContentProps = {
+  initialStudies?: CaseStudy[];
+  categories?: string[];
+};
+
+export function CaseStudiesPageContent({
+  initialStudies = [],
+  categories = ["All"],
+}: CaseStudiesPageContentProps) {
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
   const filteredStudies = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return caseStudies.filter((study) => {
+    return initialStudies.filter((study) => {
       const matchesCategory =
-        activeCategory === "All" || study.category === activeCategory;
+        activeCategory === "All" ||
+        study.category.toLowerCase() === activeCategory.toLowerCase();
       const matchesQuery =
         normalizedQuery.length === 0 ||
         study.company.toLowerCase().includes(normalizedQuery) ||
+        (study.title && study.title.toLowerCase().includes(normalizedQuery)) ||
         study.category.toLowerCase().includes(normalizedQuery) ||
         study.description.toLowerCase().includes(normalizedQuery);
 
       return matchesCategory && matchesQuery;
     });
-  }, [activeCategory, query]);
+  }, [initialStudies, activeCategory, query]);
 
   const visibleStudies = filteredStudies.slice(0, visibleCount);
   const canLoadMore = visibleCount < filteredStudies.length;
 
-  function handleCategoryChange(category: CaseStudyCategory) {
+  function handleCategoryChange(category: string) {
     setActiveCategory(category);
     setVisibleCount(INITIAL_VISIBLE);
   }
@@ -103,7 +139,7 @@ export function CaseStudiesPageContent() {
                 project gets built around that question.
               </p>
             </div>
-            <p className="hidden max-w-[340px] text-[13px] leading-[1.5] text-eri-grey-11 sm:block sm:text-[14px] sm:text-right">
+            <p className="hidden max-w-[340px] text-[13px] leading-[1.5] text-eri-grey-11 sm:block sm:text-right sm:text-[14px]">
               We do not disclose confidential, classified, or sensitive detail
               about our work with brands.
             </p>
@@ -112,7 +148,7 @@ export function CaseStudiesPageContent() {
           {/* Filters & Search section */}
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-2">
-              {caseStudyCategories.map((category) => {
+              {categories.map((category) => {
                 const isActive = activeCategory === category;
 
                 return (
@@ -162,8 +198,8 @@ export function CaseStudiesPageContent() {
           ) : (
             <div className="mt-16 text-center">
               <p className="text-[16px] text-eri-grey-11">
-                No case studies match your search. Try another category or
-                brand name.
+                No case studies match your search. Try another category or brand
+                name.
               </p>
             </div>
           )}
@@ -178,7 +214,7 @@ export function CaseStudiesPageContent() {
                     Math.min(count + LOAD_MORE_STEP, filteredStudies.length),
                   )
                 }
-                className="rounded-full border border-eri-dark/70 bg-eri-white px-7 py-2.5 font-display text-[13px] font-medium text-eri-dark transition-all hover:bg-eri-grey-3 hover:border-eri-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-dark"
+                className="rounded-full border border-eri-dark/70 bg-eri-white px-7 py-2.5 font-display text-[13px] font-medium text-eri-dark transition-all hover:border-eri-dark hover:bg-eri-grey-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-dark"
               >
                 Load More
               </button>

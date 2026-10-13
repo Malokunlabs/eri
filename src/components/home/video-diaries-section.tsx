@@ -5,63 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { Container } from "@/components/ui/container";
-
-const categories = [
-  "All",
-  "Vox Pops",
-  "Interviews",
-  "Social Media",
-  "Campaigns",
-] as const;
-
-type HomeVideoCategory = Exclude<(typeof categories)[number], "All">;
-
-type HomeVideo = {
-  image: string;
-  category: HomeVideoCategory;
-  title: string;
-  brand: string;
-  date: string;
-};
-
-const featuredVideo: HomeVideo = {
-  image: "/images/video-dairies/older-woman.png",
-  category: "Interviews",
-  title: "Digital Trends Shaping the Future of Retail Experiences",
-  brand: "Scout By Eri",
-  date: "October 10, 2026",
-};
-
-const listVideos: HomeVideo[] = [
-  {
-    image: "/images/video-dairies/manonorange.png",
-    category: "Vox Pops",
-    title: "Digital Trends Shaping the Future of Retail Experiences",
-    brand: "Moniepoint",
-    date: "May 22, 2026",
-  },
-  {
-    image: "/images/video-dairies/friendssitted.png",
-    category: "Interviews",
-    title: "Embracing the Power of Mobile Payment Solutions",
-    brand: "Flutterwave",
-    date: "August 15, 2026",
-  },
-  {
-    image: "/images/video-dairies/manwithwheelbarrow.png",
-    category: "Social Media",
-    title: "Innovative E-commerce Models Revolutionizing Shopping",
-    brand: "Jumia",
-    date: "October 10, 2026",
-  },
-  {
-    image: "/images/video-dairies/girlonglasses.png",
-    category: "Campaigns",
-    title: "The Rise of Smart Stores and Self-service tech in Urban Areas",
-    brand: "Konga",
-    date: "January 5, 2027",
-  },
-];
+import type { VideoDiary } from "@/lib/video-diaries-data";
 
 function PlayOverlay() {
   return (
@@ -109,18 +53,40 @@ function ViewAllVideosLink({ className = "" }: { className?: string }) {
   );
 }
 
-export function VideoDiariesSection() {
-  const [activeCategory, setActiveCategory] =
-    useState<(typeof categories)[number]>("All");
+type VideoDiariesSectionProps = {
+  videos?: VideoDiary[];
+};
+
+export function VideoDiariesSection({ videos = [] }: VideoDiariesSectionProps) {
+  const categories = useMemo(() => {
+    const cats = Array.from(
+      new Set(videos.map((v) => v.category).filter(Boolean)),
+    );
+    return ["All", ...cats];
+  }, [videos]);
+
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+
+  const featuredVideo = videos.find((v) => v.featured) || videos[0];
+  const listVideos = useMemo(
+    () =>
+      featuredVideo ? videos.filter((v) => v.id !== featuredVideo.id) : [],
+    [videos, featuredVideo],
+  );
 
   const visibleVideos = useMemo(
     () =>
       listVideos.filter(
         (video) =>
-          activeCategory === "All" || video.category === activeCategory,
+          activeCategory === "All" ||
+          video.category?.toLowerCase() === activeCategory.toLowerCase(),
       ),
-    [activeCategory],
+    [listVideos, activeCategory],
   );
+
+  if (videos.length === 0 || !featuredVideo) {
+    return null;
+  }
 
   return (
     <section
@@ -139,7 +105,10 @@ export function VideoDiariesSection() {
         </div>
 
         <div className="mt-8 grid gap-10 lg:mt-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.9fr)] lg:items-start lg:gap-14">
-          <Link href="/video-diaries" className="group block min-w-0">
+          <Link
+            href={`/video-diaries/${featuredVideo.slug}`}
+            className="group block min-w-0"
+          >
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
               <Image
                 src={featuredVideo.image}
@@ -193,8 +162,8 @@ export function VideoDiariesSection() {
               {visibleVideos.length > 0 ? (
                 visibleVideos.map((video) => (
                   <Link
-                    key={`${video.category}-${video.title}`}
-                    href="/video-diaries"
+                    key={video.id || video.slug}
+                    href={`/video-diaries/${video.slug}`}
                     className="group flex items-center justify-between gap-4"
                   >
                     <div className="min-w-0">
@@ -217,9 +186,11 @@ export function VideoDiariesSection() {
                   </Link>
                 ))
               ) : (
-                <p className="text-[14px] text-eri-grey-11">
-                  No videos in this category yet.
-                </p>
+                <div className="rounded-[16px] border border-dashed border-eri-grey-6 p-6 text-center text-[14px] text-eri-grey-11">
+                  {listVideos.length === 0
+                    ? "More video diaries from the field coming soon."
+                    : "No videos match this category filter."}
+                </div>
               )}
             </div>
           </div>

@@ -10,6 +10,12 @@ import { ReportsSection } from "@/components/home/reports-section";
 import { VideoDiariesSection } from "@/components/home/video-diaries-section";
 import { WorkDoneSection } from "@/components/home/work-done-section";
 
+import {
+  getStudioCaseStudies,
+  getStudioInsights,
+  getStudioVideoDiaries,
+} from "@/lib/content-api";
+
 export const metadata: Metadata = {
   title:
     "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria and the world",
@@ -27,16 +33,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const [insights, videoDiaries, caseStudies] = await Promise.all([
+    getStudioInsights("eri"),
+    getStudioVideoDiaries("eri"),
+    getStudioCaseStudies("eri"),
+  ]);
+
   return (
     <main id="main-content">
       <HeroSection />
       <BrandsSection />
-      <WorkDoneSection />
+      <WorkDoneSection
+        caseStudies={caseStudies}
+        video={
+          videoDiaries.find((v) =>
+            v.title?.toLowerCase().includes("danfo"),
+          ) || videoDiaries[0]
+        }
+      />
       <AudienceSection />
       <ReportsSection />
-      <VideoDiariesSection />
-      <InsightsSection />
+      <VideoDiariesSection videos={videoDiaries} />
+      <InsightsSection insights={insights} />
       <FaqSection />
       <ReachUsSection />
     </main>
