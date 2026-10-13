@@ -57,7 +57,7 @@ export function ReachUsSection() {
         <div className="flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
           <h2
             id="reach-us-heading"
-            className="max-w-[570px] font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
+            className="max-w-[570px] font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Tell us the question. We&apos;ll go and find out for you.
           </h2>

@@ -11,7 +11,7 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const audienceSlides = [
   {
@@ -63,15 +63,13 @@ const lastIndex = audienceSlides.length - 1;
 
 /** How many cards stay visible behind the front one (front + 2 behind = 3 visible total). */
 const VISIBLE_DEPTH = 2;
-/** Horizontal / vertical / scale step per level of depth. */
-const DEPTH_X = 66;
-const DEPTH_Y = -34;
+/** Scale step per level of depth; responsive offsets are set on the track. */
 const DEPTH_SCALE = 0.05;
 /** Distance a card travels upward when it leaves. */
 const EXIT_Y = -760;
 
 const cardClassName =
-  "absolute right-0 lg:right-[-6px] top-0 aspect-[304/596] w-[304px] max-w-[79.2vw] will-change-transform";
+  "absolute right-0 lg:right-[-6px] top-0 aspect-[304/596] w-[var(--audience-card-width)] origin-top lg:origin-center will-change-transform";
 
 const easeInOut = (value: number) =>
   value < 0.5 ? 2 * value * value : 1 - Math.pow(-2 * value + 2, 2) / 2;
@@ -84,18 +82,19 @@ const easeInOut = (value: number) =>
 function useCardMotion(position: MotionValue<number>, index: number) {
   const x = useTransform(position, (value) => {
     const offset = index - value;
-    return offset > 0 ? -Math.min(offset, VISIBLE_DEPTH + 0.5) * DEPTH_X : 0;
+    const depth = offset > 0 ? Math.min(offset, VISIBLE_DEPTH + 0.5) : 0;
+    return `calc(${-depth} * var(--audience-depth-x))`;
   });
 
   const y = useTransform(position, (value) => {
     const offset = index - value;
 
     if (offset > 0) {
-      // Cards behind step UP (negative Y)
-      return Math.min(offset, VISIBLE_DEPTH + 0.5) * DEPTH_Y;
+      // Desktop cards step up; mobile cards use a small downward fan.
+      return `calc(${Math.min(offset, VISIBLE_DEPTH + 0.5)} * var(--audience-depth-y))`;
     }
 
-    return easeInOut(Math.min(-offset, 1)) * EXIT_Y;
+    return `${easeInOut(Math.min(-offset, 1)) * EXIT_Y}px`;
   });
 
   const scale = useTransform(position, (value) => {
@@ -145,7 +144,7 @@ function AudienceCard({
         src={slide.image}
         alt={slide.alt}
         fill
-        sizes="(max-width: 1023px) 79vw, 304px"
+        sizes="(max-width: 639px) calc((100vw - 24px) / 1.27), (max-width: 1023px) calc((100vw - 64px) / 1.27), 304px"
         className="object-fill"
         priority={index === 0}
       />
@@ -155,8 +154,21 @@ function AudienceCard({
 
 export function AudienceCardStack() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion() ?? false;
   const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    // Keep the copy reachable when a full-width stack is taller than the screen.
+    const observer = new ResizeObserver(() => {
+      panel.style.setProperty("--audience-panel-height", `${panel.offsetHeight}px`);
+    });
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -206,11 +218,14 @@ export function AudienceCardStack() {
       <div
         ref={trackRef}
         data-audience-card-track=""
-        className="relative mt-1 lg:mt-0"
+        className="relative mt-0 [container-type:inline-size] [--audience-card-width:calc(100cqw/1.27)] [--audience-depth-x:calc(var(--audience-card-width)*0.16)] [--audience-depth-y:12px] lg:[container-type:normal] lg:[--audience-card-width:304px] lg:[--audience-depth-x:66px] lg:[--audience-depth-y:-34px]"
         style={{ height: `${audienceSlides.length * 90 + 60}svh` }}
       >
-        <div className="sticky top-0 flex flex-col lg:overflow-visible lg:h-svh">
-          <div className="relative mx-auto h-[calc(min(304px,79.2vw)*596/304)] w-full max-w-96 shrink-0 lg:h-149">
+        <div
+          ref={panelRef}
+          className="sticky top-[min(1rem,calc(100svh-var(--audience-panel-height,100svh)-1rem))] flex flex-col lg:top-0 lg:overflow-visible lg:h-svh"
+        >
+          <div className="relative mx-auto h-[calc(var(--audience-card-width)*596/304)] w-full shrink-0 lg:h-149 lg:max-w-96">
             {audienceSlides.map((slide, index) => (
               <AudienceCard
                 index={index}
@@ -222,7 +237,11 @@ export function AudienceCardStack() {
             ))}
 
             {/* Vertical pill badge indicator matching design */}
-            <div className="absolute -left-19 xl:-left-21 bottom-5 hidden lg:flex flex-col items-center gap-2.5 rounded-full bg-white/20 border border-white/25 px-2 py-3.5 backdrop-blur-sm z-30 shadow-sm">
+            <div
+              aria-label={`Audience ${activeSlide + 1} of ${audienceSlides.length}`}
+              role="status"
+              className="absolute left-0 bottom-0 flex flex-col items-center gap-2.5 rounded-full bg-white/20 border border-white/25 px-1.5 py-2 backdrop-blur-sm z-30 shadow-sm lg:-left-19 xl:-left-21 lg:bottom-5 lg:px-2 lg:py-3.5"
+            >
               <div className="flex flex-col items-center gap-1.5">
                 {audienceSlides.map((_, index) => (
                   <span
@@ -242,7 +261,7 @@ export function AudienceCardStack() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="text-[10px] font-medium leading-none tracking-tight text-white/95 [writing-mode:vertical-rl] rotate-180 whitespace-nowrap"
+                  className="absolute bottom-0 left-full ml-2 text-[8px] font-medium leading-none tracking-tight text-white/95 [writing-mode:vertical-rl] rotate-180 whitespace-nowrap lg:static lg:ml-0 lg:text-[10px]"
                 >
                   {currentSlide.title.join(" ")}
                 </motion.span>
@@ -265,7 +284,7 @@ export function AudienceCardStack() {
             </AnimatePresence>
           </div>
 
-          <div className="mt-2 px-1 lg:hidden">
+          <div className="mt-8 lg:hidden">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeSlide}
@@ -277,24 +296,13 @@ export function AudienceCardStack() {
                 <h3 className="font-display text-[22px] font-semibold leading-[1.08] tracking-[-0.02em]">
                   {currentSlide.title.join(" ")}
                 </h3>
-                <p className="mt-2 text-[13px] leading-[1.55] text-eri-coral-light">
-                  {currentSlide.roles}
-                </p>
               </motion.div>
             </AnimatePresence>
-
-            <div
-              aria-label={`Audience ${activeSlide + 1} of ${audienceSlides.length}`}
-              className="mt-3 flex h-5 w-25 items-center justify-center gap-1.5 rounded-full bg-white/20 backdrop-blur-xs"
-              role="status"
-            >
-              {dots}
-            </div>
 
             <AnimatePresence mode="wait" initial={false}>
               <motion.p
                 key={activeSlide}
-                className="mt-3 min-h-32 text-[13px] leading-[1.55] text-eri-coral-light"
+                className="mt-3 text-[13px] leading-[1.55] text-eri-coral-light"
                 initial={reduceMotion ? false : { opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
@@ -349,13 +357,13 @@ export function AudienceCardStack() {
         />
       </div>
 
-      <div className="mt-8 px-3 lg:hidden">
+      <div className="mt-3 px-3 lg:hidden">
         <Image
-          src="/images/this-for/3lines.svg"
+          src="/images/this-for/2lines.svg"
           alt=""
           width={274}
-          height={102}
-          className="mx-auto h-auto w-full max-w-[274px]"
+          height={157}
+          className="mx-auto h-auto w-full"
         />
       </div>
     </>

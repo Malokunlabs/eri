@@ -62,7 +62,7 @@ export function FaqSection() {
         <div className="mb-8 lg:hidden">
           <h2
             id="faq-heading"
-            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px]"
+            className="font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px]"
           >
             FAQs
           </h2>
