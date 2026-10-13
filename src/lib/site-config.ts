@@ -5,6 +5,7 @@ export const siteConfig = {
     "Eri gathers verified ground truth across Nigeria through field teams, store audits, consumer interviews, and trade spend verification.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://useeri.africa",
   alternateUrls: ["https://useeri.com"],
+  askEriHref: process.env.NEXT_PUBLIC_ASK_ERI_URL || "https://ask.useeri.com",
   ogImage: "/images/about/folder.png",
   keywords: [
     "Eri",

@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { EvidenceMenu } from "@/components/layout/evidence-menu";
 import { MobileMenu } from "@/components/layout/mobile-menu";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 const navigation = [
   { label: "Services", href: "/services" },
@@ -83,12 +84,12 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href="/contact"
+          <a
+            href={siteConfig.askEriHref}
             className="eri-pill eri-pill--header shrink-0 whitespace-nowrap px-3.5 py-2 text-[13px] md:min-h-9 md:px-4 md:py-2 md:text-[14px] lg:min-h-10.5 lg:px-4.5 lg:py-2.5 lg:text-[15px]"
           >
-            Book a Signal
-          </Link>
+            Ask Eri
+          </a>
 
           <MobileMenu variant={variant} />
         </div>
