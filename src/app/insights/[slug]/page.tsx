@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { InsightDetailContent } from "@/components/insights/insight-detail-content";
 import { getStudioInsightBySlug, getStudioInsights } from "@/lib/content-api";
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 type Props = {
   params: Promise<{ slug: string }>;
 };

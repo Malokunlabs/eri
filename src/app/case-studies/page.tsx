@@ -7,6 +7,8 @@ import {
   getStudioCaseStudyCategories,
 } from "@/lib/content-api";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Case Studies",
   description:

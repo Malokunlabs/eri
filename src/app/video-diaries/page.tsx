@@ -8,6 +8,8 @@ import {
   getStudioVideoDiaries,
 } from "@/lib/content-api";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Video Diaries",
   description:
