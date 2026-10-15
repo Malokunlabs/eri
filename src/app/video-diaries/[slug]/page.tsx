@@ -7,6 +7,9 @@ import {
   getStudioVideoDiaryBySlug,
 } from "@/lib/content-api";
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
