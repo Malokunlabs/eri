@@ -146,7 +146,7 @@ export function AboutPageContent() {
                     href="/contact"
                     className="inline-flex min-h-11 items-center justify-center rounded-full border border-eri-dark bg-eri-coral-dark px-7 py-2.5 font-display text-[15px] font-medium text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Book a Signal
+                    Contact Us
                   </Link>
                 </div>
               </div>
