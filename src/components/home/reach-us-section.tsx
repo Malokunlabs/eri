@@ -62,12 +62,10 @@ export function ReachUsSection() {
             Tell us the question. We&apos;ll go and find out for you.
           </h2>
           <a
-            href={contact.websiteHref}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact"
             className="eri-pill eri-pill--primary min-h-[40px] shrink-0 px-4 py-2.5 text-[14px]"
           >
-            Book a Signal
+            Contact Us
           </a>
         </div>
 

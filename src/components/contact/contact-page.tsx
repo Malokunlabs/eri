@@ -330,7 +330,7 @@ export function ContactPage() {
                       disabled={status === "submitting"}
                       className="eri-pill eri-pill--primary min-h-[46px] w-full rounded-full bg-eri-coral-dark px-7 py-3 text-[14.5px] font-semibold text-white shadow-sm transition-colors hover:bg-[#b04018] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:self-start"
                     >
-                      {status === "submitting" ? "Sending..." : "Book a Signal"}
+                      {status === "submitting" ? "Sending..." : "Send Message"}
                     </button>
                   </div>
                 </form>

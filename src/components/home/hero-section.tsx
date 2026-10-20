@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-import { siteConfig } from "@/lib/site-config";
 
 export function HeroSection() {
   return (
@@ -25,12 +24,10 @@ export function HeroSection() {
 
           <div className="mt-6 flex flex-wrap items-center gap-2 sm:mt-8 lg:mt-12">
             <a
-              href={siteConfig.contact.websiteHref}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact"
               className="eri-pill eri-pill--primary"
             >
-              Book a Signal
+              Contact Us
             </a>
             <Link href="#" className="eri-pill eri-pill--secondary">
               View Reports

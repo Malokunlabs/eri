@@ -259,7 +259,7 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                       onClick={() => setIsOpen(false)}
                       className="eri-pill eri-pill--primary flex min-h-12 w-full items-center justify-center text-[16px] font-semibold"
                     >
-                      Book a Signal
+                      Contact Us
                     </Link>
 
                     <div className="mt-6 flex items-center justify-between text-[13px] text-eri-grey-8">

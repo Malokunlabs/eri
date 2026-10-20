@@ -126,12 +126,10 @@ export function SiteFooter() {
               We gather field intelligence on the ground across Nigeria.
             </p>
             <a
-              href={siteConfig.contact.websiteHref}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/contact"
               className="eri-pill eri-pill--footer mt-5 max-sm:min-h-8 max-sm:px-3 max-sm:py-1.5 max-sm:text-[12px] sm:mt-6"
             >
-              Book a Signal
+              Contact Us
             </a>
           </div>
 
