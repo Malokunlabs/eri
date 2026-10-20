@@ -15,23 +15,11 @@ const TESTIMONIALS = [
     avatar: "/images/video-dairies/moniepoint-img.svg",
     logo: "/images/video-dairies/moniepoint-logo.svg",
   },
-  {
-    quote:
-      "Eri's fieldwork gave us a clear picture of what was actually happening on the ground — not what we assumed.\"",
-    name: "Amina Yusuf",
-    company: "Flutterwave",
-    avatar: "/images/video-dairies/girlonglasses.png",
-    logo: "/images/video-dairies/moniepoint-logo.svg",
-  },
-  {
-    quote:
-      "The depth of insight we got from Eri's ground-level research completely changed how we approach new markets. Exceptional work.\"",
-    name: "Chidi Eze",
-    company: "Paystack",
-    avatar: "/images/video-dairies/manonorange.png",
-    logo: "/images/video-dairies/moniepoint-logo.svg",
-  },
+  // Add more testimonials here — the stacked carousel animation
+  // turns on automatically once there is more than one entry.
 ];
+
+const HAS_CAROUSEL = TESTIMONIALS.length > 1;
 
 type AnimPhase = "stacked" | "fanning" | "transitioning";
 
@@ -123,6 +111,7 @@ export function ContactPage() {
   };
 
   useEffect(() => {
+    if (!HAS_CAROUSEL) return;
     // Total cycle: 6 000 ms
     // 5 000ms stacked (readable) → 500ms fanning → 500ms swap
     const STACKED = 5000;
@@ -212,16 +201,20 @@ export function ContactPage() {
                   aria-live="polite"
                   aria-label="Client testimonials"
                 >
-                  <TestimonialCard
-                    testimonial={TESTIMONIALS[backIdx]}
-                    layer="back"
-                    phase={phase}
-                  />
-                  <TestimonialCard
-                    testimonial={TESTIMONIALS[midIdx]}
-                    layer="mid"
-                    phase={phase}
-                  />
+                  {HAS_CAROUSEL && (
+                    <>
+                      <TestimonialCard
+                        testimonial={TESTIMONIALS[backIdx]}
+                        layer="back"
+                        phase={phase}
+                      />
+                      <TestimonialCard
+                        testimonial={TESTIMONIALS[midIdx]}
+                        layer="mid"
+                        phase={phase}
+                      />
+                    </>
+                  )}
                   <TestimonialCard
                     testimonial={TESTIMONIALS[frontIdx]}
                     layer="front"
