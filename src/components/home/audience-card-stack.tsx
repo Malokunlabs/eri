@@ -202,11 +202,10 @@ export function AudienceCardStack() {
       {audienceSlides.map((slide, index) => (
         <span
           aria-hidden="true"
-          className={`rounded-full transition-[width,background-color] duration-200 ${
-            index === activeSlide
+          className={`rounded-full transition-[width,background-color] duration-200 ${index === activeSlide
               ? "h-2 w-4 bg-eri-mauve"
               : "size-2 bg-eri-coral-light/80"
-          }`}
+            }`}
           key={slide.alt}
         />
       ))}
@@ -246,11 +245,10 @@ export function AudienceCardStack() {
                 {audienceSlides.map((_, index) => (
                   <span
                     key={index}
-                    className={`rounded-full transition-all duration-300 ${
-                      index === activeSlide
+                    className={`rounded-full transition-all duration-300 ${index === activeSlide
                         ? "h-3.5 w-1.5 bg-white"
                         : "size-1.5 bg-white/60"
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
