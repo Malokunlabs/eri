@@ -40,10 +40,10 @@ const defaultHeroVideo: VideoDiary = {
   category: "Interviews",
   brand: "Danfo Experience",
   date: "Oct 2026",
-  image: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+  image: "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg",
   youtubeUrl: "https://www.youtube.com/watch?v=hNY1f4MbLqQ",
   videoEmbedUrl: "https://www.youtube.com/embed/hNY1f4MbLqQ",
-  videoThumbnail: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+  videoThumbnail: "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg",
 };
 
 const INITIAL_VISIBLE = 9;
@@ -65,14 +65,13 @@ export function VideoDiaryCard({ video }: { video: VideoDiary }) {
 
           {/* Centered Play Button Overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex size-11 items-center justify-center rounded-full bg-white/40 shadow-sm backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-12">
-              <svg
-                className="size-5 translate-x-0.5 fill-white text-white drop-shadow-xs"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
+            <Image
+              src="/images/this-for/Play Button.png"
+              alt=""
+              width={48}
+              height={48}
+              className="size-11 drop-shadow-md transition-transform duration-200 group-hover:scale-110 sm:size-12"
+            />
           </div>
         </div>
 
@@ -214,7 +213,7 @@ export function VideoDiariesPageContent({
               </p>
             </div>
 
-            <div className="relative aspect-[552/331] w-full overflow-hidden rounded-[24px] bg-black shadow-[0_8px_30px_rgba(41,41,41,0.06)]">
+            <div className="relative aspect-video w-full overflow-hidden rounded-[24px] bg-black shadow-[0_8px_30px_rgba(41,41,41,0.06)]">
               {isHeroPlaying && heroEmbedUrl ? (
                 <>
                   <iframe
@@ -222,7 +221,7 @@ export function VideoDiariesPageContent({
                     title={heroVideo.title}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                    className="absolute inset-0 size-full border-0"
+                    className="absolute inset-0 size-full scale-[1.04] border-0"
                   />
                   <button
                     type="button"
@@ -261,14 +260,13 @@ export function VideoDiariesPageContent({
                     aria-label={`Play video: ${heroVideo.title || "video diary"}`}
                     className="absolute inset-0 flex items-center justify-center"
                   >
-                    <div className="flex size-14 items-center justify-center rounded-full bg-white/40 shadow-md backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-16">
-                      <svg
-                        className="size-6 translate-x-0.5 fill-white text-white drop-shadow-xs sm:size-7"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
+                    <Image
+                      src="/images/this-for/Play Button.png"
+                      alt=""
+                      width={64}
+                      height={64}
+                      className="size-14 drop-shadow-md transition-transform duration-200 group-hover:scale-110 sm:size-16"
+                    />
                   </button>
                   {heroVideo.title && (
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4 sm:p-5">

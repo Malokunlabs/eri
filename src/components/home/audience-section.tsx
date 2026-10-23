@@ -16,7 +16,7 @@ export function AudienceSection() {
         size="audience"
         className="grid gap-0 pb-1 pt-10 lg:grid-cols-[264px_384px_264px] lg:gap-x-10 xl:gap-x-12 lg:pb-0 lg:pt-0"
       >
-        <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-22">
+        <div className="lg:sticky lg:top-0 lg:h-svh lg:pt-20 xl:pt-22">
           <h2
             id="audience-heading"
             className="font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
@@ -35,7 +35,7 @@ export function AudienceSection() {
             href="/contact"
             className="eri-pill eri-pill--primary mt-6 min-h-8 px-3 py-2 text-[12px] lg:min-h-[42px] lg:px-4 lg:py-[11px] lg:text-[15px]"
           >
-            Contact Us
+            Book a Signal
           </a>
 
           <Image

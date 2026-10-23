@@ -13,10 +13,10 @@ const defaultVideo: VideoDiary = {
   category: "Interviews",
   brand: "Danfo Experience",
   date: "Oct 2026",
-  image: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+  image: "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg",
   youtubeUrl: "https://www.youtube.com/watch?v=hNY1f4MbLqQ",
   videoEmbedUrl: "https://www.youtube.com/embed/hNY1f4MbLqQ",
-  videoThumbnail: "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg",
+  videoThumbnail: "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg",
 };
 
 const FOLDER_VARIANTS = [
@@ -129,13 +129,17 @@ function StudyFolder({ study, index }: { study: CaseStudy; index: number }) {
   );
 }
 
+type WorkDoneSectionProps = {
+  caseStudies?: CaseStudy[];
+  video?: VideoDiary;
+  className?: string;
+};
+
 export function WorkDoneSection({
   caseStudies,
   video,
-}: {
-  caseStudies?: CaseStudy[];
-  video?: VideoDiary;
-} = {}) {
+  className = "",
+}: WorkDoneSectionProps = {}) {
   const displayStudies =
     caseStudies && caseStudies.length > 0
       ? caseStudies.slice(0, 4)
@@ -146,7 +150,7 @@ export function WorkDoneSection({
   return (
     <section
       aria-labelledby="work-done-heading"
-      className="bg-eri-white py-12 text-eri-dark lg:pb-16 lg:pt-18"
+      className={`bg-eri-white pt-12 pb-24 text-eri-dark sm:pt-16 sm:pb-32 lg:pt-18 lg:pb-44 ${className}`}
     >
       <Container
         size="work"

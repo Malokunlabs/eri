@@ -4,10 +4,14 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 
+/**
+ * Replaced Section: Previous dark hero section with tallies and dark header.
+ * Kept for reference or future re-activation.
+ */
 export function ServicesPageContent() {
   return (
     <>
-      {/* Section 1: Hero */}
+      {/* Section 1: Hero (Replaced) */}
       <section
         id="main-content"
         aria-labelledby="services-hero-heading"

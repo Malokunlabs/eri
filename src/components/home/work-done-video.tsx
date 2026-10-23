@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import type { VideoDiary } from "@/lib/video-diaries-data";
 
+
 function getYouTubeEmbedUrl(url?: string): string | null {
   if (!url) return null;
   if (url.includes("/embed/")) return url;
@@ -27,6 +28,14 @@ function getYouTubeEmbedUrl(url?: string): string | null {
   return url;
 }
 
+function getCleanYouTubeThumbnail(url?: string): string {
+  if (!url) return "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg";
+  if (url.includes("img.youtube.com/vi/") && url.includes("/hqdefault.jpg")) {
+    return url.replace("/hqdefault.jpg", "/maxresdefault.jpg");
+  }
+  return url;
+}
+
 export function WorkDoneVideo({ video }: { video: VideoDiary }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -34,20 +43,21 @@ export function WorkDoneVideo({ video }: { video: VideoDiary }) {
     getYouTubeEmbedUrl(video.videoEmbedUrl) ||
     getYouTubeEmbedUrl(video.youtubeUrl);
 
-  const thumbnail =
+  const rawThumbnail =
     video.videoThumbnail ||
     video.image ||
-    "https://img.youtube.com/vi/hNY1f4MbLqQ/hqdefault.jpg";
+    "https://img.youtube.com/vi/hNY1f4MbLqQ/maxresdefault.jpg";
+  const thumbnail = getCleanYouTubeThumbnail(rawThumbnail);
 
   if (isPlaying && embedUrl) {
     return (
-      <div className="relative mt-8 aspect-[487/267] w-full overflow-hidden rounded-[18px] bg-black shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
+      <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-[18px] bg-black shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
         <iframe
           src={`${embedUrl}${embedUrl.includes("?") ? "&" : "?"}autoplay=1&rel=0`}
           title={video.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
-          className="absolute inset-0 size-full border-0"
+          className="absolute inset-0 size-full scale-[1.04] border-0"
         />
         <button
           type="button"
@@ -74,14 +84,13 @@ export function WorkDoneVideo({ video }: { video: VideoDiary }) {
   }
 
   return (
-    <div className="group relative mt-8 aspect-[487/267] w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
+    <div className="group relative mt-8 aspect-video w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
       <Image
         src={thumbnail}
         alt={video.title || "Video diary"}
         fill
         sizes="(max-width: 1023px) 100vw, 50vw"
-        className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-        style={{ objectFit: "cover", objectPosition: "center" }}
+        className="object-cover scale-[1.05] transition-transform duration-300 group-hover:scale-[1.08]"
       />
 
       {/* Centered Play Button */}
@@ -91,21 +100,19 @@ export function WorkDoneVideo({ video }: { video: VideoDiary }) {
         aria-label={`Play video: ${video.title || "video diary"}`}
         className="absolute inset-0 flex items-center justify-center"
       >
-        <span className="flex size-11 items-center justify-center rounded-full bg-white/40 shadow-md backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-14">
-          <svg
-            className="size-5 translate-x-0.5 fill-white text-white drop-shadow-xs sm:size-6"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        </span>
+        <Image
+          src="/images/this-for/Play Button.png"
+          alt=""
+          width={56}
+          height={56}
+          className="size-11 drop-shadow-md transition-transform duration-200 group-hover:scale-110 sm:size-14"
+        />
       </button>
 
       {/* Video title overlay */}
       {video.title && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-3.5 sm:p-4.5">
-          <p className="font-display text-[13px] font-semibold text-white drop-shadow-xs sm:text-[15px]">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3.5 sm:p-4.5">
+          <p className="font-display text-[13px] font-semibold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] sm:text-[15px]">
             {video.title}
           </p>
         </div>

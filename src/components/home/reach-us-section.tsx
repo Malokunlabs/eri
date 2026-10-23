@@ -47,7 +47,17 @@ const contactOptions = [
   },
 ] as const;
 
-export function ReachUsSection() {
+type ReachUsSectionProps = {
+  title?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+export function ReachUsSection({
+  title = "Tell us the question. We'll go and find out for you.",
+  ctaText = "Contact Us",
+  ctaHref = "/contact",
+}: ReachUsSectionProps = {}) {
   return (
     <section
       aria-labelledby="reach-us-heading"
@@ -57,15 +67,15 @@ export function ReachUsSection() {
         <div className="flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
           <h2
             id="reach-us-heading"
-            className="max-w-[570px] font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
+            className="max-w-[640px] font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
-            Tell us the question. We&apos;ll go and find out for you.
+            {title}
           </h2>
           <a
-            href="/contact"
+            href={ctaHref}
             className="eri-pill eri-pill--primary min-h-[40px] shrink-0 px-4 py-2.5 text-[14px]"
           >
-            Contact Us
+            {ctaText}
           </a>
         </div>
 

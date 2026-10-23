@@ -95,7 +95,7 @@ export function SolutionBundleSection() {
               className={`relative flex flex-1 flex-col rounded-2xl p-6 sm:p-7 lg:p-8 ${
                 bundle.featured
                   ? "bg-eri-mauve text-eri-white"
-                  : "border border-eri-grey-5 bg-eri-white text-eri-dark"
+                  : "border border-eri-grey-5 bg-eri-grey-3 text-eri-dark"
               }`}
             >
               {/* Card top: audience label + branded logo icon */}
