@@ -96,7 +96,7 @@ export function InsightsSection({ insights = [] }: InsightsSectionProps) {
       <div className="relative left-1/2 mt-8 w-screen -translate-x-1/2 lg:mt-7">
         <div
           ref={railRef}
-          className="flex snap-x snap-mandatory scroll-pl-3 gap-5 overflow-x-auto scroll-smooth pl-3 pr-3 [scrollbar-width:none] sm:scroll-pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pr-8 [&::-webkit-scrollbar]:hidden"
+          className="flex snap-x snap-mandatory scroll-pl-4 scroll-pr-4 gap-5 overflow-x-auto scroll-smooth pl-4 pr-4 [scrollbar-width:none] sm:scroll-pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:scroll-pr-[max(32px,calc((100vw-1096px)/2+32px))] sm:pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pr-[max(32px,calc((100vw-1096px)/2+32px))] [&::-webkit-scrollbar]:hidden"
         >
           {insights.map((insight) => (
             <article

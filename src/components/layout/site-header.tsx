@@ -28,7 +28,7 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
     <header
       className={`relative z-40 h-20 ${isLight ? "bg-eri-white text-eri-dark" : "text-eri-white"}`}
     >
-      <Container className="flex h-full items-center justify-between gap-3 px-4 sm:px-6 lg:gap-8 lg:px-8">
+      <Container className="flex h-full items-center justify-between gap-3 lg:gap-8">
         <Link
           href="/"
           aria-label="Eri home"

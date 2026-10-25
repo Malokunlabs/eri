@@ -61,7 +61,7 @@ export function ReachUsSection({
   return (
     <section
       aria-labelledby="reach-us-heading"
-      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-7 "
+      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-14"
     >
       <Container size="reach">
         <div className="flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
