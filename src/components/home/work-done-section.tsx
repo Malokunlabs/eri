@@ -154,7 +154,7 @@ export function WorkDoneSection({
     >
       <Container
         size="work"
-        className="grid gap-8 max-sm:px-5 lg:grid-cols-[minmax(0,1fr)_512px] lg:items-end lg:justify-between lg:gap-15"
+        className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_512px] lg:items-end lg:justify-between lg:gap-15"
       >
         <div className="w-full min-w-0 self-end text-left">
           <div>

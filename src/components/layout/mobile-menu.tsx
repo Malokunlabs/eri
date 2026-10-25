@@ -123,7 +123,7 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                 className="fixed inset-0 z-100 flex flex-col overflow-y-auto bg-eri-menu text-eri-white"
               >
                 {/* Header row with logo and close button */}
-                <div className="flex h-20 shrink-0 items-center justify-between px-4 sm:px-6">
+                <div className="flex h-20 shrink-0 items-center justify-between px-6 sm:px-8">
                   <Link
                     href="/"
                     onClick={() => setIsOpen(false)}

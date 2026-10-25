@@ -56,9 +56,9 @@ export function FaqSection() {
   return (
     <section
       aria-label="Frequently asked questions"
-      className="overflow-x-clip bg-eri-white pb-0 pt-14 text-eri-dark lg:pb-0 lg:pt-37"
+      className="overflow-x-clip bg-eri-white pb-14 pt-14 text-eri-dark lg:pb-16 lg:pt-37"
     >
-      <Container size="wide">
+      <Container>
         <div className="mb-8 lg:hidden">
           <h2
             id="faq-heading"
@@ -79,7 +79,7 @@ export function FaqSection() {
               src="/images/large-folder/mobile-folder-back.svg"
               alt=""
               fill
-              sizes="calc(100vw - 24px)"
+              sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), 1032px"
               unoptimized
               className="pointer-events-none object-fill"
             />
@@ -128,7 +128,7 @@ export function FaqSection() {
               src="/images/large-folder/mobile-folder-front.svg"
               alt=""
               fill
-              sizes="calc(100vw - 24px)"
+              sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), 1032px"
               unoptimized
               className="pointer-events-none object-fill"
             />
@@ -136,24 +136,30 @@ export function FaqSection() {
         </div>
 
         {/* Desktop */}
-        <div className="relative hidden w-full lg:mb-[-12%] lg:-ml-16 lg:block lg:aspect-1354/1240 lg:w-[calc(100%+128px)]">
-          <Image
-            src="/images/large-folder/cover-folder.svg"
-            alt=""
-            fill
-            sizes="(max-width: 1023px) calc(100vw - 24px), 1354px"
-            className="pointer-events-none object-fill"
-          />
+        <div className="relative hidden w-full lg:block lg:aspect-[1072/958.34]">
+          {/* Back folder illustration: scaled and shifted so visible folder (x: 140.59 to 1212.59) aligns 100% with container width */}
+          <div className="pointer-events-none absolute -left-[13.115%] top-0 z-0 h-[129.39%] w-[126.31%]">
+            <Image
+              src="/images/large-folder/cover-folder.svg"
+              alt=""
+              fill
+              sizes="(max-width: 1023px) calc(100vw - 48px), 1354px"
+              className="object-fill"
+            />
+          </div>
 
-          <Image
-            src="/images/large-folder/cover-folder.svg"
-            alt=""
-            fill
-            sizes="1354px"
-            className="pointer-events-none z-20 object-fill [clip-path:inset(55.5%_0_0_0)]"
-          />
+          {/* Front flap folder illustration: natural rounded corners and soft drop shadow preserved */}
+          <div className="pointer-events-none absolute -left-[13.115%] top-0 z-20 h-[129.39%] w-[126.31%]">
+            <Image
+              src="/images/large-folder/cover-folder.svg"
+              alt=""
+              fill
+              sizes="(max-width: 1023px) calc(100vw - 48px), 1354px"
+              className="object-fill [clip-path:inset(55.5%_0_0_0)]"
+            />
+          </div>
 
-          <div className="absolute left-1/2 top-0 hidden w-[38%] items-start justify-between lg:flex">
+          <div className="absolute left-[47.6%] top-0 z-10 hidden w-[50%] items-start justify-between lg:flex">
             <h2
               id="faq-heading-desktop"
               className="font-display text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] lg:text-[44px]"
@@ -166,7 +172,7 @@ export function FaqSection() {
             </p>
           </div>
 
-          <div className="relative z-10 mx-[4%] pb-24 pt-24 lg:mx-[13.5%] lg:pb-10 lg:pt-[9.5%] ">
+          <div className="relative z-10 mx-[4%] pb-24 pt-24 lg:mx-[3.5%] lg:pb-10 lg:pt-[11%]">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
