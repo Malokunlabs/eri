@@ -66,9 +66,9 @@ export function FaqSection() {
           >
             FAQs
           </h2>
-          <p className="mt-3 max-w-77.5 text-[14px] leading-[1.55] text-eri-grey-9 sm:text-[15px]">
+          <p className="mt-3 max-w-[310px] text-[14px] leading-[1.55] text-eri-grey-9 sm:text-[15px]">
             A selection of projects that show how organizations ERI to answer
-            important questions.
+            important
           </p>
         </div>
 
@@ -159,18 +159,20 @@ export function FaqSection() {
             />
           </div>
 
-          <div className="absolute left-[47.6%] top-0 z-10 hidden w-[50%] items-start justify-between lg:flex">
-            <h2
-              id="faq-heading-desktop"
-              className="font-display text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] lg:text-[44px]"
-            >
-              FAQs
-            </h2>
-            <p className="mt-1 max-w-62.5 text-[14px] leading-[1.55] text-eri-grey-9 sm:text-[15px]">
-              A selection of projects that show how organizations ERI to answer
-              important questions.
-            </p>
-          </div>
+          {/* Desktop FAQs heading on the folder shelf */}
+          <h2
+            id="faq-heading-desktop"
+            className="absolute left-[48.5%] top-0 z-10 hidden font-display text-[38px] font-semibold leading-tight tracking-[-0.02em] lg:block lg:text-[44px]"
+          >
+            FAQs
+          </h2>
+
+          {/* Desktop subtitle on the far right of the folder shelf */}
+          <p className="absolute right-[3.5%] top-1.5 z-10 hidden max-w-[280px] text-[12px] leading-[1.35] text-eri-grey-9 sm:text-[13px] lg:block">
+            A selection of projects that show how
+            <br />
+            organizations ERI to answer important
+          </p>
 
           <div className="relative z-10 mx-[4%] pb-24 pt-24 lg:mx-[3.5%] lg:pb-10 lg:pt-[11%]">
             {faqs.map((faq, index) => {
