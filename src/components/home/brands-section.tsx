@@ -129,7 +129,7 @@ const brandColumns: Brand[][] = [
     },
     {
       name: "TEEM",
-      src: "/icons/brand-icon/teem.svg",
+      src: "/icons/brand-icon/team-logo.png",
       width: 70,
       height: 56,
       cardHeight: "short",
@@ -145,8 +145,39 @@ const brandColumns: Brand[][] = [
   ],
 ];
 
-// Flatten all brands for responsive mobile/tablet layout
+// Flatten all brands for tablet layout
 const allBrands: Brand[] = brandColumns.flat();
+
+const brandByName = new Map(allBrands.map((brand) => [brand.name, brand]));
+
+function getBrand(name: string): Brand {
+  const brand = brandByName.get(name);
+  if (!brand) throw new Error(`Unknown brand: ${name}`);
+  return brand;
+}
+
+// Mobile 2-column masonry order matching the design
+const mobileColumns: Brand[][] = [
+  [
+    "Insight Edge",
+    "Martell",
+    "Moniepoint",
+    "waf.",
+    "Quidax",
+    "The Culture Foundry",
+    "TEEM",
+    "Alára",
+  ].map(getBrand),
+  [
+    "Landmark",
+    "Jameson",
+    "Google",
+    "Chicken Republic",
+    "Kora",
+    "adidas",
+    "Hennessy",
+  ].map(getBrand),
+];
 
 function BrandCard({
   brand,
@@ -190,8 +221,25 @@ export function BrandsSection({ className = "" }: BrandsSectionProps = {}) {
           Brands we&apos;ve been in the field for.
         </h2>
 
-        {/* Mobile & Tablet Grid */}
-        <div className="mx-auto mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:hidden">
+        {/* Mobile 2-Column Masonry */}
+        <div className="mx-auto mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
+          {mobileColumns.map((column, columnIndex) => (
+            <div className="flex flex-col gap-2.5" key={columnIndex}>
+              {column.map((brand) => (
+                <BrandCard
+                  brand={brand}
+                  className={
+                    brand.cardHeight === "tall" ? "h-[120px]" : "h-[80px]"
+                  }
+                  key={brand.name}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Tablet Grid */}
+        <div className="mx-auto mt-6 hidden grid-cols-3 gap-3 sm:grid lg:hidden">
           {allBrands.map((brand) => (
             <BrandCard
               brand={brand}
