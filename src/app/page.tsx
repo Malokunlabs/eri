@@ -51,6 +51,9 @@ export default async function Home() {
         video={
           videoDiaries.find((v) => v.featured) ||
           videoDiaries.find((v) =>
+            v.title?.toLowerCase().includes("body that sells"),
+          ) ||
+          videoDiaries.find((v) =>
             v.title?.toLowerCase().includes("danfo"),
           ) ||
           videoDiaries[0]
