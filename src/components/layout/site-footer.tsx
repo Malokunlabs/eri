@@ -158,16 +158,6 @@ export function SiteFooter() {
                   {siteConfig.contact.email}
                 </a>
               </p>
-              <p>
-                <a
-                  href={siteConfig.contact.websiteHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-opacity hover:opacity-70"
-                >
-                  {siteConfig.contact.websiteLabel}
-                </a>
-              </p>
             </div>
           </div>
 
