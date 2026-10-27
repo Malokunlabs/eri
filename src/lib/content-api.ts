@@ -508,6 +508,7 @@ export function mapStudioDocToVideoDiary(
     author: authorName,
     excerpt: doc.excerpt || "",
     body: doc.body || "",
+    featured: doc.featured ?? false,
   };
 }
 

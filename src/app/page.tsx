@@ -49,9 +49,11 @@ export default async function Home() {
       <WorkDoneSection
         caseStudies={caseStudies}
         video={
+          videoDiaries.find((v) => v.featured) ||
           videoDiaries.find((v) =>
             v.title?.toLowerCase().includes("danfo"),
-          ) || videoDiaries[0]
+          ) ||
+          videoDiaries[0]
         }
       />
       <AudienceSection />
