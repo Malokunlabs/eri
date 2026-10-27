@@ -214,7 +214,7 @@ export function parseHtmlContent(rawHtml: string): {
       const bodyPart = parts[i + 1] || "";
       const paragraphs = extractParagraphs(bodyPart);
 
-      if (heading && paragraphs.length > 0) {
+      if (heading) {
         sections.push({
           id: slugify(heading) || `section-${sections.length + 1}`,
           heading,
@@ -268,11 +268,17 @@ export function parseCaseStudyHtml(rawHtml: string): {
   });
 
   // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
+  // Skip numeric/stat lines (e.g. "2250") so they stay body copy, not headings.
   clean = clean.replace(
     /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
     (match, inner) => {
       const text = inner.replace(/<[^>]+>/g, "").trim();
-      if (text.length > 0 && text.length < 120) {
+      if (
+        text.length > 0 &&
+        text.length < 120 &&
+        /[A-Za-z]/.test(text) &&
+        !/^\d/.test(text)
+      ) {
         return `<h2>${text}</h2>`;
       }
       return match;
@@ -280,13 +286,16 @@ export function parseCaseStudyHtml(rawHtml: string): {
   );
 
   // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
+  // Skip numeric/stat lines (e.g. "2250") so body copy under a sub stays a paragraph.
   clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
     const text = inner.trim();
     if (
       text.length > 3 &&
       text.length < 80 &&
       !/[.!?]$/.test(text) &&
-      !text.includes(". ")
+      !text.includes(". ") &&
+      /[A-Za-z]/.test(text) &&
+      !/^\d/.test(text)
     ) {
       return `<h2>${text}</h2>`;
     }
