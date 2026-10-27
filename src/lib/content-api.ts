@@ -183,7 +183,11 @@ export function parseHtmlContent(rawHtml: string): {
     /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi;
 
   let normalizedHtml = cleanHtml;
-  // If no explicit h2/h3 tags exist but standalone bold paragraphs exist, treat them as h2 headings
+  // If no explicit h2/h3 tags exist but standalone bold paragraphs exist, treat them as h2 headings.
+  // Guard the same way as the case-study parser: skip numeric/stat lines and
+  // wrapped sentence fragments ("...toward", "...and"), which are body copy.
+  const fragmentEnd =
+    /\b(and|or|toward|towards|of|in|on|for|with|to|from|as|at|by|into|among|between|including|&)$/i;
   if (
     !/<h[2-4][^>]*>/i.test(cleanHtml) &&
     strongParagraphRegex.test(cleanHtml)
@@ -191,8 +195,15 @@ export function parseHtmlContent(rawHtml: string): {
     normalizedHtml = cleanHtml.replace(
       /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
       (match, p1) => {
+        if (/<a[\s>]/i.test(p1)) return match;
         const text = p1.replace(/<[^>]+>/g, "").trim();
-        if (text.length > 0 && text.length < 120) {
+        if (
+          text.length > 0 &&
+          text.length < 120 &&
+          /[A-Za-z]/.test(text) &&
+          !/^\d/.test(text) &&
+          !fragmentEnd.test(text)
+        ) {
           return `<h2>${text}</h2>`;
         }
         return match;
@@ -267,40 +278,55 @@ export function parseCaseStudyHtml(rawHtml: string): {
     return match;
   });
 
-  // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
-  // Skip numeric/stat lines (e.g. "2250") so they stay body copy, not headings.
-  clean = clean.replace(
-    /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
-    (match, inner) => {
-      const text = inner.replace(/<[^>]+>/g, "").trim();
+  // Only guess headings when the author used none. If the CMS body already
+  // has real <h2>-<h4> structure (e.g. <h2>Target</h2>), trust it — inventing
+  // headings from short lines is what split the "Cryptocurrency Adoption"
+  // intro into phantom "This study investigated..." sections.
+  const hasExplicitHeadings = /<h[2-4][^>]*>/i.test(clean);
+
+  // A line ending in a preposition/conjunction ("toward", "and", ...) is a
+  // wrapped fragment of the next line, not a heading.
+  const fragmentEnd =
+    /\b(and|or|toward|towards|of|in|on|for|with|to|from|as|at|by|into|among|between|including|&)$/i;
+
+  if (!hasExplicitHeadings) {
+    // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
+    // Skip numeric/stat lines (e.g. "2250") so they stay body copy, not headings.
+    clean = clean.replace(
+      /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
+      (match, inner) => {
+        const text = inner.replace(/<[^>]+>/g, "").trim();
+        if (
+          text.length > 0 &&
+          text.length < 120 &&
+          /[A-Za-z]/.test(text) &&
+          !/^\d/.test(text) &&
+          !fragmentEnd.test(text)
+        ) {
+          return `<h2>${text}</h2>`;
+        }
+        return match;
+      },
+    );
+
+    // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
+    // Skip numeric/stat lines (e.g. "2250") so body copy under a sub stays a paragraph.
+    clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
+      const text = inner.trim();
       if (
-        text.length > 0 &&
-        text.length < 120 &&
+        text.length > 3 &&
+        text.length < 80 &&
+        !/[.!?]$/.test(text) &&
+        !text.includes(". ") &&
         /[A-Za-z]/.test(text) &&
-        !/^\d/.test(text)
+        !/^\d/.test(text) &&
+        !fragmentEnd.test(text)
       ) {
         return `<h2>${text}</h2>`;
       }
       return match;
-    },
-  );
-
-  // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
-  // Skip numeric/stat lines (e.g. "2250") so body copy under a sub stays a paragraph.
-  clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
-    const text = inner.trim();
-    if (
-      text.length > 3 &&
-      text.length < 80 &&
-      !/[.!?]$/.test(text) &&
-      !text.includes(". ") &&
-      /[A-Za-z]/.test(text) &&
-      !/^\d/.test(text)
-    ) {
-      return `<h2>${text}</h2>`;
-    }
-    return match;
-  });
+    });
+  }
 
   return parseHtmlContent(clean);
 }
