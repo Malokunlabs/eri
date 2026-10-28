@@ -51,7 +51,7 @@ const faqs = [
 ] as const;
 
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section
@@ -174,21 +174,29 @@ export function FaqSection() {
             organizations ERI to answer important
           </p>
 
-          <div className={`relative mx-[4%] pt-24 lg:mx-[3.5%] lg:pt-[11%] transition-[padding] duration-300 ease-out ${openIndex === null ? "z-10 pb-24 lg:pb-10" : "z-30 pb-40 lg:pb-28"}`}>
+          <div className="relative z-10 mx-[4%] pt-24 lg:mx-[3.5%] lg:pt-[11%]">
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 
               return (
                 <div
-                  className={`relative -mt-px overflow-hidden rounded-2xl first:mt-0 ${faq.color}`}
+                  className={`relative transition-[margin] duration-300 ease-out ${isOpen ? "mb-0" : "-mb-12"}`}
+                  style={{ zIndex: index + 1 }}
                   key={faq.question}
                 >
+                <div
+                  className={`relative overflow-hidden rounded-2xl transition-[padding] duration-300 ease-out ${isOpen ? "pb-0" : "pb-12"} ${faq.color}`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-b from-transparent to-black/15 transition-opacity duration-300 ${isOpen ? "opacity-0" : "opacity-100"}`}
+                  />
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${index}`}
-                    className="flex min-h-19.5 w-full items-center justify-between gap-6 px-6 text-left font-display text-[18px] font-semibold leading-tight lg:px-7 lg:text-[22px]"
-                    onClick={() => setOpenIndex(index)}
+                    className="relative flex min-h-17 w-full items-center justify-between gap-6 px-6 text-left font-display text-[18px] font-semibold leading-tight lg:px-7 lg:text-[22px]"
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
                   >
                     <span>{faq.question}</span>
                     <span
@@ -209,6 +217,7 @@ export function FaqSection() {
                       </p>
                     </div>
                   </div>
+                </div>
                 </div>
               );
             })}
