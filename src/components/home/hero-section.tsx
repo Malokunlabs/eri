@@ -29,7 +29,7 @@ export function HeroSection() {
             >
               Contact Us
             </a>
-            <Link href="#" className="eri-pill eri-pill--secondary">
+            <Link href="https://aiye.africa/" target="_blank" rel="noopener noreferrer" className="eri-pill eri-pill--secondary">
               View Reports
             </Link>
           </div>
