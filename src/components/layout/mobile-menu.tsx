@@ -123,7 +123,7 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                 className="fixed inset-0 z-100 flex flex-col overflow-y-auto bg-eri-menu text-eri-white"
               >
                 {/* Header row with logo and close button */}
-                <div className="flex h-20 shrink-0 items-center justify-between px-4 sm:px-6">
+                <div className="flex h-20 shrink-0 items-center justify-between px-6 sm:px-8">
                   <Link
                     href="/"
                     onClick={() => setIsOpen(false)}
@@ -182,14 +182,25 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                         >
                           Evidence
                         </span>
-                        <span
+                        <svg
+                          width="18"
+                          height="10"
+                          viewBox="0 0 12 7"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
-                          className={`text-[16px] text-eri-grey-8 transition-transform duration-200 ${
+                          className={`shrink-0 translate-y-[1px] text-eri-grey-8 transition-transform duration-200 ${
                             isEvidenceOpen ? "rotate-180" : ""
                           }`}
                         >
-                          ⌄
-                        </span>
+                          <path
+                            d="M1 1.25L6 5.75L11 1.25"
+                            stroke="currentColor"
+                            strokeWidth="1.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </button>
 
                       <AnimatePresence initial={false}>

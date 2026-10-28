@@ -16,6 +16,8 @@ import {
   getStudioVideoDiaries,
 } from "@/lib/content-api";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title:
     "Eri — Ground-Level Field Intelligence & Market Research Across Nigeria and the world",
@@ -47,9 +49,14 @@ export default async function Home() {
       <WorkDoneSection
         caseStudies={caseStudies}
         video={
+          videoDiaries.find((v) => v.featured) ||
+          videoDiaries.find((v) =>
+            v.title?.toLowerCase().includes("body that sells"),
+          ) ||
           videoDiaries.find((v) =>
             v.title?.toLowerCase().includes("danfo"),
-          ) || videoDiaries[0]
+          ) ||
+          videoDiaries[0]
         }
       />
       <AudienceSection />

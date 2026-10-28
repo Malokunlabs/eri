@@ -255,22 +255,23 @@ export function CoreServicesSection() {
   return (
     <section
       aria-labelledby="core-services-heading"
-      className="bg-eri-white py-4 text-eri-dark sm:py-4 lg:py-6"
+      className="bg-eri-white pb-12 pt-6 text-eri-dark sm:pb-16 sm:pt-10 lg:pb-20 lg:pt-12"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       <Container size="insights">
         {/* Section header */}
-        <div className="mb-8 text-center sm:mb-10 lg:mb-12">
-          <h2
+        <div className="mx-auto mb-8 text-center sm:mb-10 lg:mb-12">
+          <h1
             id="core-services-heading"
-            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
+            className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]"
           >
             Our Core Services
-          </h2>
-          <p className="mx-auto mt-2.5 max-w-sm text-[14px] leading-[1.55] text-eri-grey-11 sm:max-w-md sm:text-[15px]">
-            Comprehensive solutions that combine data-driven methodologies with
-            cultural intelligence to deliver impactful results
+          </h1>
+          <p className="mx-auto mt-3 max-w-[440px] text-center font-sans text-[13.5px] font-normal leading-[1.5] tracking-[-0.01em] text-[#66625C] sm:text-[15px]">
+            <span className="block whitespace-nowrap">Comprehensive solutions that combine data-</span>
+            <span className="block whitespace-nowrap">driven methodologies with cultural intelligence to</span>
+            <span className="block whitespace-nowrap">deliver impactful results</span>
           </p>
         </div>
 

@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 
-import { ServicesPageContent } from "@/components/services/services-page-content";
+import { SiteHeader } from "@/components/layout/site-header";
 import { CoreServicesSection } from "@/components/services/core-services-section";
 import { SolutionBundleSection } from "@/components/services/solution-bundle-section";
 import { BrandsSection } from "@/components/home/brands-section";
-import { AudienceSection } from "@/components/home/audience-section";
 import { FaqSection } from "@/components/home/faq-section";
 import { ReachUsSection } from "@/components/home/reach-us-section";
+
+// Replaced component imports:
+// import { ServicesPageContent } from "@/components/services/services-page-content";
+// import { AudienceSection } from "@/components/home/audience-section";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -26,13 +29,28 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <SiteHeader variant="light" />
+
+      {/* Sections replaced in the updated service page layout:
       <ServicesPageContent />
       <AudienceSection />
-      <CoreServicesSection />
-      <BrandsSection />
-      <SolutionBundleSection />
-      <FaqSection />
+      */}
+
+      <main id="main-content">
+        <CoreServicesSection />
+        <SolutionBundleSection />
+        <BrandsSection className="mt-8 sm:mt-12 lg:mt-18" />
+        <FaqSection />
+        <ReachUsSection
+          title="Need a custom solution that combines multiple services?"
+          ctaText="Get in touch"
+          ctaHref="/contact"
+        />
+      </main>
+
+      {/* Original ReachUsSection replaced with customized version above:
       <ReachUsSection />
+      */}
     </>
   );
 }

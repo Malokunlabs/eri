@@ -5,6 +5,8 @@ import { FaqSection } from "@/components/home/faq-section";
 import { ReachUsSection } from "@/components/home/reach-us-section";
 import { getAllInsights, getStudioCategories } from "@/lib/content-api";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Insights",
   description:

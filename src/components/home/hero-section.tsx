@@ -29,13 +29,13 @@ export function HeroSection() {
             >
               Contact Us
             </a>
-            <Link href="#" className="eri-pill eri-pill--secondary">
+            <Link href="https://aiye.africa/" target="_blank" rel="noopener noreferrer" className="eri-pill eri-pill--secondary">
               View Reports
             </Link>
           </div>
         </div>
 
-        <div className="relative left-4 -mx-4 flex items-center justify-center sm:left-0 sm:mx-0 lg:min-h-140 lg:justify-end">
+        <div className="relative flex items-center justify-center lg:min-h-140 lg:justify-end">
           <Image
             src="/images/landingpage/large-folder.svg"
             alt="A folder showing that Eri's research is collected by over 12,000 active field agents"

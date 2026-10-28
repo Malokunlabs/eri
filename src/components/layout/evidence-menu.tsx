@@ -71,15 +71,26 @@ export function EvidenceMenu({ variant = "dark" }: EvidenceMenuProps) {
               : "text-eri-white hover:text-eri-grey-6 focus-visible:outline-eri-white"
         }`}
       >
-        Evidence
-        <span
+        <span>Evidence</span>
+        <svg
+          width="12"
+          height="7"
+          viewBox="0 0 12 7"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
-          className={`text-[13px] leading-none transition-transform duration-200 lg:text-[14px] xl:text-[16px] ${
+          className={`shrink-0 translate-y-[2px] transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         >
-          ⌄
-        </span>
+          <path
+            d="M1 1.25L6 5.75L11 1.25"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
 
       <div

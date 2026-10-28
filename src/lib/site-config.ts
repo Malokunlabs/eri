@@ -35,8 +35,6 @@ export const siteConfig = {
     whatsappHref: "https://wa.me/2348142970965",
     email: "info@useeri.com",
     emailHref: "mailto:info@useeri.com",
-    websiteLabel: "sales.malokunlabs.com",
-    websiteHref: "https://sales.malokunlabs.com",
   },
 } as const;
 
