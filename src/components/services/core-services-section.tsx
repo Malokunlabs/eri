@@ -49,7 +49,7 @@ const services: Service[] = [
   },
 ];
 
-const INTERVAL_MS = 3000;
+const INTERVAL_MS = 6000;
 
 function NotchedBars({ color }: { color: string }) {
   const tabs = 7;
@@ -107,6 +107,7 @@ export function CoreServicesSection() {
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [isPaused, setIsPaused] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(INTERVAL_MS / 1000);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const touchStartX = useRef<number | null>(null);
@@ -136,7 +137,7 @@ export function CoreServicesSection() {
     goTo((active - 1 + services.length) % services.length, "prev");
   }, [active, goTo]);
 
-  // Auto-advance every 3s unless paused by user interaction
+  // Auto-advance every INTERVAL_MS unless paused by user interaction
   useEffect(() => {
     if (isPaused) return;
     timerRef.current = setTimeout(goNext, INTERVAL_MS);
@@ -144,6 +145,19 @@ export function CoreServicesSection() {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [goNext, isPaused]);
+
+  // Countdown shown to the user; resets whenever the slide changes or autoplay resumes
+  useEffect(() => {
+    const id = isPaused
+      ? null
+      : setInterval(() => {
+          setSecondsLeft((s) => Math.max(s - 1, 0));
+        }, 1000);
+    return () => {
+      if (id) clearInterval(id);
+      setSecondsLeft(INTERVAL_MS / 1000);
+    };
+  }, [active, isPaused]);
 
   // Touch swipe support for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -167,6 +181,24 @@ export function CoreServicesSection() {
   };
 
   const current = services[active];
+
+  const countdown = (
+    <div className="mt-4 flex w-full max-w-50 items-center gap-3" aria-hidden="true">
+      <div className="h-1 flex-1 overflow-hidden rounded-full bg-black/10">
+        <div
+          className="h-full rounded-full ease-linear"
+          style={{
+            width: `${(secondsLeft / (INTERVAL_MS / 1000)) * 100}%`,
+            backgroundColor: current.accentColor,
+            transition: secondsLeft === INTERVAL_MS / 1000 ? "none" : "width 1s linear",
+          }}
+        />
+      </div>
+      <span className="w-6 text-right font-sans text-[12px] tabular-nums text-[#66625C]">
+        {secondsLeft}s
+      </span>
+    </div>
+  );
 
   // Helper for desktop vertical slide transform
   const getDesktopStyle = (index: number) => {
@@ -268,7 +300,7 @@ export function CoreServicesSection() {
           >
             Our Core Services
           </h1>
-          <p className="mx-auto mt-3 max-w-[440px] text-center font-sans text-[13.5px] font-normal leading-[1.5] tracking-[-0.01em] text-[#66625C] sm:text-[15px]">
+          <p className="mt-3 text-left font-sans text-[13.5px] font-normal leading-[1.5] tracking-[-0.01em] text-[#66625C] sm:text-[15px] lg:pl-72.5">
             <span className="block whitespace-nowrap">Comprehensive solutions that combine data-</span>
             <span className="block whitespace-nowrap">driven methodologies with cultural intelligence to</span>
             <span className="block whitespace-nowrap">deliver impactful results</span>
@@ -327,6 +359,7 @@ export function CoreServicesSection() {
             <div className="mt-7">
               <NotchedBars color={current.barColor} />
             </div>
+            {countdown}
           </div>
 
           {/* Right panel: image card taking full width of container up to page boundary */}
@@ -399,6 +432,7 @@ export function CoreServicesSection() {
           <div className="mt-5">
             <NotchedBars color={current.barColor} />
           </div>
+          {countdown}
 
           {/* Image card with horizontal side-by-side slide animation & touch swipe */}
           <div

@@ -10,7 +10,7 @@ import { Container } from "@/components/ui/container";
 const stats = [
   { value: "20k+", label: "Survey responses\ncollected" },
   { value: "500+", label: "Agents trained\nand deployed" },
-  { value: "16", label: "States worked in,\nacross all 6 zones" },
+  { value: "35", label: "States worked in,\nacross all 6 zones" },
   { value: "150+", label: "Retail outlets\naudited" },
   { value: "300+", label: "Field interviews\nconducted" },
   { value: "5", label: "Years actively\nin the field" },
@@ -141,14 +141,14 @@ export function AboutPageContent() {
                   Nigeria are not written down anywhere, and someone has to go
                   and see them.
                 </p>
-                <div className="mt-7 sm:mt-8">
+                {/* <div className="mt-7 sm:mt-8">
                   <Link
                     href="/contact"
                     className="inline-flex min-h-11 items-center justify-center rounded-full border border-eri-dark bg-eri-coral-dark px-7 py-2.5 font-display text-[15px] font-medium text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     Contact Us
                   </Link>
-                </div>
+                </div> */}
               </div>
 
               <div className="flex justify-start lg:justify-end">

@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site-config";
 
 const companyLinks = ["Home", "About", "Services", "FAQs"] as const;
-const exploreLinks = ["Case Studies", "Insights", "Reports"] as const;
+const exploreLinks = ["Case Studies", "Window", "Reports"] as const;
 const socialLinks = [
   { label: "X", icon: "/icons/social-media-icons/twitter.svg", size: 32 },
   {
@@ -30,7 +30,7 @@ const linkHrefMap: Record<string, string> = {
   About: "/about",
   Services: "/services",
   "Case Studies": "/case-studies",
-  Insights: "/insights",
+  Window: "/insights",
   "Video Diaries": "/video-diaries",
   Reports: "/reports",
   Contact: "/contact",

@@ -99,17 +99,17 @@ export function InsightsPageContent({
           <div className="flex flex-col gap-6 border-b border-eri-grey-5 pb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div>
               <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
-                Insights
+                Window
               </h1>
-              <p className="mt-3 max-w-[520px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
-                What our people see in the field, and what it means for the
-                brands buying from them.
+              <p className="mt-3 max-w-105 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
+                First person POV of the lives of the people we serve and what it
+                means for the brands they buy.
               </p>
             </div>
-            <p className="max-w-[360px] text-[14px] leading-[1.55] text-eri-grey-11 lg:text-right">
+            {/* <p className="max-w-105 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px] lg:text-right">
               Everything here comes from our own fieldwork, and we publish it
               under our own name.
-            </p>
+            </p> */}
           </div>
 
           <div className="mt-8 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
@@ -157,7 +157,10 @@ export function InsightsPageContent({
           {visibleInsights.length > 0 ? (
             <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-5 lg:gap-y-10">
               {visibleInsights.map((insight) => (
-                <InsightCard insight={insight} key={insight.slug || insight.image} />
+                <InsightCard
+                  insight={insight}
+                  key={insight.slug || insight.image}
+                />
               ))}
             </div>
           ) : (
