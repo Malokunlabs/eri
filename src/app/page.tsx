@@ -59,9 +59,9 @@ export default async function Home() {
       />
       <AudienceSection />
       {/* <ReportsSection /> */}
-      <FaqSection />
       <VideoDiariesSection videos={videoDiaries} />
       <InsightsSection insights={insights} />
+      <FaqSection />
       <ReachUsSection />
     </main>
   );
