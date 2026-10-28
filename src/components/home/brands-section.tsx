@@ -8,10 +8,28 @@ type Brand = {
   width: number;
   height: number;
   cardHeight: "short" | "tall";
+  logoClassName?: string;
 };
 
 const brandColumns: Brand[][] = [
+  // Column 1: Tall (Martell), Short (Insight Edge), Short (Moniepoint)
   [
+    {
+      name: "Martell",
+      src: "/icons/brand-icon/martell.svg",
+      width: 105,
+      height: 83,
+      cardHeight: "tall",
+      logoClassName: "max-h-[68%] max-w-[68%]",
+    },
+    {
+      name: "Insight Edge",
+      src: "/icons/brand-icon/insight-edge.svg",
+      width: 64,
+      height: 64,
+      cardHeight: "short",
+      logoClassName: "max-h-[64%] max-w-[50%]",
+    },
     {
       name: "Moniepoint",
       src: "/icons/brand-icon/moniepoint.svg",
@@ -19,22 +37,9 @@ const brandColumns: Brand[][] = [
       height: 40,
       cardHeight: "short",
     },
-    {
-      name: "Martell",
-      src: "/icons/brand-icon/martell.svg",
-      width: 105,
-      height: 83,
-      cardHeight: "tall",
-    },
   ],
+  // Column 2: Short (Landmark), Short (Jameson), Tall (Google)
   [
-    {
-      name: "Google",
-      src: "/icons/brand-icon/Google.svg",
-      width: 180,
-      height: 120,
-      cardHeight: "tall",
-    },
     {
       name: "Landmark",
       src: "/icons/brand-icon/Landmark.svg",
@@ -42,14 +47,32 @@ const brandColumns: Brand[][] = [
       height: 26,
       cardHeight: "short",
     },
+    {
+      name: "Jameson",
+      src: "/icons/brand-icon/jameson.svg",
+      width: 120,
+      height: 50,
+      cardHeight: "short",
+      logoClassName: "max-h-[66%] max-w-[72%]",
+    },
+    {
+      name: "Google",
+      src: "/icons/brand-icon/Google.svg",
+      width: 180,
+      height: 120,
+      cardHeight: "tall",
+      logoClassName: "max-h-[82%] max-w-[56%]",
+    },
   ],
+  // Column 3 (Center): Short (waf.), Tall (Chicken Republic), Short (Quidax)
   [
     {
-      name: "Quidax",
-      src: "/icons/brand-icon/Quidax.svg",
-      width: 120,
-      height: 30,
+      name: "waf.",
+      src: "/icons/brand-icon/waf.svg",
+      width: 90,
+      height: 36,
       cardHeight: "short",
+      logoClassName: "max-h-[50%] max-w-[60%]",
     },
     {
       name: "Chicken Republic",
@@ -57,16 +80,19 @@ const brandColumns: Brand[][] = [
       width: 88,
       height: 106,
       cardHeight: "tall",
+      logoClassName: "max-h-[72%] max-w-[58%]",
+    },
+    {
+      name: "Quidax",
+      src: "/icons/brand-icon/Quidax.svg",
+      width: 120,
+      height: 30,
+      cardHeight: "short",
+      logoClassName: "max-h-[48%] max-w-[55%]",
     },
   ],
+  // Column 4: Short (Kora), Short (adidas), Tall (Hennessy)
   [
-    {
-      name: "Showmax",
-      src: "/icons/brand-icon/Showmax.svg",
-      width: 160,
-      height: 37,
-      cardHeight: "tall",
-    },
     {
       name: "Kora",
       src: "/icons/brand-icon/kora.svg",
@@ -74,88 +100,156 @@ const brandColumns: Brand[][] = [
       height: 37,
       cardHeight: "short",
     },
-  ],
-  [
     {
-      name: "Alara",
-      src: "/icons/brand-icon/Alara.svg",
-      width: 88,
-      height: 22,
+      name: "adidas",
+      src: "/icons/brand-icon/adidas.svg",
+      width: 100,
+      height: 68,
       cardHeight: "short",
+      logoClassName: "max-h-[58%] max-w-[52%]",
     },
+    {
+      name: "Hennessy_id7paXFK7v_0 3",
+      src: "/icons/brand-icon/Hennessy_id7paXFK7v_0 3.png",
+      width: 140,
+      height: 70,
+      cardHeight: "tall",
+      logoClassName: "max-h-[72%] max-w-[70%]",
+    },
+  ],
+  // Column 5: Tall (The Culture Foundry), Short (TEEM), Short (Alára)
+  [
     {
       name: "The Culture Foundry",
       src: "/icons/brand-icon/culture-foundry.png",
       width: 160,
       height: 67,
       cardHeight: "tall",
+      logoClassName: "max-h-[72%] max-w-[72%]",
+    },
+    {
+      name: "TEEM",
+      src: "/icons/brand-icon/team-logo.png",
+      width: 70,
+      height: 56,
+      cardHeight: "short",
+      logoClassName: "max-h-[64%] max-w-[50%]",
+    },
+    {
+      name: "Alára",
+      src: "/icons/brand-icon/Alara.svg",
+      width: 88,
+      height: 22,
+      cardHeight: "short",
     },
   ],
 ];
 
-const [moniepoint, martell] = brandColumns[0];
-const [google, landmark] = brandColumns[1];
-const [quidax, chickenRepublic] = brandColumns[2];
-const [showmax, kora] = brandColumns[3];
-const [alara, cultureFoundry] = brandColumns[4];
+// Flatten all brands for tablet layout
+const allBrands: Brand[] = brandColumns.flat();
 
-function BrandCard({ brand, className }: { brand: Brand; className: string }) {
+const brandByName = new Map(allBrands.map((brand) => [brand.name, brand]));
+
+function getBrand(name: string): Brand {
+  const brand = brandByName.get(name);
+  if (!brand) throw new Error(`Unknown brand: ${name}`);
+  return brand;
+}
+
+// Mobile 2-column masonry order matching the design
+const mobileColumns: Brand[][] = [
+  [
+    "Insight Edge",
+    "Martell",
+    "Moniepoint",
+    "waf.",
+    "Quidax",
+    "The Culture Foundry",
+    "TEEM",
+    "Alára",
+  ].map(getBrand),
+  [
+    "Landmark",
+    "Jameson",
+    "Google",
+    "Chicken Republic",
+    "Kora",
+    "adidas",
+    "Hennessy_id7paXFK7v_0 3",
+  ].map(getBrand),
+];
+
+function BrandCard({
+  brand,
+  className,
+  logoClassName = "",
+}: {
+  brand: Brand;
+  className: string;
+  logoClassName?: string;
+}) {
   return (
     <div
-      className={`flex items-center justify-center overflow-hidden rounded-[20px] bg-eri-grey-3 px-3 ${className}`}
+      className={`flex items-center justify-center overflow-hidden rounded-2xl bg-eri-grey-3 px-3 transition-transform duration-200 hover:scale-[1.02] sm:rounded-[20px] ${className}`}
     >
       <Image
         src={brand.src}
         alt={`${brand.name} logo`}
         width={brand.width}
         height={brand.height}
-        className="h-auto max-h-[106px] max-w-full scale-[1.2] object-contain lg:scale-100"
+        className={`h-auto max-h-[58%] max-w-[76%] object-contain lg:max-h-26.5 lg:max-w-full ${brand.logoClassName || logoClassName}`}
       />
     </div>
   );
 }
 
-export function BrandsSection() {
+type BrandsSectionProps = {
+  className?: string;
+};
+
+export function BrandsSection({ className = "" }: BrandsSectionProps = {}) {
   return (
     <section
       aria-labelledby="brands-heading"
-      className="bg-eri-white pb-10 pt-8 text-eri-dark lg:py-[62px]"
+      className={`bg-eri-white pb-7 pt-12 text-eri-dark sm:pb-10 sm:pt-16 lg:pb-[62px] lg:pt-[96px] ${className}`}
     >
       <Container size="brands">
         <h2
           id="brands-heading"
-          className="max-w-[380px] font-display text-[clamp(34px,7.3vw,40px)] font-semibold leading-[1.05] tracking-[-0.02em] lg:mx-auto lg:max-w-none lg:text-center lg:text-[42px] lg:leading-tight"
+          className="max-w-[380px] font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:mx-auto lg:max-w-none lg:text-center lg:text-[44px]"
         >
           Brands we&apos;ve been in the field for.
         </h2>
 
-        <div className="mt-10 space-y-3 lg:hidden">
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-3">
-              <BrandCard brand={moniepoint} className="aspect-[2/1]" />
-              <BrandCard brand={showmax} className="aspect-[4/3]" />
+        {/* Mobile 2-Column Masonry */}
+        <div className="mx-auto mt-6 grid grid-cols-2 gap-2.5 sm:hidden">
+          {mobileColumns.map((column, columnIndex) => (
+            <div className="flex flex-col gap-2.5" key={columnIndex}>
+              {column.map((brand) => (
+                <BrandCard
+                  brand={brand}
+                  className={
+                    brand.cardHeight === "tall" ? "h-[120px]" : "h-[80px]"
+                  }
+                  key={brand.name}
+                />
+              ))}
             </div>
-            <div className="flex flex-col gap-3">
-              <BrandCard brand={chickenRepublic} className="aspect-[4/3]" />
-              <BrandCard brand={alara} className="aspect-[2/1]" />
-            </div>
-          </div>
-
-          <BrandCard brand={google} className="aspect-[520/127]" />
-          <BrandCard brand={quidax} className="aspect-[520/127]" />
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="flex flex-col gap-3">
-              <BrandCard brand={martell} className="aspect-[4/3]" />
-              <BrandCard brand={kora} className="aspect-[2/1]" />
-            </div>
-            <div className="flex flex-col gap-3">
-              <BrandCard brand={landmark} className="aspect-[2/1]" />
-              <BrandCard brand={cultureFoundry} className="aspect-[4/3]" />
-            </div>
-          </div>
+          ))}
         </div>
 
+        {/* Tablet Grid */}
+        <div className="mx-auto mt-6 hidden grid-cols-3 gap-3 sm:grid lg:hidden">
+          {allBrands.map((brand) => (
+            <BrandCard
+              brand={brand}
+              className="aspect-[13/6] h-auto min-h-[72px]"
+              key={brand.name}
+            />
+          ))}
+        </div>
+
+        {/* Desktop 5-Column Symmetrical Masonry Grid matching Figma */}
         <div className="mt-[48px] hidden grid-cols-5 gap-3 lg:grid">
           {brandColumns.map((column, columnIndex) => (
             <div className="flex flex-col gap-3" key={columnIndex}>

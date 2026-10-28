@@ -3,9 +3,8 @@ import {
   type VideoDiary,
 } from "@/lib/video-diaries-data";
 import {
-  caseStudies,
-  caseStudyCategories,
   type CaseStudy,
+  type CaseStudySection,
 } from "@/lib/case-studies-data";
 
 export const STUDIO_API_KEY =
@@ -177,14 +176,20 @@ export function parseHtmlContent(rawHtml: string): {
     return { intro: [], sections: [] };
   }
 
-  const cleanHtml = rawHtml.replace(/\r\n|\r/g, "\n");
+  const cleanHtml = joinContinuationLines(
+    normalizeCmsHtml(rawHtml.replace(/\r\n|\r/g, "\n")),
+  );
 
   // Normalize headings: <h[2-4]> or paragraph containing only bold/strong text (<p><strong>Heading</strong></p>)
   const strongParagraphRegex =
     /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi;
 
   let normalizedHtml = cleanHtml;
-  // If no explicit h2/h3 tags exist but standalone bold paragraphs exist, treat them as h2 headings
+  // If no explicit h2/h3 tags exist but standalone bold paragraphs exist, treat them as h2 headings.
+  // Guard the same way as the case-study parser: skip numeric/stat lines and
+  // wrapped sentence fragments ("...toward", "...and"), which are body copy.
+  const fragmentEnd =
+    /\b(and|or|toward|towards|of|in|on|for|with|to|from|as|at|by|into|among|between|including|&)$/i;
   if (
     !/<h[2-4][^>]*>/i.test(cleanHtml) &&
     strongParagraphRegex.test(cleanHtml)
@@ -192,8 +197,15 @@ export function parseHtmlContent(rawHtml: string): {
     normalizedHtml = cleanHtml.replace(
       /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
       (match, p1) => {
-        const text = p1.replace(/<[^>]+>/g, "").trim();
-        if (text.length > 0 && text.length < 120) {
+        if (/<a[\s>]/i.test(p1)) return match;
+        const text = cleanTextField(p1);
+        if (
+          text.length > 0 &&
+          text.length < 120 &&
+          /[A-Za-z]/.test(text) &&
+          !/^\d/.test(text) &&
+          !fragmentEnd.test(text)
+        ) {
           return `<h2>${text}</h2>`;
         }
         return match;
@@ -211,11 +223,11 @@ export function parseHtmlContent(rawHtml: string): {
     const sections: InsightSection[] = [];
 
     for (let i = 1; i < parts.length; i += 2) {
-      const heading = (parts[i] || "").replace(/<[^>]+>/g, "").trim();
+      const heading = cleanTextField(parts[i] || "");
       const bodyPart = parts[i + 1] || "";
       const paragraphs = extractParagraphs(bodyPart);
 
-      if (heading && paragraphs.length > 0) {
+      if (heading) {
         sections.push({
           id: slugify(heading) || `section-${sections.length + 1}`,
           heading,
@@ -239,10 +251,196 @@ export function parseHtmlContent(rawHtml: string): {
   };
 }
 
+/**
+ * Parses Case Study HTML content, normalizing headings and splitting into intro and sections.
+ */
+export function parseCaseStudyHtml(rawHtml: string): {
+  intro: string[];
+  sections: CaseStudySection[];
+} {
+  if (!rawHtml || typeof rawHtml !== "string") {
+    return { intro: [], sections: [] };
+  }
+
+  let clean = joinContinuationLines(
+    normalizeCmsHtml(rawHtml.replace(/\r\n|\r/g, "\n")),
+  );
+
+  // Fix <h2>/<h3> containing long intro text + <br><br> + heading
+  clean = clean.replace(/<h[2-4][^>]*>([\s\S]*?)<\/h[2-4]>/gi, (match, inner) => {
+    if (inner.includes("<br")) {
+      const parts = inner
+        .split(/<br\s*\/?>/gi)
+        .map((s: string) => s.trim())
+        .filter(Boolean);
+      if (parts.length > 1) {
+        const heading = parts.pop();
+        const introText = parts.join("<br>");
+        return `<p>${introText}</p><h2>${heading}</h2>`;
+      }
+    }
+    return match;
+  });
+
+  // Only guess headings when the author used none. If the CMS body already
+  // has real <h2>-<h4> structure (e.g. <h2>Target</h2>), trust it — inventing
+  // headings from short lines is what split the "Cryptocurrency Adoption"
+  // intro into phantom "This study investigated..." sections.
+  const hasExplicitHeadings = /<h[2-4][^>]*>/i.test(clean);
+
+  // A line ending in a preposition/conjunction ("toward", "and", ...) is a
+  // wrapped fragment of the next line, not a heading.
+  const fragmentEnd =
+    /\b(and|or|toward|towards|of|in|on|for|with|to|from|as|at|by|into|among|between|including|&)$/i;
+
+  if (!hasExplicitHeadings) {
+    // Convert standalone bold paragraphs <p><strong>Heading</strong></p> to <h2>
+    // Skip numeric/stat lines (e.g. "2250") so they stay body copy, not headings.
+    clean = clean.replace(
+      /<p[^>]*>\s*<(?:strong|b)[^>]*>([\s\S]*?)<\/(?:strong|b)>\s*<\/p>/gi,
+      (match, inner) => {
+        const text = cleanTextField(inner);
+        if (
+          text.length > 0 &&
+          text.length < 120 &&
+          /[A-Za-z]/.test(text) &&
+          !/^\d/.test(text) &&
+          !fragmentEnd.test(text)
+        ) {
+          return `<h2>${text}</h2>`;
+        }
+        return match;
+      },
+    );
+
+    // Convert short standalone paragraph lines without sentence endings (< 80 chars) to <h2>
+    // Skip numeric/stat lines (e.g. "2250") so body copy under a sub stays a paragraph.
+    clean = clean.replace(/<p[^>]*>([^<]+)<\/p>/gi, (match, inner) => {
+      const text = cleanTextField(inner);
+      if (
+        text.length > 3 &&
+        text.length < 80 &&
+        !/[.!?]$/.test(text) &&
+        !text.includes(". ") &&
+        /[A-Za-z]/.test(text) &&
+        !/^\d/.test(text) &&
+        !fragmentEnd.test(text)
+      ) {
+        return `<h2>${text}</h2>`;
+      }
+      return match;
+    });
+  }
+
+  return parseHtmlContent(clean);
+}
+
+function decodeHtmlEntities(text: string): string {
+  let decoded = text;
+  // Run twice so double-escaped entities from the CMS (e.g. "&amp;nbsp;")
+  // fully resolve to a space instead of leaving a literal "&nbsp;" behind.
+  for (let pass = 0; pass < 2; pass++) {
+    decoded = decoded
+      .replace(/&nbsp;/gi, " ")
+      .replace(/&lt;/gi, "<")
+      .replace(/&gt;/gi, ">")
+      .replace(/&quot;/gi, '"')
+      .replace(/&#39;|&apos;/gi, "'")
+      .replace(/&#x([0-9a-f]+);/gi, (_match: string, hex: string) =>
+        String.fromCharCode(parseInt(hex, 16)),
+      )
+      .replace(/&#(\d+);/g, (_match: string, dec: string) =>
+        String.fromCharCode(Number(dec)),
+      )
+      .replace(/&amp;/gi, "&");
+  }
+  return decoded.replace(/ /g, " ");
+}
+
+// Strip tags, decode entities ("&nbsp;" etc.), and collapse whitespace so
+// CMS copy never leaks literal entity text into rendered paragraphs,
+// headings, or meta descriptions. Also normalizes spacing around
+// punctuation ("Port Harcourt , capturing" → "Port Harcourt, capturing",
+// "premium,aspirational" → "premium, aspirational").
+function cleanTextField(value: string): string {
+  let text = decodeHtmlEntities(value.replace(/<[^>]+>/g, ""))
+    .replace(/\s+/g, " ")
+    .trim();
+  // Remove space before closing punctuation: "word ," → "word,"
+  text = text.replace(/\s+([,;:.!?%)\]}])/g, "$1");
+  // Remove space after opening brackets: "( word" → "(word"
+  text = text.replace(/([([{])\s+/g, "$1");
+  // Ensure a space after comma/semicolon/colon when followed by a letter
+  // (skips numbers like "12,000" and times like "10:30").
+  text = text.replace(/([,;:])(?=[A-Za-z(])/g, "$1 ");
+  return text.replace(/\s{2,}/g, " ").trim();
+}
+
+// Collapse double-escaped entities from the CMS ("&amp;nbsp;") back to a
+// single-escaped form ("&nbsp;") so browsers render them instead of showing
+// the literal "&nbsp;" text seen in raw-HTML slots (dangerouslySetInnerHTML,
+// meta descriptions).
+function normalizeCmsHtml(value: string): string {
+  return value.replace(
+    /&amp;((?:nbsp|lt|gt|quot|apos|#\d+|#x[0-9a-f]+);)/gi,
+    "&$1",
+  );
+}
+
+// Join soft-wrapped CMS lines: some CMS bodies emit every visual line as its
+// own <p>, which renders as gappy one-line paragraphs. The Studio blog view
+// renders those same breaks as soft line-wraps inside one paragraph, so the
+// site should too. Join a boundary when:
+//   - the next block starts lowercase (wrapped continuation), or
+//   - the previous block ends mid-sentence (no terminal . ! ? … or colon).
+// A real paragraph break ends with terminal punctuation AND starts the next
+// block capitalized — only that combination is kept as a split.
+function joinContinuationLines(html: string): string {
+  return html.replace(
+    /<\/(?:p|div)>\s*<(?:p|div)[^>]*>\s*/g,
+    (boundary, offset: number, full: string) => {
+      const before = full
+        .slice(0, offset)
+        .replace(/<[^>]+>/g, "")
+        .replace(/&nbsp;| /gi, " ")
+        .trimEnd();
+      const afterRaw = full
+        .slice(offset + boundary.length)
+        .replace(/<[^>]+>/g, "")
+        .replace(/&nbsp;| /gi, " ")
+        .trimStart();
+      const lastChar = before.slice(-1);
+      const nextChar = afterRaw.charAt(0) || "";
+      const endsSentence = /[.!?…:]$/.test(lastChar);
+      const nextIsLower = /^[a-zà-öø-ÿ]/.test(nextChar);
+      const nextIsUpper = /^[A-ZÀ-ÖØ-Þ]/.test(nextChar);
+      // Keep the break only for a true paragraph boundary: sentence ends
+      // AND the next block starts capitalized ("...contexts.</p><p>We...").
+      if (endsSentence && nextIsUpper) return boundary;
+      // Also keep it when a closing quote/paren ends the sentence and the
+      // next block starts capitalized ("...expression."</p><p>Particular...).
+      if (/["'”’)\]}]$/.test(before.slice(-2)) && nextIsUpper) return boundary;
+      // Otherwise it's a wrapped continuation — join with a space.
+      void nextIsLower;
+      return " ";
+    },
+  );
+}
+
 function extractParagraphs(htmlSnippet: string): string[] {
-  const raw = htmlSnippet
-    .split(/<\/(?:p|div)>|<br\s*\/?>/i)
-    .map((p) => p.replace(/<[^>]+>/g, "").trim())
+  // Join CMS soft-wraps first: every visual line as its own <p> renders as
+  // gappy one-line paragraphs, so stitch continuations back into one block.
+  // A single <br> inside a block is also a soft wrap — join it with a space.
+  // Two or more consecutive <br>s are a real paragraph break, so keep those
+  // as a split point alongside closing </p>/</div> tags.
+  const joined = joinContinuationLines(htmlSnippet);
+  const withParaBreaks = joined.replace(
+    /<br\s*\/?>(?:\s*<br\s*\/?>\s*)+/gi,
+    "</p><p>",
+  );
+  const raw = withParaBreaks
+    .split(/<\/(?:p|div)>/i)
+    .map((p) => cleanTextField(p.replace(/<br\s*\/?>/gi, " ")))
     .filter((p) => p.length > 0);
 
   return raw.filter((p, index) => index === 0 || p !== raw[index - 1]);
@@ -449,8 +647,9 @@ export function mapStudioDocToVideoDiary(
     videoEmbedUrl: doc.videoEmbedUrl || undefined,
     videoThumbnail: doc.videoThumbnail || undefined,
     author: authorName,
-    excerpt: doc.excerpt || "",
-    body: doc.body || "",
+    excerpt: doc.excerpt ? cleanTextField(doc.excerpt) : "",
+    body: doc.body ? normalizeCmsHtml(doc.body) : "",
+    featured: doc.featured ?? false,
   };
 }
 
@@ -553,9 +752,10 @@ export function mapStudioDocToCaseStudy(
   index = 0,
 ): CaseStudy {
   const rawContent = doc.body || doc.excerpt || "";
-  const paragraphs = extractParagraphs(rawContent);
+  const { intro, sections } = parseCaseStudyHtml(rawContent);
+  const paragraphs = intro.length > 0 ? intro : extractParagraphs(rawContent);
 
-  let authorName: string | undefined = undefined;
+  let authorName = "Eri Field Team";
   if (typeof doc.author === "object" && doc.author?.title) {
     authorName = doc.author.title;
   } else if (typeof doc.author === "string" && doc.author) {
@@ -585,16 +785,20 @@ export function mapStudioDocToCaseStudy(
   }
 
   const folderImages = [
-    "/images/small-folders/orange-file1.svg",
-    "/images/small-folders/purple-folder1.png",
-    "/images/small-folders/orange-folder2.svg",
-    "/images/small-folders/purple-folder2.svg",
+    "/images/small-folders/orange-folder.svg",
+    "/images/small-folders/purple-file.svg",
+    "/images/small-folders/orange-folder.svg",
+    "/images/small-folders/purple-file.svg",
   ];
   const folder = folderImages[index % folderImages.length];
 
   const company = doc.title || "Case Study";
   const title = doc.title || "";
-  const description = (doc.description || doc.excerpt || "").trim();
+  const description = doc.description
+    ? cleanTextField(doc.description)
+    : doc.excerpt
+      ? cleanTextField(doc.excerpt)
+      : "";
 
   let readTimeStr: string | undefined = undefined;
   if (doc.readTime) {
@@ -612,8 +816,10 @@ export function mapStudioDocToCaseStudy(
     category: categoryName,
     folder,
     description,
-    body: doc.body || "",
+    body: doc.body ? normalizeCmsHtml(doc.body) : "",
     paragraphs,
+    intro,
+    sections,
     date: formatPublishDate(doc.publishDate || doc.createdAt),
     author: authorName,
     readTime: readTimeStr,

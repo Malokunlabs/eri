@@ -7,6 +7,8 @@ import {
 } from "@/lib/content-api";
 import { siteConfig } from "@/lib/site-config";
 
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = [
     { path: "", changeFrequency: "weekly" as const, priority: 1.0 },

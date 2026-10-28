@@ -19,7 +19,7 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
   const logoSrc = getCaseStudyLogo(study);
 
   return (
-    <article className="group relative aspect-[244/232] w-full transition-transform duration-200 hover:-translate-y-1">
+    <article className="group relative aspect-[244/232] w-full [container-type:inline-size] transition-transform duration-200 hover:-translate-y-1">
       <Link
         href={href}
         className="absolute inset-0 z-10 block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-dark"
@@ -30,7 +30,7 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
 
       <Image
         src={study.folder}
-        alt={study.company}
+        alt=""
         fill
         sizes="(max-width: 639px) 50vw, (max-width: 767px) 50vw, (max-width: 1023px) 33vw, 260px"
         className="object-contain drop-shadow-sm"
@@ -55,16 +55,22 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
         )}
       </div>
 
-      <div className="pointer-events-none absolute inset-x-[8.5%] bottom-[7.5%] text-eri-white sm:bottom-[8.5%]">
-        <h3 className="font-display text-[clamp(13px,3.5vw,20px)] font-semibold leading-tight tracking-[-0.01em]">
+      <div className="pointer-events-none absolute inset-x-[9%] bottom-[6%] top-[40%] flex flex-col items-start justify-center text-eri-white max-[360px]:top-[34%]">
+        <h3
+          className={`whitespace-nowrap font-display font-semibold leading-tight tracking-[-0.01em] ${
+            study.company.length > 16
+              ? "text-[clamp(9px,7.5cqw,18px)]"
+              : "text-[clamp(11px,9cqw,20px)]"
+          }`}
+        >
           {study.company}
         </h3>
         {study.description ? (
-          <p className="mt-[3%] line-clamp-2 max-w-[200px] text-[clamp(8px,1.8vw,11px)] leading-[1.45] text-white/95">
+          <p className="mt-1 line-clamp-2 max-w-[200px] text-[clamp(8px,5.1cqw,11px)] leading-[1.4] text-white/90 sm:mt-2">
             {study.description}
           </p>
         ) : null}
-        <span className="mt-[5%] inline-flex min-h-6 items-center justify-center rounded-full border border-eri-white px-[7%] py-[2.5%] font-display text-[clamp(8px,1.6vw,11px)] leading-none text-eri-white transition-colors group-hover:bg-white/20">
+        <span className="mt-2 inline-flex shrink-0 items-center justify-center rounded-full border border-eri-white px-2.5 py-1 font-display text-[clamp(9px,5.5cqw,11px)] leading-none text-eri-white transition-colors group-hover:bg-white/20 max-[360px]:mt-1 max-[360px]:py-0.5 sm:mt-3 sm:px-3.5">
           View Details
         </span>
       </div>
@@ -125,7 +131,7 @@ export function CaseStudiesPageContent({
           {/* Header section */}
           <div className="flex flex-col gap-5 border-b border-eri-grey-5 pb-7 sm:flex-row sm:items-end sm:justify-between lg:gap-10">
             <div>
-              <h1 className="font-display text-[38px] font-semibold leading-[1.05] tracking-[-0.025em] text-eri-dark sm:text-[44px] lg:text-[48px]">
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
                 Case Studies
               </h1>
               <p className="mt-3 max-w-[480px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
@@ -184,7 +190,7 @@ export function CaseStudiesPageContent({
 
           {/* Grid section */}
           {visibleStudies.length > 0 ? (
-            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8">
+            <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-8">
               {visibleStudies.map((study) => (
                 <CaseStudyCard key={study.id} study={study} />
               ))}

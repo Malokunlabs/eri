@@ -5,6 +5,7 @@ export const siteConfig = {
     "Eri gathers verified ground truth across Nigeria through field teams, store audits, consumer interviews, and trade spend verification.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://useeri.africa",
   alternateUrls: ["https://useeri.com"],
+  askEriHref: process.env.NEXT_PUBLIC_ASK_ERI_URL || "https://ask.useeri.com",
   ogImage: "/images/about/folder.png",
   keywords: [
     "Eri",
@@ -27,5 +28,13 @@ export const siteConfig = {
   ],
   creator: "Eri",
   twitterHandle: "@useeri_africa",
+  contact: {
+    address: "97 Adeola Odeku Street, Victoria Island, Lagos",
+    phoneDisplay: "+234 814 297 0965",
+    phoneHref: "tel:+2348142970965",
+    whatsappHref: "https://wa.me/2348142970965",
+    email: "info@useeri.com",
+    emailHref: "mailto:info@useeri.com",
+  },
 } as const;
 

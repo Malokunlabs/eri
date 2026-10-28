@@ -9,37 +9,109 @@ import { Container } from "@/components/ui/container";
 const TESTIMONIALS = [
   {
     quote:
-      "Eri is synonymous with speed and agility! I am always confident about my timelines when I work with the team. Responses are swift and on time. Quality is also top-notch. Looking forward to future studies!",
+      'Eri is synonymous with speed and agility! I am always confident about my timelines when I work with the team. Responses are swift and on time. Quality is also top- notch. Looking forward to future studies!"',
     name: "Fred Okobi",
     company: "Moniepoint NG",
     avatar: "/images/video-dairies/moniepoint-img.svg",
     logo: "/images/video-dairies/moniepoint-logo.svg",
   },
-  {
-    quote:
-      "Eri's fieldwork gave us a clear picture of what was actually happening on the ground — not what we assumed.",
-    name: "Amina Yusuf",
-    company: "Flutterwave",
-    avatar: "/images/video-dairies/girlonglasses.png",
-    logo: "/images/video-dairies/moniepoint-logo.svg",
-  },
-  {
-    quote:
-      "The depth of insight we got from Eri's ground-level research completely changed how we approach new markets. Exceptional work.",
-    name: "Chidi Eze",
-    company: "Paystack",
-    avatar: "/images/video-dairies/manonorange.png",
-    logo: "/images/video-dairies/moniepoint-logo.svg",
-  },
+  // Add more testimonials here — the stacked carousel animation
+  // turns on automatically once there is more than one entry.
 ];
+
+const HAS_CAROUSEL = TESTIMONIALS.length > 1;
 
 type AnimPhase = "stacked" | "fanning" | "transitioning";
 
 export function ContactPage() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [phase, setPhase] = useState<AnimPhase>("stacked");
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (status === "error") {
+      setStatus("idle");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMsg("");
+
+    const accessKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+      "59cb37c1-c48f-4a5f-86f8-40bf7ed949ef";
+
+    try {
+      const payload = new FormData();
+      payload.append("access_key", accessKey);
+      payload.append(
+        "name",
+        `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim(),
+      );
+      payload.append("email", formData.email.trim());
+      payload.append("message", formData.message.trim());
+      payload.append(
+        "subject",
+        `New Project Inquiry from ${formData.firstName.trim()} [Eri]`,
+      );
+      payload.append("from_name", "Eri Website");
+
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: payload,
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.success) {
+        if (res.status === 403) {
+          throw new Error(
+            data.message ||
+              "Domain not whitelisted in Web3Forms. Please add 'localhost' (or your production domain) under Form Settings in Web3Forms.",
+          );
+        }
+        throw new Error(
+          data.message || "Failed to submit form. Please try again.",
+        );
+      }
+
+      setStatus("success");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        message: "",
+      });
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please reach out to info@useeri.com directly.",
+      );
+    }
+  };
 
   useEffect(() => {
+    if (!HAS_CAROUSEL) return;
     // Total cycle: 6 000 ms
     // 5 000ms stacked (readable) → 500ms fanning → 500ms swap
     const STACKED = 5000;
@@ -80,7 +152,7 @@ export function ContactPage() {
   const frontIdx = activeIdx;
 
   return (
-    <div className="relative min-h-screen bg-eri-dark">
+    <div className="relative min-h-screen overflow-x-hidden bg-eri-dark">
       {/* Background image */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
@@ -91,7 +163,7 @@ export function ContactPage() {
           className="object-cover object-center"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/40 to-black/70" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/20 to-black/55" />
         <div className="absolute inset-0 bg-linear-to-r from-black/55 via-black/20 to-transparent" />
       </div>
 
@@ -103,26 +175,63 @@ export function ContactPage() {
       {/* Main */}
       <main
         id="main-content"
-        className="relative z-10 pb-20 pt-6 sm:pt-10 lg:pb-28 lg:pt-14"
+        className="relative z-10 flex min-h-[calc(100vh-80px)] flex-col justify-center py-8 sm:py-12 lg:py-14"
       >
         <Container size="reach">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
-            {/* Header text: order-1 on mobile, Col 1 Row 1 on desktop */}
-            <div className="order-1 lg:order-0 lg:col-start-1 lg:row-start-1">
-              <h1 className="max-w-[480px] font-display text-[34px] font-semibold leading-[1.1] tracking-[-0.025em] text-white sm:text-[40px] lg:text-[44px]">
-                Tell us about your next project
-              </h1>
-              <p className="mt-4 max-w-[420px] text-[15px] leading-[1.55] text-white/70">
-                Tell us what you need to find out. We&apos;ll come back within
-                one working day with what it would take to answer it.
-              </p>
+          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-12 xl:gap-16">
+            {/* Left side: Header (top) + Cards (bottom) */}
+            <div className="contents lg:col-start-1 lg:flex lg:h-full lg:flex-col lg:justify-between">
+              {/* Header text: order-1 on mobile */}
+              <div className="order-1">
+                <h1 className="max-w-[480px] font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[46px] lg:text-[50px]">
+                  Tell us about
+                  <br />
+                  your next project
+                </h1>
+                <p className="mt-3.5 max-w-[420px] text-[14px] leading-[1.5] text-white/85 sm:text-[14.5px]">
+                  Tell us what you need to find out. We&apos;ll come back within
+                  one working day with what it would take to answer it.
+                </p>
+              </div>
+
+              {/* Testimonial Cards: order-3 on mobile (beneath form) */}
+              <div className="order-3 mt-8 sm:mt-10 lg:mt-9 lg:w-full lg:max-w-[430px]">
+                <div
+                  className="relative h-[198px] w-full max-w-[430px]"
+                  aria-live="polite"
+                  aria-label="Client testimonials"
+                >
+                  {HAS_CAROUSEL && (
+                    <>
+                      <TestimonialCard
+                        testimonial={TESTIMONIALS[backIdx]}
+                        layer="back"
+                        phase={phase}
+                      />
+                      <TestimonialCard
+                        testimonial={TESTIMONIALS[midIdx]}
+                        layer="mid"
+                        phase={phase}
+                      />
+                    </>
+                  )}
+                  <TestimonialCard
+                    testimonial={TESTIMONIALS[frontIdx]}
+                    layer="front"
+                    phase={phase}
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Form: order-2 on mobile (ON TOP), Col 2 Row 1-span-2 on desktop */}
-            <div className="order-2 lg:order-0 lg:col-start-2 lg:row-start-1 lg:row-span-2">
-              <div className="rounded-[28px] border border-eri-grey-4 bg-eri-white p-6 shadow-[0_8px_40px_rgba(0,0,0,0.18)] sm:p-8 lg:p-10">
-                <form action="#" className="space-y-4 sm:space-y-5">
-                  <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
+            {/* Form: order-2 on mobile (between header and cards), Col 2 on desktop */}
+            <div className="order-2 lg:col-start-2 lg:h-full">
+              <div className="flex h-full flex-col justify-between rounded-[28px] border border-eri-grey-4/80 bg-eri-white p-6 shadow-[0_12px_40px_rgba(0,0,0,0.12)] sm:p-7 lg:p-8 xl:p-9">
+                <form
+                  onSubmit={handleSubmit}
+                  className="flex h-full flex-col justify-between gap-3.5 sm:gap-4"
+                >
+                  <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 sm:gap-4">
                     <div>
                       <label htmlFor="first-name" className="sr-only">
                         First name
@@ -131,9 +240,12 @@ export function ContactPage() {
                         id="first-name"
                         name="firstName"
                         type="text"
+                        required
+                        value={formData.firstName}
+                        onChange={handleChange}
                         autoComplete="given-name"
                         placeholder="Enter your First Name"
-                        className="eri-field"
+                        className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
                       />
                     </div>
                     <div>
@@ -144,9 +256,11 @@ export function ContactPage() {
                         id="last-name"
                         name="lastName"
                         type="text"
+                        value={formData.lastName}
+                        onChange={handleChange}
                         autoComplete="family-name"
                         placeholder="Enter your Last Name"
-                        className="eri-field"
+                        className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -159,58 +273,60 @@ export function ContactPage() {
                       id="work-email"
                       name="email"
                       type="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
                       autoComplete="email"
                       placeholder="Enter your work email"
-                      className="eri-field"
+                      className="eri-field h-12 rounded-[14px] border border-eri-grey-5 bg-white px-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
                     />
                   </div>
 
-                  <div>
+                  <div className="min-h-[125px] flex-1 sm:min-h-[135px]">
                     <label htmlFor="message" className="sr-only">
                       What do you need to find out?
                     </label>
-                    <input
+                    <textarea
                       id="message"
                       name="message"
-                      type="text"
+                      rows={5}
+                      required
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="What do you need to find out?"
-                      className="eri-field"
+                      className="eri-field eri-field--textarea h-full min-h-[125px] w-full resize-none rounded-[14px] border border-eri-grey-5 bg-white p-4 text-[14px] text-eri-dark placeholder:text-eri-grey-10 focus:border-eri-grey-8 focus:outline-none"
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    className="eri-pill eri-pill--primary flex min-h-12 w-full items-center justify-center text-center text-[15px] font-semibold"
-                  >
-                    Book a Signal
-                  </button>
-                </form>
-              </div>
-            </div>
+                  {status === "success" && (
+                    <div
+                      role="status"
+                      className="rounded-[14px] border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-[13px] text-emerald-800"
+                    >
+                      ✓ Thank you! We&apos;ve received your inquiry and will be
+                      in touch within one working day.
+                    </div>
+                  )}
 
-            {/* Testimonial Cards: order-3 on mobile (BENEATH the form), Col 1 Row 2 on desktop */}
-            <div className="order-3 mt-4 sm:mt-6 lg:order-0 lg:col-start-1 lg:row-start-2 lg:mt-8 lg:self-start">
-              <div
-                className="relative h-62.5 w-full max-w-120 pt-6 sm:h-60 lg:max-w-105"
-                aria-live="polite"
-                aria-label="Client testimonials"
-              >
-                {/* Render back-to-front so front card is painted on top */}
-                <TestimonialCard
-                  testimonial={TESTIMONIALS[backIdx]}
-                  layer="back"
-                  phase={phase}
-                />
-                <TestimonialCard
-                  testimonial={TESTIMONIALS[midIdx]}
-                  layer="mid"
-                  phase={phase}
-                />
-                <TestimonialCard
-                  testimonial={TESTIMONIALS[frontIdx]}
-                  layer="front"
-                  phase={phase}
-                />
+                  {status === "error" && (
+                    <div
+                      role="alert"
+                      className="rounded-[14px] border border-rose-200 bg-rose-50 px-4 py-2.5 text-[13px] text-rose-800"
+                    >
+                      {errorMsg}
+                    </div>
+                  )}
+
+                  <div>
+                    <button
+                      type="submit"
+                      disabled={status === "submitting"}
+                      className="eri-pill eri-pill--primary min-h-[46px] w-full rounded-full bg-eri-coral-dark px-7 py-3 text-[14.5px] font-semibold text-white shadow-sm transition-colors hover:bg-[#b04018] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:self-start"
+                    >
+                      {status === "submitting" ? "Sending..." : "Send Message"}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -236,99 +352,96 @@ function getCardStyle(
     position: "absolute",
     left: 0,
     right: 0,
-    top: "26px",
+    height: "180px",
     transition:
-      "transform 500ms cubic-bezier(0.34, 1.1, 0.64, 1), opacity 500ms ease",
-    willChange: "transform, opacity",
+      "transform 500ms cubic-bezier(0.34, 1.1, 0.64, 1), opacity 500ms ease, top 500ms cubic-bezier(0.34, 1.1, 0.64, 1)",
+    willChange: "transform, opacity, top",
+    transformOrigin: "top center",
   };
 
-  // ── STACKED: back cards offset upward — peek above the front card ──
+  // ── STACKED: Stepped tabs visible at top, uniform bottom covered by front card ──
   if (phase === "stacked") {
     if (layer === "back") {
-      // Furthest back: floats 16px above, narrower (creates depth stripe at top)
       return {
         ...base,
         zIndex: 1,
-        transform: "translateY(-16px) scaleX(0.92)",
-        opacity: 0.5,
-        transformOrigin: "top center",
+        top: "0px",
+        transform: "scaleX(0.92)",
+        opacity: 0.65,
       };
     }
     if (layer === "mid") {
-      // Middle: 8px above, slightly narrower
       return {
         ...base,
         zIndex: 2,
-        transform: "translateY(-8px) scaleX(0.96)",
-        opacity: 0.72,
-        transformOrigin: "top center",
+        top: "9px",
+        transform: "scaleX(0.96)",
+        opacity: 0.85,
       };
     }
-    // Front: flush at top, full width
     return {
       ...base,
       zIndex: 3,
-      transform: "translateY(0px) scaleX(1)",
+      top: "18px",
+      transform: "scaleX(1)",
       opacity: 1,
     };
   }
 
-  // ── FANNING: cards fan upward + slight rotation ──
+  // ── FANNING: Gentle rotation & lift ──
   if (phase === "fanning") {
     if (layer === "back") {
       return {
         ...base,
         zIndex: 1,
-        transform:
-          "translateY(-24px) translateX(-10px) rotate(-4deg) scaleX(0.92)",
-        opacity: 0.62,
-        transformOrigin: "top center",
+        top: "-6px",
+        transform: "translateX(-8px) rotate(-3deg) scaleX(0.92)",
+        opacity: 0.7,
       };
     }
     if (layer === "mid") {
       return {
         ...base,
         zIndex: 2,
-        transform:
-          "translateY(-12px) translateX(-5px) rotate(-2deg) scaleX(0.96)",
-        opacity: 0.82,
-        transformOrigin: "top center",
+        top: "6px",
+        transform: "translateX(-4px) rotate(-1.5deg) scaleX(0.96)",
+        opacity: 0.88,
       };
     }
-    // Front lifts slightly down to create visual separation
     return {
       ...base,
       zIndex: 3,
-      transform: "translateY(4px) scale(1.01)",
+      top: "20px",
+      transform: "scaleX(1)",
       opacity: 1,
     };
   }
 
-  // ── TRANSITIONING: front exits upward, mid → front, back → mid ──
+  // ── TRANSITIONING: Front exits up, mid → front, back → mid ──
   if (layer === "back") {
-    // Promotes to mid
     return {
       ...base,
       zIndex: 2,
-      transform: "translateY(-8px) scaleX(0.96)",
-      opacity: 0.78,
-      transformOrigin: "top center",
+      top: "9px",
+      transform: "scaleX(0.96)",
+      opacity: 0.85,
     };
   }
   if (layer === "mid") {
-    // Promotes to front
     return {
       ...base,
       zIndex: 3,
-      transform: "translateY(0px) scaleX(1)",
+      top: "18px",
+      transform: "scaleX(1)",
       opacity: 1,
     };
   }
-  // Front card exits: slides up and fades out
+  // Front exits upward
   return {
     ...base,
     zIndex: 1,
-    transform: "translateY(-36px) translateX(-14px) rotate(-5deg) scale(0.88)",
+    top: "-26px",
+    transform: "translateX(-12px) rotate(-4deg) scale(0.92)",
     opacity: 0,
   };
 }
@@ -336,29 +449,36 @@ function getCardStyle(
 function TestimonialCard({ testimonial, layer, phase }: CardProps) {
   const style = getCardStyle(layer, phase);
 
+  const layerBg =
+    layer === "back"
+      ? "bg-[#ded9d0] border-[#ccc6bb]"
+      : layer === "mid"
+        ? "bg-[#eae5dc] border-[#dad4c9]"
+        : "bg-eri-white border-eri-grey-4/80 shadow-[0_12px_32px_rgba(0,0,0,0.16)]";
+
   return (
     <figure
       style={style}
-      className="rounded-[28px] border border-eri-grey-4 bg-eri-white p-6 shadow-[0_12px_32px_rgba(0,0,0,0.22)] sm:p-7"
+      className={`flex flex-col justify-between rounded-[22px] border p-5 select-none sm:rounded-[24px] sm:p-5.5 ${layerBg}`}
     >
-      <blockquote className="text-[13.5px] leading-[1.65] text-eri-grey-11">
-        {testimonial.quote}&rdquo;
+      <blockquote className="line-clamp-4 text-[12.5px] leading-[1.5] text-eri-grey-11 sm:text-[13px]">
+        {testimonial.quote}
       </blockquote>
 
-      <figcaption className="mt-5 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
+      <figcaption className="mt-3 flex items-center justify-between gap-3 pt-0.5">
+        <div className="flex min-w-0 items-center gap-3">
           <Image
             src={testimonial.avatar}
             alt=""
             width={40}
             height={40}
-            className="size-10 rounded-full object-cover"
+            className="size-10 shrink-0 rounded-full object-cover"
           />
-          <div>
-            <p className="font-display text-[15px] font-semibold leading-tight text-eri-dark">
+          <div className="min-w-0">
+            <p className="truncate font-display text-[14.5px] font-semibold leading-tight text-eri-dark">
               {testimonial.name}
             </p>
-            <p className="text-[13px] leading-tight text-eri-grey-11">
+            <p className="mt-0.5 truncate text-[12px] leading-tight text-eri-grey-11">
               {testimonial.company}
             </p>
           </div>

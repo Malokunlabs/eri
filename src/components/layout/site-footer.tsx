@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 const companyLinks = ["Home", "About", "Services", "FAQs"] as const;
 const exploreLinks = ["Case Studies", "Insights", "Reports"] as const;
@@ -44,10 +45,10 @@ function FooterLinkGroup({
 }) {
   return (
     <div>
-      <h3 className="font-display text-[18px] font-semibold leading-tight">
+      <h3 className="font-display text-[16px] font-semibold leading-tight sm:text-[18px]">
         {title}
       </h3>
-      <ul className="mt-3 space-y-3 text-[15px] leading-tight">
+      <ul className="mt-3 space-y-3 text-[13px] leading-tight sm:text-[15px]">
         {links.map((link) => (
           <li key={link}>
             <Link
@@ -73,27 +74,27 @@ export function SiteFooter() {
         >
           <h2
             id="newsletter-title"
-            className="max-w-[650px] font-display text-[38px] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[42px]"
+            className="max-w-[650px] font-display text-[clamp(20px,6.15vw,24px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Get Ground-level
             <br />
             Intelligence, in your inbox
           </h2>
-          <p className="mt-4 text-[15px] leading-[1.5] text-eri-coral-light">
+          <p className="mt-3 text-[13px] leading-[1.55] text-eri-coral-light sm:mt-4 sm:text-[15px]">
             We send Signals, field observations and consumer trends from across
             Nigeria.
           </p>
 
           <form
             action="#"
-            className="mt-10 flex h-14 w-full max-w-[536px] items-center rounded-full bg-eri-white p-2 text-eri-dark"
+            className="mt-6 flex h-12 w-full max-w-[536px] items-center rounded-full bg-eri-white p-1.5 text-eri-dark sm:mt-10 sm:h-14 sm:p-2"
           >
             <Image
               src="/icons/icons/search-icon.svg"
               alt=""
               width={20}
               height={20}
-              className="ml-2 size-5 shrink-0"
+              className="ml-2 size-4 shrink-0 sm:size-5"
             />
             <label htmlFor="footer-email" className="sr-only">
               Work email
@@ -104,49 +105,74 @@ export function SiteFooter() {
               type="email"
               autoComplete="email"
               placeholder="Enter your work email"
-              className="min-w-0 flex-1 bg-transparent px-3 text-[14px] outline-none placeholder:text-eri-grey-10"
+              className="min-w-0 flex-1 bg-transparent px-2 text-[12px] outline-none placeholder:text-eri-grey-10 sm:px-3 sm:text-[14px]"
             />
-            <button type="submit" className="eri-pill eri-pill--signup shrink-0">
+            <button type="submit" className="eri-pill eri-pill--signup shrink-0 max-sm:min-h-8 max-sm:px-3 max-sm:py-1.5 max-sm:text-[12px]">
               Sign Up
             </button>
           </form>
         </section>
 
-        <div className="mt-24 grid grid-cols-2 gap-x-8 gap-y-12 sm:mt-32 sm:grid-cols-3 lg:grid-cols-[1.4fr_0.7fr_0.8fr_1fr_auto] lg:gap-12">
-          <div className="col-span-2 sm:col-span-3 lg:col-span-1">
+        <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:mt-32 sm:grid-cols-3 sm:gap-y-12 lg:grid-cols-[1.4fr_0.7fr_0.8fr_1fr_auto] lg:gap-12">
+          <div className="sm:col-span-3 lg:col-span-1">
             <Image
               src="/logo/header/logo.svg"
               alt="Eri"
               width={135}
               height={48}
+              className="h-auto w-[90px] sm:w-[135px]"
             />
-            <p className="mt-5 max-w-[225px] text-[15px] leading-[1.5] text-eri-coral-light">
+            <p className="mt-4 max-w-[225px] text-[13px] leading-[1.5] text-eri-coral-light sm:mt-5 sm:text-[15px]">
               We gather field intelligence on the ground across Nigeria.
             </p>
-            <Link href="#" className="eri-pill eri-pill--footer mt-6">
-              Book a Signal
-            </Link>
+            <a
+              href="/contact"
+              className="eri-pill eri-pill--footer mt-5 max-sm:min-h-8 max-sm:px-3 max-sm:py-1.5 max-sm:text-[12px] sm:mt-6"
+            >
+              Contact Us
+            </a>
           </div>
 
           <FooterLinkGroup title="Company" links={companyLinks} />
           <FooterLinkGroup title="Explore" links={exploreLinks} />
 
-          <div className="col-span-2 sm:col-span-1">
-            <h3 className="font-display text-[18px] font-semibold leading-tight">
+          <div>
+            <h3 className="font-display text-[16px] font-semibold leading-tight sm:text-[18px]">
               Contact
             </h3>
-            <div className="mt-3 space-y-3 text-[15px] leading-tight">
-              <p>(234) 801 234 3678</p>
-              <p>(234) 801 987 6543</p>
-              <p>hello@useeri.africa</p>
+            <div className="mt-3 space-y-3 text-[13px] leading-tight sm:text-[15px]">
+              <p>{siteConfig.contact.address}</p>
+              <p>
+                <a
+                  href={siteConfig.contact.phoneHref}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {siteConfig.contact.phoneDisplay}
+                </a>
+              </p>
+              <p>
+                <a
+                  href={siteConfig.contact.emailHref}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  {siteConfig.contact.email}
+                </a>
+              </p>
             </div>
           </div>
 
-          <div className="col-span-2 flex items-start gap-3 sm:col-span-3 lg:col-span-1 lg:justify-end">
+          <div className="flex items-start justify-between gap-3 sm:col-span-3 sm:justify-start lg:col-span-1 lg:justify-end">
             {socialLinks.map((social) => (
               <Link
                 key={social.label}
-                href="#"
+                href={
+                  social.label === "WhatsApp"
+                    ? siteConfig.contact.whatsappHref
+                    : "#"
+                }
+                {...(social.label === "WhatsApp"
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
                 aria-label={social.label}
                 className="flex size-10 items-center justify-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
               >
@@ -155,14 +181,14 @@ export function SiteFooter() {
                   alt=""
                   width={social.size}
                   height={social.size}
-                  className="shrink-0"
+                  className="h-auto w-7 shrink-0 sm:w-auto"
                 />
               </Link>
             ))}
           </div>
         </div>
 
-        <div className="relative mt-16 h-[500px] sm:h-[680px] lg:h-[900px]">
+        <div className="relative mt-16 h-[calc((100vw-24px)*1.05)] sm:h-[680px] lg:h-[900px]">
           <Image
             src="/logo/footer/eri-logo.svg"
             alt=""
@@ -171,8 +197,8 @@ export function SiteFooter() {
             className="absolute left-0 top-0 h-auto w-full"
           />
 
-          <div className="absolute inset-x-0 bottom-5 z-10 flex items-center justify-between border-b border-eri-bone pb-4 font-display text-[12px] sm:bottom-12 sm:text-[14px] lg:bottom-auto lg:top-[650px]">
-            <div className="flex items-center gap-8">
+          <div className="absolute inset-x-0 bottom-5 z-30 hidden items-center justify-between border-b border-eri-bone pb-4 font-display text-[10px] sm:bottom-12 sm:z-10 sm:text-[14px] lg:bottom-auto lg:top-[650px] lg:flex">
+            <div className="flex items-center gap-4 sm:gap-8">
               <span>© {new Date().getFullYear()} ERI</span>
               <Link href="#" className="transition-opacity hover:opacity-70">
                 Privacy Policy
@@ -191,7 +217,7 @@ export function SiteFooter() {
             alt="A folder highlighting Eri's network of over 12,000 active field agents"
             width={770}
             height={500}
-            className="absolute left-1/2 top-[150px] z-20 h-auto w-[min(88vw,430px)] -translate-x-1/2 sm:top-[250px] sm:w-[600px] lg:left-[58%] lg:top-[400px] lg:w-[770px]"
+            className="pointer-events-none absolute left-[54%] top-[calc((100vw-24px)*0.38)] z-20 h-auto w-[85%] -translate-x-1/2 sm:left-1/2 sm:top-[250px] sm:w-[600px] lg:left-[58%] lg:top-[400px] lg:w-[770px]"
           />
         </div>
       </Container>

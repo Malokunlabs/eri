@@ -1,17 +1,60 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 
+const indexes = [
+  {
+    id: "consumer-compression",
+    tag: "Q1 2026",
+    title: "Consumer Compresion Index",
+    description:
+      "Measures the degree to which consumers are compressing discretionary spending relative to essential needs.",
+    image: "/images/report-page/consumer-compression.png",
+    alt: "Dining area with colorful plastic chairs and tables",
+  },
+  {
+    id: "payment-behavior",
+    tag: "Q1 2026",
+    title: "Payment Behavior Index",
+    description:
+      "Tracks shifts in payment method adoption, from cash to digital wallets and bank transfers.",
+    image: "/images/report-page/payment-behavior.png",
+    alt: "Gravel stones and building sand",
+  },
+  {
+    id: "retail-migration",
+    tag: "Q1 2026",
+    title: "Retail Migration Index",
+    description:
+      "Observes consumer movement between formal retail, open markets, and informal channels across Nigeria.",
+    image: "/images/report-page/retail-migration.png",
+    alt: "Commercial buses in a Nigerian street",
+  },
+  {
+    id: "consumer-confidence",
+    tag: "Q1 2026",
+    title: "Consumer Confidence Signal",
+    description:
+      "A composite signal reflecting consumer outlook on income stability and economic trajectory in Nigeria.",
+    image: "/images/report-page/consumer-confidence.png",
+    alt: "Person carrying a pink umbrella",
+  },
+] as const;
+
 export function ReportsPageContent() {
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
       <section className="relative min-h-140 w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-155 lg:min-h-170">
         {/* Background Hero Image */}
         <Image
-          src="/images/report-page/Reports Hero.png"
+          src="/images/report-page/new-bg.png"
           alt="Woman carrying a tray in a Nigerian rural setting"
           fill
           priority
@@ -34,10 +77,10 @@ export function ReportsPageContent() {
         <div className="relative z-10 flex min-h-[460px] items-center pb-20 pt-8 sm:min-h-[520px] lg:min-h-[580px]">
           <Container size="insights">
             <div className="max-w-[560px]">
-              <h1 className="font-display text-[44px] font-semibold leading-[1.04] tracking-[-0.025em] text-eri-white sm:text-[54px] lg:text-[62px]">
-                Reports by Eri
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-white sm:text-[48px] lg:text-[56px]">
+                Reports by Aiye
               </h1>
-              <p className="mt-5 max-w-[460px] text-[15px] leading-[1.55] text-eri-white/90 sm:text-[16px]">
+              <p className="mt-5 max-w-[460px] text-[14px] leading-[1.55] text-eri-white/90 sm:text-[15px] lg:text-[16px]">
                 Eri publishes its own field research, gathered by our people in
                 markets and stores across Nigeria, and every report is free to
                 read.
@@ -57,13 +100,13 @@ export function ReportsPageContent() {
             <div>
               <h2
                 id="snapshot-heading"
-                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.025em] text-eri-dark sm:text-[38px] lg:text-[44px]"
+                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
               >
                 <span className="block">The Nigerian</span>
                 <span className="block">Urban Consumer</span>
                 <span className="block">2026 Snapshot Q1</span>
               </h2>
-              <p className="mt-4 max-w-97.5 text-[13px] leading-[1.55] text-eri-grey-11 sm:text-[14px]">
+              <p className="mt-4 max-w-97.5 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
                 57% of consumers had switched brands. 47% said they choose on
                 consistency, not price or advertising. From 244 retail
                 intercepts across Lagos, Abuja and Port Harcourt.
@@ -100,127 +143,119 @@ export function ReportsPageContent() {
       >
         <Container size="insights">
           {/* Header */}
-          <div className="text-center">
+          <div className="text-left sm:text-center">
             <h2
               id="indexes-heading"
-              className="font-display text-[38px] font-semibold leading-[1.05] tracking-[-0.02em] text-eri-dark sm:text-[46px] lg:text-[52px]"
+              className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
             >
               Living Intelligence Indexes
             </h2>
-            <p className="mx-auto mt-4 max-w-[560px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
+            <p className="mt-3 sm:mx-auto sm:mt-4 max-w-[560px] text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
               Four measures we track every quarter, gathered the same way as
               everything else we publish, so you can see what is moving in the
               market and what isn&apos;t.
             </p>
           </div>
 
-          {/* 4 Cards Row: Card 1 (Wide) + 3 Portrait Cards */}
-          <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 lg:gap-5">
-            {/* Card 1: Consumer Compression Index (Wide - 2 columns on lg) */}
-            <article className="group relative min-h-[360px] overflow-hidden rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:col-span-2 md:col-span-2 lg:col-span-2">
-              <Image
-                src="/images/report-page/two-girls.png"
-                alt="Consumers shopping in a retail store"
-                fill
-                sizes="(max-width: 1023px) 100vw, 440px"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"
-              />
+          {/* Desktop Interactive Expanding Cards Row */}
+          <div className="mt-12 hidden lg:flex lg:h-[390px] xl:h-[410px] lg:gap-5 w-full">
+            {indexes.map((item, index) => {
+              const isExpanded = activeIndex === index;
+              return (
+                <article
+                  key={item.id}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  onFocus={() => setActiveIndex(index)}
+                  onClick={() => setActiveIndex(index)}
+                  tabIndex={0}
+                  role="button"
+                  aria-expanded={isExpanded}
+                  className={`group relative overflow-hidden rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] cursor-pointer select-none transition-[flex-grow] duration-500 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                    isExpanded ? "flex-[2.4]" : "flex-1"
+                  }`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes={isExpanded ? "520px" : "220px"}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"
+                  />
 
-              {/* Tag */}
-              <span className="absolute left-5 top-5 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
-                Q1 2026
-              </span>
+                  {/* Tag */}
+                  <span className="absolute left-5 top-5 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
+                    {item.tag}
+                  </span>
 
-              {/* Bottom Content */}
-              <div className="absolute inset-x-5 bottom-6 flex flex-col justify-between gap-3 text-white sm:flex-row sm:items-end">
-                <h3 className="max-w-[170px] font-display text-[22px] font-semibold leading-tight tracking-[-0.015em]">
-                  Consumer Compression Index
-                </h3>
-                <p className="max-w-[240px] text-[12px] leading-[1.4] text-white/90">
-                  Measures the degree to which consumers are compressing
-                  discretionary spending relative to essential needs.
-                </p>
-              </div>
-            </article>
+                  {/* Bottom Content */}
+                  <div className="absolute inset-x-5 bottom-6 text-white">
+                    <div className="flex items-end justify-between gap-4">
+                      <h3
+                        className={`font-display font-semibold leading-tight tracking-[-0.015em] transition-all duration-300 ${
+                          isExpanded
+                            ? "text-[22px] max-w-[190px]"
+                            : "text-[19px] xl:text-[20px] max-w-[150px]"
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+                      <div
+                        className={`overflow-hidden transition-all duration-500 ease-out ${
+                          isExpanded
+                            ? "max-w-[270px] opacity-100 translate-x-0"
+                            : "max-w-0 opacity-0 translate-x-4 pointer-events-none"
+                        }`}
+                      >
+                        <p className="w-[270px] text-[13px] leading-[1.4] text-white/90">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
 
-            {/* Card 2: Payment Behavior Index */}
-            <article className="group relative min-h-[360px] overflow-hidden rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] lg:col-span-1">
-              <Image
-                src="/images/report-page/darkboy.png"
-                alt="Young man in casual orange shirt"
-                fill
-                sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 220px"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-              />
+          {/* Mobile Vertically Stacked Cards */}
+          <div className="mt-8 flex flex-col gap-4 sm:gap-5 lg:hidden">
+            {indexes.map((item) => (
+              <article
+                key={item.id}
+                className="relative min-h-[290px] sm:min-h-[330px] overflow-hidden rounded-[22px] shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
+              >
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  sizes="(max-width: 639px) calc(100vw - 32px), 640px"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"
+                />
 
-              <span className="absolute left-5 top-5 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
-                Q1 2026
-              </span>
+                {/* Tag */}
+                <span className="absolute left-4 top-4 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
+                  {item.tag}
+                </span>
 
-              <div className="absolute inset-x-5 bottom-6 text-white">
-                <h3 className="font-display text-[19px] font-semibold leading-tight tracking-[-0.015em]">
-                  Payment Behavior Index
-                </h3>
-              </div>
-            </article>
-
-            {/* Card 3: Retail Migration Index */}
-            <article className="group relative min-h-[360px] overflow-hidden rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] lg:col-span-1">
-              <Image
-                src="/images/report-page/girlwithbook.png"
-                alt="Women reading a book together"
-                fill
-                sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 220px"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-              />
-
-              <span className="absolute left-5 top-5 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
-                Q1 2026
-              </span>
-
-              <div className="absolute inset-x-5 bottom-6 text-white">
-                <h3 className="font-display text-[19px] font-semibold leading-tight tracking-[-0.015em]">
-                  Retail Migration Index
-                </h3>
-              </div>
-            </article>
-
-            {/* Card 4: Consumer Confidence Signal */}
-            <article className="group relative min-h-[360px] overflow-hidden rounded-[24px] shadow-[0_8px_24px_rgba(0,0,0,0.06)] lg:col-span-1">
-              <Image
-                src="/images/report-page/girlonglasses.png"
-                alt="Woman in white scarf and glasses"
-                fill
-                sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 220px"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
-              />
-
-              <span className="absolute left-5 top-5 rounded-full border border-white/80 px-3 py-1 text-[11px] font-medium leading-none text-white backdrop-blur-sm">
-                Q1 2026
-              </span>
-
-              <div className="absolute inset-x-5 bottom-6 text-white">
-                <h3 className="font-display text-[19px] font-semibold leading-tight tracking-[-0.015em]">
-                  Consumer Confidence Signal
-                </h3>
-              </div>
-            </article>
+                {/* Bottom Content */}
+                <div className="absolute inset-x-4 bottom-5 text-white">
+                  <h3 className="font-display text-[20px] sm:text-[22px] font-semibold leading-tight tracking-[-0.015em]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 max-w-[340px] text-[12px] sm:text-[13px] leading-[1.4] text-white/90">
+                    {item.description}
+                  </p>
+                </div>
+              </article>
+            ))}
           </div>
         </Container>
       </section>

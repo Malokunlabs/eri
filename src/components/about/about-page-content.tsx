@@ -133,10 +133,10 @@ export function AboutPageContent() {
           <Container size="insights">
             <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
               <div>
-                <h1 className="font-display text-[44px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[56px] lg:text-[64px]">
+                <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
                   About Us
                 </h1>
-                <p className="mt-5 max-w-105 text-[15px] leading-[1.55] text-white/95 sm:text-[16px]">
+                <p className="mt-5 max-w-105 text-[14px] leading-[1.55] text-white/95 sm:text-[15px] lg:text-[16px]">
                   Eri exists because the most important things about a market in
                   Nigeria are not written down anywhere, and someone has to go
                   and see them.
@@ -146,7 +146,7 @@ export function AboutPageContent() {
                     href="/contact"
                     className="inline-flex min-h-11 items-center justify-center rounded-full border border-eri-dark bg-eri-coral-dark px-7 py-2.5 font-display text-[15px] font-medium text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    Book a Signal
+                    Contact Us
                   </Link>
                 </div>
               </div>
@@ -187,7 +187,7 @@ export function AboutPageContent() {
             <div className="flex min-w-0 flex-col justify-center lg:pb-20 lg:pr-4">
               <h2
                 id="what-we-do-heading"
-                className="font-display text-[38px] font-semibold leading-[1.06] tracking-tight text-eri-dark sm:text-[48px] lg:text-[54px]"
+                className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
               >
                 What we do
               </h2>
@@ -277,15 +277,15 @@ export function AboutPageContent() {
 
       {/* Section 3: Meet The Founders */}
       <section aria-label="Meet The Founders">
-        {/* Founder 1: Lola Talabi-Oni (Orange Background) */}
+        {/* Founder 1: Logo Oluwamuyiwa (Orange Background) */}
         <div className="bg-eri-coral py-16 text-white sm:py-20 lg:py-28">
           <Container size="insights">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
                 <div className="relative aspect-464/513 w-full max-w-115">
                   <Image
-                    src="/images/about/manonleft.png"
-                    alt="Lola Talabi-Oni"
+                    src="/images/about/logor-img.png"
+                    alt="Logo Oluwamuyiwa"
                     fill
                     sizes="(max-width: 1023px) 100vw, 460px"
                     className="pointer-events-none object-contain"
@@ -297,20 +297,47 @@ export function AboutPageContent() {
                 <p className="text-[14px] font-medium tracking-wide text-white/90">
                   Meet The Founder
                 </p>
-                <h3 className="mt-2 font-display text-[38px] font-semibold leading-[1.06] tracking-[-0.02em] text-white sm:text-[48px] lg:text-[56px]">
-                  Lola Talabi-Oni
+                <h3 className="mt-2 font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-white sm:text-[38px] lg:text-[44px]">
+                  Logo Oluwamuyiwa
                 </h3>
-                <p className="mt-4 max-w-115 text-[15px] leading-[1.55] text-white/90 sm:mt-5 sm:text-[16px] sm:leading-[1.65]">
-                  57% of consumers had switched brands. 47% said they choose on
-                  consistency, not price or advertising. From 244 retail
-                  intercepts across Lagos, Abuja and Port Harcourt.
-                </p>
+                <div className="mt-4 max-w-115 space-y-4 text-[15px] leading-[1.55] text-white/90 sm:mt-5 sm:text-[16px] sm:leading-[1.65]">
+                  <p>
+                    Logo &ldquo;Logor&rdquo; Oluwamuyiwa is the Founder of ERI,
+                    an evidence infrastructure company building systems to make
+                    informal economies more legible.
+                  </p>
+                  <p>
+                    For more than a decade, his work has spanned field research,
+                    technology, culture and human behaviour, studying how
+                    people, merchants and markets operate beyond what
+                    conventional datasets can see.
+                  </p>
+                  <p>
+                    He founded Malokun Labs, a research and intelligence company
+                    working across financial services, consumer goods,
+                    public-sector and development contexts in Nigeria. That
+                    experience led to ERI: infrastructure for capturing,
+                    structuring and preserving permissioned evidence from real
+                    economic activity.
+                  </p>
+                  <p>
+                    Alongside his technology and research work, Logor is an
+                    internationally exhibited visual artist whose documentation
+                    of Lagos has been presented at the Museum of Modern Art
+                    (MoMA), New York, and Somerset House, London.
+                  </p>
+                  <p>
+                    Across both practices, his focus is to observe carefully,
+                    preserve what others overlook, and turn lived reality into
+                    something useful.
+                  </p>
+                </div>
               </div>
             </div>
           </Container>
         </div>
 
-        {/* Founder 2: Logor Oluwamuyiwa (Purple Background) */}
+        {/* Founder 2: Logor Oluwamuyiwa (Purple Background)
         <div className="bg-[#9F45B6] py-16 text-white sm:py-20 lg:py-28">
           <Container size="insights">
             <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -342,6 +369,7 @@ export function AboutPageContent() {
             </div>
           </Container>
         </div>
+        */}
       </section>
 
       {/* Section 4: Meet The Team */}
@@ -355,7 +383,7 @@ export function AboutPageContent() {
         >
           <h2
             id="meet-the-team-heading"
-            className="font-display text-[38px] font-semibold leading-[1.06] tracking-tight text-eri-dark sm:text-[48px] lg:text-[54px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
           >
             Meet The Team
           </h2>

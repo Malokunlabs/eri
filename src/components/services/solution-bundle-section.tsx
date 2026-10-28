@@ -70,18 +70,18 @@ export function SolutionBundleSection() {
   return (
     <section
       aria-labelledby="solution-bundles-heading"
-      className="bg-eri-grey-2 py-16 sm:py-18 lg:py-16"
+      className="bg-eri-white py-16 sm:py-18 lg:py-16"
     >
       <Container size="insights">
         {/* Section header */}
         <div className="mb-10 text-center sm:mb-12 lg:mb-14">
           <h2
             id="solution-bundles-heading"
-            className="font-display text-[30px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[36px] lg:text-[48px]"
+            className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
           >
             Our Solution Bundles
           </h2>
-          <p className="mx-auto mt-3 max-w-xs text-[13px] leading-[1.6] text-eri-grey-11 sm:max-w-sm sm:text-[14px] lg:max-w-md lg:text-[15px]">
+          <p className="mx-auto mt-3 max-w-xs text-[14px] leading-[1.55] text-eri-grey-11 sm:max-w-sm sm:text-[15px] lg:max-w-md">
             Choose the perfect bundle to transform your market research and
             brand activation strategy
           </p>
@@ -95,7 +95,7 @@ export function SolutionBundleSection() {
               className={`relative flex flex-1 flex-col rounded-2xl p-6 sm:p-7 lg:p-8 ${
                 bundle.featured
                   ? "bg-eri-mauve text-eri-white"
-                  : "border border-eri-grey-5 bg-eri-white text-eri-dark"
+                  : "border border-eri-grey-5 bg-eri-grey-3 text-eri-dark"
               }`}
             >
               {/* Card top: audience label + branded logo icon */}

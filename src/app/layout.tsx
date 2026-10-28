@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { RebrandBanner } from "@/components/layout/rebrand-banner";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { siteConfig } from "@/lib/site-config";
 
@@ -72,11 +73,17 @@ const jsonLd = {
       sameAs: ["https://useeri.africa", "https://useeri.com"],
       logo: `${siteConfig.url}/logo/header/logo.svg`,
       description: siteConfig.description,
-      email: "hello@useeri.africa",
+      email: siteConfig.contact.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "97 Adeola Odeku Street",
+        addressLocality: "Victoria Island, Lagos",
+        addressCountry: "NG",
+      },
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "Customer Support",
-        telephone: "+2348012343678",
+        telephone: "+2348142970965",
         areaServed: "NG",
         availableLanguage: ["English"],
       },
@@ -109,6 +116,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <RebrandBanner />
         {children}
         <SiteFooter />
       </body>

@@ -73,14 +73,14 @@ export function VideoDiaryDetailContent({
         <Container size="insights">
           {/* Featured Video Player Area */}
           <section aria-label="Featured Video">
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[20px] bg-black shadow-[0_8px_30px_rgba(41,41,41,0.08)] sm:rounded-[24px] lg:aspect-[16/9]">
+            <div className="relative aspect-video w-full overflow-hidden rounded-[20px] bg-black shadow-[0_8px_30px_rgba(41,41,41,0.08)] sm:rounded-[24px]">
               {isPlaying && embedUrl ? (
                 <iframe
                   src={`${embedUrl}${embedUrl.includes("?") ? "&" : "?"}autoplay=1&rel=0`}
                   title={video.title}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  className="absolute inset-0 size-full border-0"
+                  className="absolute inset-0 size-full scale-[1.04] border-0"
                 />
               ) : (
                 <div className="group relative size-full cursor-pointer">
@@ -90,7 +90,7 @@ export function VideoDiaryDetailContent({
                     fill
                     priority
                     sizes="(max-width: 1023px) 100vw, 1096px"
-                    className="object-cover"
+                    className="object-cover scale-[1.03] transition-transform duration-300 group-hover:scale-[1.06]"
                   />
                   <button
                     type="button"
@@ -98,14 +98,13 @@ export function VideoDiaryDetailContent({
                     aria-label={`Play video: ${video.title}`}
                     className="absolute inset-0 flex items-center justify-center transition-transform duration-200"
                   >
-                    <div className="flex size-14 items-center justify-center rounded-full bg-white/40 shadow-md backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-20">
-                      <svg
-                        className="size-6 translate-x-0.5 fill-white text-white drop-shadow-sm sm:size-8"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
+                    <Image
+                      src="/images/this-for/Play Button.png"
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="size-14 drop-shadow-md transition-transform duration-200 group-hover:scale-110 sm:size-20"
+                    />
                   </button>
                 </div>
               )}

@@ -1,13 +1,17 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
+
+const { contact } = siteConfig;
 
 const contactOptions = [
   {
     title: "Call Our Phone Lines",
     description: ["Fastest way to reach someone.", "Weekdays, 9 to 6."],
     action: "Call Us",
+    href: contact.phoneHref,
+    external: false,
     image: "/images/reach-us/Landline.svg",
     imageWidth: 340,
     imageHeight: 302,
@@ -20,6 +24,8 @@ const contactOptions = [
       "We reply the same day.",
     ],
     action: "Text Us",
+    href: contact.whatsappHref,
+    external: true,
     image: "/images/reach-us/phone.svg",
     imageWidth: 328,
     imageHeight: 270,
@@ -32,6 +38,8 @@ const contactOptions = [
       "We reply within 24 hours.",
     ],
     action: "Email Us",
+    href: contact.emailHref,
+    external: false,
     image: "/images/reach-us/Monitor.svg",
     imageWidth: 340,
     imageHeight: 313,
@@ -39,26 +47,36 @@ const contactOptions = [
   },
 ] as const;
 
-export function ReachUsSection() {
+type ReachUsSectionProps = {
+  title?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+export function ReachUsSection({
+  title = "Tell us the question. We'll go and find out for you.",
+  ctaText = "Contact Us",
+  ctaHref = "/contact",
+}: ReachUsSectionProps = {}) {
   return (
     <section
       aria-labelledby="reach-us-heading"
-      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-7 "
+      className="bg-eri-white py-14 text-eri-dark lg:pb-24 lg:pt-14"
     >
       <Container size="reach">
         <div className="flex flex-col items-start gap-7 sm:flex-row sm:items-center sm:justify-between">
           <h2
             id="reach-us-heading"
-            className="max-w-[570px] font-display text-[36px] font-semibold leading-[1.08] tracking-[-0.025em] lg:text-[44px]"
+            className="max-w-[640px] font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
-            Tell us the question. We&apos;ll go and find out for you.
+            {title}
           </h2>
-          <Link
-            href="#"
+          <a
+            href={ctaHref}
             className="eri-pill eri-pill--primary min-h-[40px] shrink-0 px-4 py-2.5 text-[14px]"
           >
-            Book a Signal
-          </Link>
+            {ctaText}
+          </a>
         </div>
 
         <div className="mt-10 grid gap-5 lg:grid-cols-3 lg:gap-[22px]">
@@ -78,12 +96,15 @@ export function ReachUsSection() {
                     </span>
                   ))}
                 </p>
-                <Link
-                  href="#"
+                <a
+                  href={option.href}
+                  {...(option.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="eri-pill mt-5 min-h-[38px] bg-transparent px-4 py-2 text-[14px] hover:bg-eri-dark hover:text-eri-white"
                 >
                   {option.action}
-                </Link>
+                </a>
               </div>
 
               <Image

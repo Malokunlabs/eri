@@ -3,9 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
+
+const emptySubscribe = () => () => {};
 
 const evidenceLinks = [
   { label: "Video Diaries", href: "/video-diaries" },
@@ -26,14 +28,20 @@ type MobileMenuProps = {
 
 export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
   const [isEvidenceOpen, setIsEvidenceOpen] = useState(true);
   const pathname = usePathname();
   const isLight = variant === "light";
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setIsOpen(false);
+  }
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -46,11 +54,6 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   // Close on Escape key
   useEffect(() => {
@@ -120,7 +123,7 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                 className="fixed inset-0 z-100 flex flex-col overflow-y-auto bg-eri-menu text-eri-white"
               >
                 {/* Header row with logo and close button */}
-                <div className="flex h-20 shrink-0 items-center justify-between px-4 sm:px-6">
+                <div className="flex h-20 shrink-0 items-center justify-between px-6 sm:px-8">
                   <Link
                     href="/"
                     onClick={() => setIsOpen(false)}
@@ -179,14 +182,25 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                         >
                           Evidence
                         </span>
-                        <span
+                        <svg
+                          width="18"
+                          height="10"
+                          viewBox="0 0 12 7"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
-                          className={`text-[16px] text-eri-grey-8 transition-transform duration-200 ${
+                          className={`shrink-0 translate-y-[1px] text-eri-grey-8 transition-transform duration-200 ${
                             isEvidenceOpen ? "rotate-180" : ""
                           }`}
                         >
-                          ⌄
-                        </span>
+                          <path
+                            d="M1 1.25L6 5.75L11 1.25"
+                            stroke="currentColor"
+                            strokeWidth="1.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
                       </button>
 
                       <AnimatePresence initial={false}>
@@ -256,7 +270,7 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                       onClick={() => setIsOpen(false)}
                       className="eri-pill eri-pill--primary flex min-h-12 w-full items-center justify-center text-[16px] font-semibold"
                     >
-                      Book a Signal
+                      Contact Us
                     </Link>
 
                     <div className="mt-6 flex items-center justify-between text-[13px] text-eri-grey-8">

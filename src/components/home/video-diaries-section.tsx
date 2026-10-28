@@ -10,15 +10,13 @@ import type { VideoDiary } from "@/lib/video-diaries-data";
 function PlayOverlay() {
   return (
     <span className="absolute inset-0 flex items-center justify-center">
-      <span className="flex size-11 items-center justify-center rounded-full bg-white/40 backdrop-blur-md transition-transform duration-200 group-hover:scale-110 group-hover:bg-white/60 sm:size-14">
-        <svg
-          className="size-5 translate-x-0.5 fill-white drop-shadow-xs sm:size-6"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M8 5v14l11-7z" />
-        </svg>
-      </span>
+      <Image
+        src="/images/this-for/Play Button.png"
+        alt="Play video"
+        width={56}
+        height={56}
+        className="size-11 drop-shadow-md transition-transform duration-200 group-hover:scale-110 sm:size-14"
+      />
     </span>
   );
 }
@@ -97,7 +95,7 @@ export function VideoDiariesSection({ videos = [] }: VideoDiariesSectionProps) {
         <div className="flex items-end justify-between gap-6 border-b border-eri-grey-6 pb-5">
           <h2
             id="home-video-diaries-heading"
-            className="font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.025em] sm:text-[40px] lg:text-[44px]"
+            className="font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
             Video Diaries
           </h2>
@@ -109,13 +107,13 @@ export function VideoDiariesSection({ videos = [] }: VideoDiariesSectionProps) {
             href={`/video-diaries/${featuredVideo.slug}`}
             className="group block min-w-0"
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
+            <div className="relative aspect-video w-full overflow-hidden rounded-[18px] bg-eri-grey-3 shadow-[0_8px_24px_rgba(41,41,41,0.08)]">
               <Image
                 src={featuredVideo.image}
                 alt={featuredVideo.title}
                 fill
                 sizes="(max-width: 1023px) 100vw, 560px"
-                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                className="object-cover scale-[1.03] transition-transform duration-300 group-hover:scale-[1.06]"
               />
               <PlayOverlay />
             </div>
