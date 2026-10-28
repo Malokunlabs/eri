@@ -53,17 +53,15 @@ export default async function Home() {
           videoDiaries.find((v) =>
             v.title?.toLowerCase().includes("body that sells"),
           ) ||
-          videoDiaries.find((v) =>
-            v.title?.toLowerCase().includes("danfo"),
-          ) ||
+          videoDiaries.find((v) => v.title?.toLowerCase().includes("danfo")) ||
           videoDiaries[0]
         }
       />
       <AudienceSection />
-      <ReportsSection />
+      {/* <ReportsSection /> */}
+      <FaqSection />
       <VideoDiariesSection videos={videoDiaries} />
       <InsightsSection insights={insights} />
-      <FaqSection />
       <ReachUsSection />
     </main>
   );
