@@ -136,7 +136,7 @@ export function VideoDiariesPageContent({
 
   const heroVideo = useMemo(() => {
     return (
-      initialVideos.find((v) => v.title?.toLowerCase().includes("danfo")) ||
+      initialVideos.find((v) => v.featured) ||
       initialVideos[0] ||
       defaultHeroVideo
     );
