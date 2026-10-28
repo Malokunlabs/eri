@@ -109,8 +109,8 @@ const brandColumns: Brand[][] = [
       logoClassName: "max-h-[58%] max-w-[52%]",
     },
     {
-      name: "Hennessy",
-      src: "/icons/brand-icon/hennessy.svg",
+      name: "Hennessy_id7paXFK7v_0 3",
+      src: "/icons/brand-icon/Hennessy_id7paXFK7v_0 3.png",
       width: 140,
       height: 70,
       cardHeight: "tall",
@@ -175,7 +175,7 @@ const mobileColumns: Brand[][] = [
     "Chicken Republic",
     "Kora",
     "adidas",
-    "Hennessy",
+    "Hennessy_id7paXFK7v_0 3",
   ].map(getBrand),
 ];
 
