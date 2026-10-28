@@ -51,7 +51,7 @@ const faqs = [
 ] as const;
 
 export function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section
@@ -83,7 +83,7 @@ export function FaqSection() {
               unoptimized
               className="pointer-events-none object-fill"
             />
-            <div className="relative z-10 px-[3.5%] pb-[7.5%] pt-[16%]">
+            <div className={`relative px-[3.5%] pt-[16%] transition-[padding] duration-300 ease-out ${openIndex === null ? "z-10 pb-[7.5%]" : "z-30 pb-[20%]"}`}>
               {faqs.map((faq, index) => {
                 const isOpen = openIndex === index;
 
@@ -97,7 +97,7 @@ export function FaqSection() {
                       aria-expanded={isOpen}
                       aria-controls={`faq-answer-mobile-${index}`}
                       className="flex min-h-11 w-full items-center justify-between gap-3 px-3.5 py-2 text-left font-display text-[13px] font-semibold leading-tight"
-                      onClick={() => setOpenIndex(index)}
+                      onClick={() => setOpenIndex(isOpen ? null : index)}
                     >
                       <span>{faq.question}</span>
                       <span
@@ -174,7 +174,7 @@ export function FaqSection() {
             organizations ERI to answer important
           </p>
 
-          <div className="relative z-10 mx-[4%] pb-24 pt-24 lg:mx-[3.5%] lg:pb-10 lg:pt-[11%]">
+          <div className={`relative mx-[4%] pt-24 lg:mx-[3.5%] lg:pt-[11%] transition-[padding] duration-300 ease-out ${openIndex === null ? "z-10 pb-24 lg:pb-10" : "z-30 pb-40 lg:pb-28"}`}>
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
 

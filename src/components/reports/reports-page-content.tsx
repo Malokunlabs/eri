@@ -78,7 +78,7 @@ export function ReportsPageContent() {
           <Container size="insights">
             <div className="max-w-[560px]">
               <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-white sm:text-[48px] lg:text-[56px]">
-                Reports by Eri
+                Reports by Aiye
               </h1>
               <p className="mt-5 max-w-[460px] text-[14px] leading-[1.55] text-eri-white/90 sm:text-[15px] lg:text-[16px]">
                 Eri publishes its own field research, gathered by our people in

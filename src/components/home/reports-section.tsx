@@ -15,7 +15,7 @@ export function ReportsSection() {
       >
         <div className="w-full lg:max-w-88">
           <p className="font-display text-[15px] font-semibold leading-tight sm:text-[16px]">
-            Reports by Eri
+            Reports by Aiye
           </p>
           <h2
             id="reports-heading"
