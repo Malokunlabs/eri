@@ -1,0 +1,313 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import { Container } from "@/components/ui/container";
+import { getCaseStudyLogo, type CaseStudy } from "@/lib/case-studies-data";
+import { parseCaseStudyHtml } from "@/lib/content-api";
+
+type CaseStudySpotlightSectionProps = {
+  study?: CaseStudy | null;
+};
+
+export function CaseStudySpotlightSection({
+  study,
+}: CaseStudySpotlightSectionProps) {
+  const { intro, sections } = useMemo(() => {
+    if (!study) return { intro: [] as string[], sections: [] as never[] };
+    if (study.sections && study.sections.length > 0) {
+      return { intro: study.intro || [], sections: study.sections };
+    }
+    if (study.body) {
+      const parsed = parseCaseStudyHtml(study.body);
+      if (parsed.sections.length > 0 || parsed.intro.length > 0) {
+        return parsed;
+      }
+    }
+    return {
+      intro:
+        study.paragraphs || (study.description ? [study.description] : []),
+      sections: [],
+    };
+  }, [study]);
+
+  const [activeSectionId, setActiveSectionId] = useState<string>(
+    sections[0]?.id ?? "",
+  );
+  const asideRef = useRef<HTMLElement>(null);
+  const [stickyTop, setStickyTop] = useState<number>(32);
+  const isClickScrollingRef = useRef(false);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Calculate sticky offset so as the user scrolls the whole page,
+  // the sidebar scrolls along until all subheadings are fully in view, then sticks.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateStickyTop = () => {
+      if (!asideRef.current) return;
+      const asideHeight = asideRef.current.offsetHeight;
+      const vh = window.innerHeight;
+      if (asideHeight + 64 > vh) {
+        setStickyTop(vh - asideHeight - 32);
+      } else {
+        setStickyTop(32);
+      }
+    };
+
+    updateStickyTop();
+    window.addEventListener("resize", updateStickyTop);
+    return () => window.removeEventListener("resize", updateStickyTop);
+  }, [sections]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || sections.length === 0) return;
+
+    const handleScroll = () => {
+      if (isClickScrollingRef.current) return;
+
+      const sectionElements = sections
+        .map((s) => ({ id: s.id, el: document.getElementById(s.id) }))
+        .filter((item): item is { id: string; el: HTMLElement } => item.el !== null);
+
+      if (sectionElements.length === 0) return;
+
+      const isBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 100;
+      if (isBottom) {
+        setActiveSectionId(sectionElements[sectionElements.length - 1].id);
+        return;
+      }
+
+      let currentId = sectionElements[0].id;
+      for (const { id, el } of sectionElements) {
+        const rect = el.getBoundingClientRect();
+        // Activate section when its top edge enters the reading zone
+        if (rect.top <= 240) {
+          currentId = id;
+        } else {
+          break;
+        }
+      }
+      setActiveSectionId(currentId);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
+  }, [sections]);
+
+  if (!study) {
+    return null;
+  }
+
+  const logoSrc = getCaseStudyLogo(study);
+
+  const handleTocClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    e.preventDefault();
+    const target = document.getElementById(id);
+    if (target) {
+      isClickScrollingRef.current = true;
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+      clickTimeoutRef.current = setTimeout(() => {
+        isClickScrollingRef.current = false;
+      }, 800);
+
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActiveSectionId(id);
+      window.history.pushState(null, "", `#${id}`);
+    }
+  };
+
+  return (
+    <section
+      aria-labelledby="case-study-spotlight-heading"
+      className="bg-eri-grey-2 pb-20 pt-8 lg:pb-32 lg:pt-14"
+    >
+      <Container size="insights">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[330px_1fr] lg:gap-14 xl:gap-20">
+          {/* Left Column: Featured SVG Folder + Table of Contents (Sticky on desktop) */}
+          <aside
+            ref={asideRef}
+            className="lg:sticky lg:self-start"
+            style={{ top: `${stickyTop}px` }}
+          >
+            <div className="relative aspect-[244/232] w-full max-w-[340px] shrink-0 transition-transform duration-200 hover:-translate-y-1">
+              <Image
+                src={study.folder}
+                alt={study.company}
+                fill
+                sizes="(max-width: 1023px) 100vw, 340px"
+                className="object-contain drop-shadow-md"
+              />
+
+              {/* Brand logo placed inside the folder paper slot */}
+              <div className="pointer-events-none absolute left-[12.3%] top-[19.4%] flex size-[9.8%] items-center justify-center overflow-hidden rounded-full border border-[#E3E1DD] bg-white shadow-xs">
+                {logoSrc ? (
+                  <div className="relative size-full overflow-hidden rounded-full">
+                    <Image
+                      src={logoSrc}
+                      alt=""
+                      fill
+                      sizes="32px"
+                      className="size-full rounded-full object-cover object-center"
+                    />
+                  </div>
+                ) : (
+                  <span className="font-display text-[10px] font-bold text-eri-dark">
+                    {study.company.charAt(0)}
+                  </span>
+                )}
+              </div>
+
+              <div className="pointer-events-none absolute inset-x-[8.5%] bottom-[8%] text-eri-white sm:bottom-[9%]">
+                <h2 className="font-display text-[clamp(17px,4.5vw,23px)] font-semibold leading-tight tracking-[-0.01em]">
+                  {study.company}
+                </h2>
+                {study.description ? (
+                  <p className="mt-1.5 line-clamp-2 max-w-[220px] text-[clamp(9.5px,2vw,12px)] leading-[1.4] text-white/95 sm:mt-2">
+                    {study.description}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+
+            {/* Table of contents: Sub headings under the SVG for each section */}
+            {sections.length > 0 &&
+              sections.some((s) => s.heading?.trim()) && (
+                <nav
+                  aria-label="Table of contents"
+                  className="mt-6 flex flex-col space-y-3 pb-8 lg:mt-7"
+                >
+                  <span className="sr-only">Table of contents</span>
+                  {sections
+                    .filter((section) => section.heading?.trim())
+                    .map((section) => {
+                      const isActive = activeSectionId === section.id;
+                      return (
+                        <div
+                          key={section.id}
+                          data-section-id={section.id}
+                          className={`border-b pb-3.5 transition-colors duration-200 ${
+                            isActive ? "border-eri-dark" : "border-eri-grey-5"
+                          }`}
+                        >
+                          <a
+                            href={`#${section.id}`}
+                            onClick={(e) => handleTocClick(e, section.id)}
+                            className={`flex items-start gap-2.5 font-sans text-[15px] leading-[1.4] transition-colors duration-150 lg:text-[16px] ${
+                              isActive
+                                ? "font-medium text-eri-dark"
+                                : "font-normal text-eri-grey-11 hover:text-eri-dark"
+                            }`}
+                          >
+                            <span
+                              className={`mt-1.5 size-1.5 shrink-0 rounded-full transition-all duration-200 ${
+                                isActive
+                                  ? "bg-eri-coral scale-100 opacity-100"
+                                  : "bg-transparent scale-0 opacity-0"
+                              }`}
+                              aria-hidden="true"
+                            />
+                            <span className="flex-1">{section.heading}</span>
+                          </a>
+                        </div>
+                      );
+                    })}
+                </nav>
+              )}
+          </aside>
+
+          {/* Right Column: Article Header & Body */}
+          <article className="min-w-0 max-w-[680px]">
+            <header className="border-b border-eri-grey-5 pb-6 lg:pb-8">
+              <h1
+                id="case-study-spotlight-heading"
+                className="font-display text-[34px] font-semibold leading-[1.1] tracking-[-0.025em] text-eri-dark sm:text-[42px] lg:text-[48px]"
+              >
+                {study.description || study.title || study.company}
+              </h1>
+
+              {(study.date || study.author || study.readTime) && (
+                <div className="mt-4 flex flex-wrap items-center gap-2 text-[14px] text-eri-grey-11 font-sans sm:mt-5 sm:text-[15px]">
+                  {study.date && (
+                    <time
+                      dateTime={(() => {
+                        const d = new Date(study.date);
+                        return Number.isNaN(d.getTime())
+                          ? undefined
+                          : d.toISOString().slice(0, 10);
+                      })()}
+                    >
+                      {study.date}
+                    </time>
+                  )}
+                  {study.date && study.author && (
+                    <span className="text-eri-grey-7" aria-hidden="true">
+                      ·
+                    </span>
+                  )}
+                  {study.author && <span>By {study.author}</span>}
+                  {(study.date || study.author) && study.readTime && (
+                    <span className="text-eri-grey-7" aria-hidden="true">
+                      ·
+                    </span>
+                  )}
+                  {study.readTime && <span>{study.readTime}</span>}
+                </div>
+              )}
+            </header>
+
+            {/* Intro paragraphs */}
+            {intro.length > 0 && (
+              <div className="mt-8 space-y-6 text-left text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
+                {intro.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
+            )}
+
+            {/* Article content sections */}
+            {sections.length > 0 ? (
+              <div className="mt-10 space-y-10 lg:space-y-12">
+                {sections.map((section) => (
+                  <section
+                    key={section.id}
+                    id={section.id}
+                    className="scroll-mt-20 lg:scroll-mt-24"
+                  >
+                    {section.heading?.trim() && (
+                      <h2 className="font-sans text-[20px] font-semibold leading-[1.3] tracking-[-0.015em] text-eri-dark sm:text-[22px] lg:text-[24px] text-left">
+                        {section.heading}
+                      </h2>
+                    )}
+                    <div className="mt-4 space-y-5 text-left text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
+                      {section.paragraphs.map((paragraph, pIdx) => (
+                        <p key={pIdx}>{paragraph}</p>
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            ) : (
+              intro.length === 0 &&
+              study.description && (
+                <div className="mt-8 space-y-6 text-left text-[15px] leading-[1.75] text-eri-dark sm:text-[16px]">
+                  <p>{study.description}</p>
+                </div>
+              )
+            )}
+          </article>
+        </div>
+      </Container>
+    </section>
+  );
+}
