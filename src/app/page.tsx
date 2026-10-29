@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { AudienceSection } from "@/components/home/audience-section";
 import { BrandsSection } from "@/components/home/brands-section";
+import { CaseStudySpotlightSection } from "@/components/home/case-study-spotlight-section";
 import { FaqSection } from "@/components/home/faq-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { InsightsSection } from "@/components/home/insights-section";
@@ -75,6 +76,10 @@ export default async function Home() {
     ...insights.filter((insight) => !pinnedSlugs.has(insight.slug)),
   ];
 
+  const spotlightStudy = caseStudies.find((study) =>
+    study.slug?.toLowerCase().includes("informal-market-survey"),
+  );
+
   return (
     <main id="main-content">
       <HeroSection />
@@ -91,6 +96,7 @@ export default async function Home() {
         }
       />
       <AudienceSection />
+      <CaseStudySpotlightSection study={spotlightStudy} />
       {/* <ReportsSection /> */}
       <VideoDiariesSection videos={videoDiaries} />
       <InsightsSection insights={orderedInsights} />
