@@ -42,12 +42,38 @@ export default async function Home() {
     getStudioCaseStudies("eri"),
   ]);
 
-  // Landing rail order: move the first two insights to the back so the
-  // next cards come forward. Full archive order on /insights is untouched.
-  const orderedInsights =
-    insights.length > 2
-      ? [...insights.slice(2), ...insights.slice(0, 2)]
-      : insights;
+  // Landing rail order: pin these four insights first, always in this order.
+  // Matching is lenient (substring on normalized title or slug) so small
+  // CMS wording/punctuation differences can't break the pin.
+  // Full archive order on /insights is untouched.
+  const pinnedPhrases = [
+    "uber left us without closure",
+    "everyone has tasted creamer",
+    "what is good for the goose is good for the writer",
+    "can we really touch grass",
+  ];
+  const normalize = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  const pinned = pinnedPhrases.flatMap((phrase) => {
+    const match = insights.find((insight) => {
+      const title = normalize(insight.title);
+      const slug = normalize(insight.slug).replace(/-/g, " ");
+      return title.includes(phrase) || slug.includes(phrase);
+    });
+    if (!match) {
+      console.warn(`[Home] Pinned insight not found: "${phrase}"`);
+    }
+    return match ? [match] : [];
+  });
+  const pinnedSlugs = new Set(pinned.map((insight) => insight.slug));
+  const orderedInsights = [
+    ...pinned,
+    ...insights.filter((insight) => !pinnedSlugs.has(insight.slug)),
+  ];
 
   return (
     <main id="main-content">
