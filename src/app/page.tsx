@@ -42,6 +42,13 @@ export default async function Home() {
     getStudioCaseStudies("eri"),
   ]);
 
+  // Landing rail order: move the first two insights to the back so the
+  // next cards come forward. Full archive order on /insights is untouched.
+  const orderedInsights =
+    insights.length > 2
+      ? [...insights.slice(2), ...insights.slice(0, 2)]
+      : insights;
+
   return (
     <main id="main-content">
       <HeroSection />
@@ -62,7 +69,7 @@ export default async function Home() {
       <AudienceSection />
       <ReportsSection />
       <VideoDiariesSection videos={videoDiaries} />
-      <InsightsSection insights={insights} />
+      <InsightsSection insights={orderedInsights} />
       <FaqSection />
       <ReachUsSection />
     </main>
