@@ -82,32 +82,57 @@ export function SiteFooter() {
     setStatus("submitting");
     setFeedbackMsg("");
 
+    const accessKey =
+      process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+      "59cb37c1-c48f-4a5f-86f8-40bf7ed949ef";
+
     try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ email: trimmedEmail }),
-      });
+      const payload = new FormData();
+      payload.append("access_key", accessKey);
+      payload.append("email", trimmedEmail);
+      payload.append(
+        "subject",
+        `New Signal / Newsletter Subscription from ${trimmedEmail} [Eri]`,
+      );
+      payload.append("from_name", "Eri Website");
+      payload.append(
+        "message",
+        `Please subscribe ${trimmedEmail} to Eri Signals, field observations, and Ask Eri updates.`,
+      );
+
+      // Submit client-side to Web3Forms (same as Contact page) and sync with Ask Eri in parallel
+      const [res] = await Promise.all([
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+          },
+          body: payload,
+        }),
+        fetch("/api/subscribe", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ email: trimmedEmail }),
+        }).catch(() => null),
+      ]);
 
       const data = (await res.json().catch(() => ({}))) as {
-        ok?: boolean;
+        success?: boolean;
         message?: string;
-        error?: string;
       };
 
-      if (!res.ok || !data.ok) {
+      if (!res.ok || !data.success) {
         throw new Error(
-          data.error || "Unable to subscribe right now. Please try again.",
+          data.message || "Unable to subscribe right now. Please try again.",
         );
       }
 
       setStatus("success");
       setFeedbackMsg(
-        data.message ||
-          "You're subscribed! You'll be notified when new Signals and field observations are published.",
+        "✓ You're subscribed! You'll be notified when new Signals and field observations are published.",
       );
       setEmail("");
     } catch (err) {
