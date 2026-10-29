@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!insight) {
     return {
-      title: "Insight Not Found",
+      title: "Window Not Found",
     };
   }
 

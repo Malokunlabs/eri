@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 const indexes = [
   {
@@ -102,21 +103,20 @@ export function ReportsPageContent() {
                 id="snapshot-heading"
                 className="font-display text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-eri-dark sm:text-[38px] lg:text-[44px]"
               >
-                <span className="block">The Nigerian</span>
-                <span className="block">Urban Consumer</span>
-                <span className="block">2026 Snapshot Q1</span>
+                Ask the real economy.
               </h2>
               <p className="mt-4 max-w-97.5 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
-                57% of consumers had switched brands. 47% said they choose on
-                consistency, not price or advertising. From 244 retail
-                intercepts across Lagos, Abuja and Port Harcourt.
+                Understand how merchants buy, sell and keep their businesses
+                moving. Explore evidence from Lagos markets—and investigate what
+                your next decision needs.
               </p>
               <div className="mt-8">
                 <Link
-                  href="#"
+                  target="_blank"
+                  href={siteConfig.askEriHref}
                   className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
                 >
-                  Download Report
+                  Ask Eri
                 </Link>
               </div>
             </div>
@@ -216,6 +216,13 @@ export function ReportsPageContent() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Dark Coming Soon Overlay */}
+                  <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/45 pb-8 transition-colors duration-300 group-hover:bg-black/35">
+                    <span className="rounded-full border border-white/40 bg-black/60 px-4 py-1.5 font-display text-[12px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm backdrop-blur-md">
+                      Coming Soon
+                    </span>
+                  </div>
                 </article>
               );
             })}
@@ -253,6 +260,13 @@ export function ReportsPageContent() {
                   <p className="mt-1.5 max-w-[340px] text-[12px] sm:text-[13px] leading-[1.4] text-white/90">
                     {item.description}
                   </p>
+                </div>
+
+                {/* Dark Coming Soon Overlay */}
+                <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/45 pb-8">
+                  <span className="rounded-full border border-white/40 bg-black/60 px-4 py-1.5 font-display text-[12px] font-semibold uppercase tracking-[0.12em] text-white shadow-sm backdrop-blur-md">
+                    Coming Soon
+                  </span>
                 </div>
               </article>
             ))}

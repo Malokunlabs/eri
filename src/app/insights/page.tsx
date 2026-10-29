@@ -8,14 +8,14 @@ import { getAllInsights, getStudioCategories } from "@/lib/content-api";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "Insights",
+  title: "Windows",
   description:
     "Field observations, consumer signals, and strategic perspective from Eri field teams deployed across informal and formal retail markets in Nigeria.",
   alternates: {
     canonical: "/insights",
   },
   openGraph: {
-    title: "Insights | Eri",
+    title: "Windows | Eri",
     description:
       "Field observations, consumer signals, and strategic perspective from Eri field teams across Nigeria.",
     url: "/insights",

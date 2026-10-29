@@ -128,7 +128,7 @@ export function InsightDetailContent({ insight }: InsightDetailContentProps) {
                   strokeWidth="1.5"
                 />
               </svg>
-              Back to Insights
+              Back to Windows
             </Link>
           </div>
 
