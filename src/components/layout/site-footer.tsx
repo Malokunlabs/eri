@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site-config";
@@ -65,6 +68,58 @@ function FooterLinkGroup({
 }
 
 export function SiteFooter() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [feedbackMsg, setFeedbackMsg] = useState("");
+
+  async function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
+
+    setStatus("submitting");
+    setFeedbackMsg("");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email: trimmedEmail }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        message?: string;
+        error?: string;
+      };
+
+      if (!res.ok || !data.ok) {
+        throw new Error(
+          data.error || "Unable to subscribe right now. Please try again.",
+        );
+      }
+
+      setStatus("success");
+      setFeedbackMsg(
+        data.message ||
+          "You're subscribed! You'll be notified when new Signals and field observations are published.",
+      );
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+      setFeedbackMsg(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
+    }
+  }
+
   return (
     <footer className="relative mt-auto overflow-hidden bg-eri-coral text-eri-white">
       <Container size="footer">
@@ -86,7 +141,7 @@ export function SiteFooter() {
           </p>
 
           <form
-            action="#"
+            onSubmit={handleSubscribe}
             className="mt-6 flex h-12 w-full max-w-[536px] items-center rounded-full bg-eri-white p-1.5 text-eri-dark sm:mt-10 sm:h-14 sm:p-2"
           >
             <Image
@@ -103,14 +158,38 @@ export function SiteFooter() {
               id="footer-email"
               name="email"
               type="email"
+              required
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (status !== "idle") {
+                  setStatus("idle");
+                  setFeedbackMsg("");
+                }
+              }}
               autoComplete="email"
               placeholder="Enter your work email"
               className="min-w-0 flex-1 bg-transparent px-2 text-[12px] outline-none placeholder:text-eri-grey-10 sm:px-3 sm:text-[14px]"
             />
-            <button type="submit" className="eri-pill eri-pill--signup shrink-0 max-sm:min-h-8 max-sm:px-3 max-sm:py-1.5 max-sm:text-[12px]">
-              Sign Up
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="eri-pill eri-pill--signup shrink-0 disabled:cursor-not-allowed disabled:opacity-60 max-sm:min-h-8 max-sm:px-3 max-sm:py-1.5 max-sm:text-[12px]"
+            >
+              {status === "submitting" ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
+
+          {feedbackMsg && (
+            <p
+              role={status === "error" ? "alert" : "status"}
+              className={`mt-3 text-[13px] sm:text-[14px] ${
+                status === "error" ? "text-white font-medium" : "text-eri-coral-light"
+              }`}
+            >
+              {feedbackMsg}
+            </p>
+          )}
         </section>
 
         <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:mt-32 sm:grid-cols-3 sm:gap-y-12 lg:grid-cols-[1.4fr_0.7fr_0.8fr_1fr_auto] lg:gap-12">

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/lib/site-config";
 
 export function ReportsSection() {
   return (
@@ -21,28 +22,19 @@ export function ReportsSection() {
             id="reports-heading"
             className="mt-3 w-full font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[38px]"
           >
-            <span className="lg:hidden">
-              The Nigerian Urban Consumer 2026 Snapshot Q1
-            </span>
-            <span className="hidden lg:inline">
-              The Nigerian
-              <br />
-              Urban Consumer
-              <br />
-              2026 Snapshot Q1
-            </span>
+            Ask the real economy.
           </h2>
           <p className="mt-3 w-full text-[14px] leading-[1.55] text-eri-coral-light sm:text-[15px] lg:max-w-105">
-            57% of consumers had switched brands. 47% said they choose on
-            consistency, not price or advertising. From 244 retail intercepts
-            across Lagos, Abuja and Port Harcourt.
+            Understand how merchants buy, sell and keep their businesses moving.
+            Explore evidence from Lagos markets—and investigate what your next
+            decision needs.
           </p>
           <Link
             target="_blank"
-            href="https://aiye.africa/"
+            href={siteConfig.askEriHref}
             className="eri-pill eri-pill--primary mt-8 min-h-[40px] px-4 py-2.5 text-[14px]"
           >
-            Download Report
+            Ask Eri
           </Link>
         </div>
 
