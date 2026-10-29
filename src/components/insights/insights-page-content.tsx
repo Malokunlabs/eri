@@ -99,7 +99,7 @@ export function InsightsPageContent({
           <div className="flex flex-col gap-6 border-b border-eri-grey-5 pb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div>
               <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
-                Window
+                Windows
               </h1>
               <p className="mt-3 max-w-105 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
                 First person POV of the lives of the people we serve and what it
@@ -136,7 +136,7 @@ export function InsightsPageContent({
             </div>
 
             <label className="relative block w-full lg:max-w-[320px]">
-              <span className="sr-only">Search insights</span>
+              <span className="sr-only">Search windows</span>
               <Image
                 src="/icons/icons/search-icon.svg"
                 alt=""
@@ -165,7 +165,7 @@ export function InsightsPageContent({
             </div>
           ) : (
             <p className="mt-10 text-[15px] text-eri-grey-11">
-              No insights match your search. Try another category or keyword.
+              No windows match your search. Try another category or keyword.
             </p>
           )}
 
@@ -180,7 +180,7 @@ export function InsightsPageContent({
               }
               className="eri-pill min-h-[42px] border-eri-grey-6 bg-eri-white px-6 py-2.5 text-[14px] font-medium text-eri-dark hover:bg-eri-grey-3 disabled:cursor-default disabled:opacity-60"
             >
-              Load More Insights
+              Load More Windows
             </button>
           </div>
         </Container>

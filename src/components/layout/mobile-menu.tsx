@@ -11,7 +11,7 @@ const emptySubscribe = () => () => {};
 
 const evidenceLinks = [
   { label: "Video Diaries", href: "/video-diaries" },
-  { label: "Insights", href: "/insights" },
+  { label: "Windows", href: "/insights" },
   { label: "Case Studies", href: "/case-studies" },
 ] as const;
 

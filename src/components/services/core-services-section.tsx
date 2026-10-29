@@ -293,17 +293,16 @@ export function CoreServicesSection() {
     >
       <Container size="insights">
         {/* Section header */}
-        <div className="mx-auto mb-8 text-center sm:mb-10 lg:mb-12">
+        <div className="mx-auto mb-8 w-fit text-center sm:mb-10 lg:mb-12">
           <h1
             id="core-services-heading"
             className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]"
           >
             Our Core Services
           </h1>
-          <p className="mt-3 text-left font-sans text-[13.5px] font-normal leading-[1.5] tracking-[-0.01em] text-[#66625C] sm:text-[15px] lg:pl-72.5">
-            <span className="block whitespace-nowrap">Comprehensive solutions that combine data-</span>
-            <span className="block whitespace-nowrap">driven methodologies with cultural intelligence to</span>
-            <span className="block whitespace-nowrap">deliver impactful results</span>
+          <p className="mt-3 w-0 min-w-full text-left font-sans text-[13.5px] font-normal leading-[1.5] tracking-[-0.01em] text-[#66625C] sm:text-[15px]">
+            Comprehensive solutions that combine data-driven methodologies with
+            cultural intelligence to deliver impactful results
           </p>
         </div>
 

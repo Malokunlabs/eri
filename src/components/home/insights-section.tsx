@@ -63,20 +63,20 @@ export function InsightsSection({ insights = [] }: InsightsSectionProps) {
             id="insights-heading"
             className="font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
-            Insights from across Nigeria
+            Windows from across Nigeria
           </h2>
           <Link
             href="/insights"
             className="mt-3 inline-flex font-display text-[15px] font-semibold text-eri-coral-dark underline decoration-eri-coral-dark decoration-2 underline-offset-[5px] transition-opacity hover:opacity-75"
           >
-            View all insights
+            View all windows
           </Link>
         </div>
 
         <div className="flex shrink-0 self-end gap-3 sm:self-auto">
           <button
             type="button"
-            aria-label="Show previous insights"
+            aria-label="Show previous windows"
             className="flex h-10 w-[54px] items-center justify-center rounded-full border border-eri-dark transition-colors hover:bg-eri-dark hover:text-eri-white"
             onClick={() => moveRail(-1)}
           >
@@ -84,7 +84,7 @@ export function InsightsSection({ insights = [] }: InsightsSectionProps) {
           </button>
           <button
             type="button"
-            aria-label="Show next insights"
+            aria-label="Show next windows"
             className="flex h-10 w-[54px] items-center justify-center rounded-full border border-eri-dark transition-colors hover:bg-eri-dark hover:text-eri-white"
             onClick={() => moveRail(1)}
           >
