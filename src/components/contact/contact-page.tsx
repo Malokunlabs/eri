@@ -6,7 +6,15 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
 
-const TESTIMONIALS = [
+interface Testimonial {
+  quote: string;
+  name: string;
+  company: string;
+  avatar?: string;
+  logo: string;
+}
+
+const TESTIMONIALS: Testimonial[] = [
   {
     quote:
       'Eri is synonymous with speed and agility! I am always confident about my timelines when I work with the team. Responses are swift and on time. Quality is also top- notch. Looking forward to future studies!"',
@@ -15,8 +23,20 @@ const TESTIMONIALS = [
     avatar: "/images/video-dairies/moniepoint-img.svg",
     logo: "/images/video-dairies/moniepoint-logo.svg",
   },
-  // Add more testimonials here — the stacked carousel animation
-  // turns on automatically once there is more than one entry.
+  {
+    quote:
+      '"Eri has been instrumental in our transformation into a data-driven marketing team. Beyond traditional research, their deep understanding of cultural trends, ranging from mainstream to Alte, provided us with essential insights. These insights helped transform our core landscapes and have become an integral component of our strategic planning."',
+    name: "Oyindamola Medeiros",
+    company: "Food Concept Limited",
+    logo: "/icons/brand-icon/Chicken_Republic.svg",
+  },
+  {
+    quote:
+      '"As our Nigerian technical partner in market research, we have had the pleasure of working with Eri on multiple projects. Their expertise, professionalism, and commitment to delivering actionable and traceable insights to every project from the initial scoping call to the final presentation is unparalleled. They always show a deep understanding of our business and client needs, and tailor their research approach to meet our objectives."',
+    name: "Luke van der Spuy",
+    company: "Culture Foundry",
+    logo: "/icons/brand-icon/culture-foundry.png",
+  },
 ];
 
 const HAS_CAROUSEL = TESTIMONIALS.length > 1;
@@ -197,7 +217,7 @@ export function ContactPage() {
               {/* Testimonial Cards: order-3 on mobile (beneath form) */}
               <div className="order-3 mt-8 sm:mt-10 lg:mt-9 lg:w-full lg:max-w-[430px]">
                 <div
-                  className="relative h-[198px] w-full max-w-[430px]"
+                  className="relative h-[242px] w-full max-w-[430px]"
                   aria-live="polite"
                   aria-label="Client testimonials"
                 >
@@ -352,7 +372,7 @@ function getCardStyle(
     position: "absolute",
     left: 0,
     right: 0,
-    height: "180px",
+    height: "224px",
     transition:
       "transform 500ms cubic-bezier(0.34, 1.1, 0.64, 1), opacity 500ms ease, top 500ms cubic-bezier(0.34, 1.1, 0.64, 1)",
     willChange: "transform, opacity, top",
@@ -461,19 +481,21 @@ function TestimonialCard({ testimonial, layer, phase }: CardProps) {
       style={style}
       className={`flex flex-col justify-between rounded-[22px] border p-5 select-none sm:rounded-[24px] sm:p-5.5 ${layerBg}`}
     >
-      <blockquote className="line-clamp-4 text-[12.5px] leading-[1.5] text-eri-grey-11 sm:text-[13px]">
+      <blockquote className="line-clamp-7 text-[12px] leading-[1.45] text-eri-grey-11 sm:text-[12.5px]">
         {testimonial.quote}
       </blockquote>
 
       <figcaption className="mt-3 flex items-center justify-between gap-3 pt-0.5">
         <div className="flex min-w-0 items-center gap-3">
-          <Image
-            src={testimonial.avatar}
-            alt=""
-            width={40}
-            height={40}
-            className="size-10 shrink-0 rounded-full object-cover"
-          />
+          {testimonial.avatar && (
+            <Image
+              src={testimonial.avatar}
+              alt=""
+              width={40}
+              height={40}
+              className="size-10 shrink-0 rounded-full object-cover"
+            />
+          )}
           <div className="min-w-0">
             <p className="truncate font-display text-[14.5px] font-semibold leading-tight text-eri-dark">
               {testimonial.name}
@@ -487,9 +509,9 @@ function TestimonialCard({ testimonial, layer, phase }: CardProps) {
         <Image
           src={testimonial.logo}
           alt=""
-          width={32}
+          width={80}
           height={32}
-          className="size-8 shrink-0"
+          className="h-8 w-auto max-w-[90px] shrink-0 object-contain"
         />
       </figcaption>
     </figure>
