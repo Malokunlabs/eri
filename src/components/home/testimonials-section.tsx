@@ -117,13 +117,15 @@ function TestimonialCard({
           </div>
         </div>
 
-        <Image
-          src={testimonial.logo}
-          alt=""
-          width={120}
-          height={64}
-          className="h-12 w-auto max-w-[110px] shrink-0 object-contain sm:h-16 sm:max-w-[150px]"
-        />
+        {testimonial.logo && (
+          <Image
+            src={testimonial.logo}
+            alt=""
+            width={120}
+            height={64}
+            className="h-12 w-auto max-w-[110px] shrink-0 object-contain sm:h-16 sm:max-w-[150px]"
+          />
+        )}
       </figcaption>
     </figure>
   );
@@ -232,7 +234,7 @@ export function TestimonialsSection() {
                   className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-eri-dark ${
                     isActive
                       ? "w-6 bg-eri-coral-dark"
-                      : "w-2 bg-eri-grey-5 hover:bg-eri-grey-7"
+                      : "w-2 bg-[#F1F0EE] hover:bg-eri-grey-7"
                   }`}
                 />
               );
