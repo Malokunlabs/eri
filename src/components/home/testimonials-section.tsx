@@ -72,7 +72,9 @@ function TestimonialCard({
   // While rolling, every card advances one position and the front card exits.
   const effectivePos = rolling ? pos - 1 : pos;
   const style: React.CSSProperties =
-    rolling && pos === 0 ? ROLLED_STYLE : restingStyle(Math.max(effectivePos, 0));
+    rolling && pos === 0
+      ? ROLLED_STYLE
+      : restingStyle(Math.max(effectivePos, 0));
 
   return (
     <figure
@@ -190,7 +192,7 @@ export function TestimonialsSection() {
           id="testimonials-heading"
           className="mx-auto max-w-[640px] text-center font-display text-[30px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-[40px] lg:text-[48px]"
         >
-          Reviews from executives in brands we have worked with
+          Reviews from Executives we have shown our workings...
         </h2>
 
         <div

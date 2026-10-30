@@ -123,46 +123,43 @@ export function AboutPageContent() {
   return (
     <div className="bg-eri-white overflow-x-hidden">
       {/* Section 1: Hero Section */}
-      <section className="relative w-full overflow-hidden bg-eri-coral text-eri-white">
-        {/* Navbar */}
+      <section className="relative flex h-[calc(100svh-36px)] max-h-[820px] min-h-[540px] w-full flex-col justify-between overflow-hidden bg-eri-coral text-eri-white">
+        {/* Background Artwork (Zebra Crossing + People anchored to bottom) */}
+        <Image
+          src="/images/about/about-mobile-bg.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none select-none object-cover object-bottom sm:hidden"
+        />
+        <Image
+          src="/images/about/about-bg.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="pointer-events-none hidden select-none object-cover object-bottom sm:block"
+        />
+
+        {/* Navbar + Hero Content */}
         <div className="relative z-10">
           <SiteHeader variant="dark" />
-        </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 pt-6 sm:pt-10 lg:pt-12">
-          <Container size="insights">
-            <div className="mx-auto flex max-w-135 flex-col items-center text-center">
-              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
-                About Us
-              </h1>
-              <p className="mt-4 max-w-95 text-[14px] leading-[1.55] text-white/95 sm:mt-5 sm:max-w-110 sm:text-[15px] lg:text-[16px]">
-                Eri exists because the most important things about a market in
-                Nigeria are not written down anywhere, and someone has to go and
-                see them.
-              </p>
-            </div>
-          </Container>
-        </div>
-
-        {/* Hero Artwork (Zebra Crossing + People) */}
-        <div className="relative -mt-48 w-full sm:-mt-28 md:-mt-36 lg:-mt-48 xl:-mt-56">
-          <Image
-            src="/images/about/about-mobile-bg.png"
-            alt=""
-            width={390}
-            height={844}
-            priority
-            className="pointer-events-none block h-auto w-full select-none object-cover object-bottom sm:hidden"
-          />
-          <Image
-            src="/images/about/about-bg.png"
-            alt=""
-            width={1280}
-            height={720}
-            priority
-            className="pointer-events-none hidden h-auto w-full select-none object-cover object-bottom sm:block"
-          />
+          <div className="pt-4 sm:pt-6 lg:pt-8">
+            <Container size="insights">
+              <div className="mx-auto flex max-w-135 flex-col items-center text-center">
+                <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
+                  About Us
+                </h1>
+                <p className="mt-3 max-w-95 text-[14px] leading-[1.55] text-white/95 sm:mt-4 sm:max-w-110 sm:text-[15px] lg:text-[16px]">
+                  Eri exists because the most important things about a market in
+                  Nigeria are not written down anywhere, and someone has to go
+                  and see them.
+                </p>
+              </div>
+            </Container>
+          </div>
         </div>
       </section>
 
