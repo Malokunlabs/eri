@@ -90,6 +90,16 @@ export function ReportsPageContent() {
                 <br />
                 Grounded in lived reality.
               </p>
+              <div className="mt-7 sm:mt-8">
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://aiye.africa/"
+                  className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
+                >
+                  View Report
+                </Link>
+              </div>
             </div>
           </div>
         </div>
