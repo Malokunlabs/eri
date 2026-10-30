@@ -220,10 +220,10 @@ export function SiteFooter() {
         <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:mt-32 sm:grid-cols-3 sm:gap-y-12 lg:grid-cols-[1.4fr_0.7fr_0.8fr_1fr_auto] lg:gap-12">
           <div className="sm:col-span-3 lg:col-span-1">
             <Image
-              src="/logo/header/new-logo-white.svg"
+              src="/logo/header/reworked-white.svg"
               alt="Eri, a Malokun Labs company"
-              width={167}
-              height={33}
+              width={184}
+              height={32}
               className="h-auto w-[130px] sm:w-[180px]"
             />
             <p className="mt-4 max-w-[225px] text-[13px] leading-[1.5] text-eri-coral-light sm:mt-5 sm:text-[15px]">

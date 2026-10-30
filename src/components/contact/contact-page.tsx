@@ -474,13 +474,15 @@ function TestimonialCard({ testimonial, layer, phase }: CardProps) {
           </div>
         </div>
 
-        <Image
-          src={testimonial.logo}
-          alt=""
-          width={80}
-          height={32}
-          className="h-8 w-auto max-w-[90px] shrink-0 object-contain"
-        />
+        {testimonial.logo && (
+          <Image
+            src={testimonial.logo}
+            alt=""
+            width={80}
+            height={32}
+            className="h-8 w-auto max-w-[90px] shrink-0 object-contain"
+          />
+        )}
       </figcaption>
     </figure>
   );

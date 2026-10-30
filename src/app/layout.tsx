@@ -71,7 +71,7 @@ const jsonLd = {
       name: siteConfig.name,
       url: siteConfig.url,
       sameAs: ["https://useeri.africa", "https://useeri.com"],
-      logo: `${siteConfig.url}/logo/header/new-logo-orange.svg`,
+      logo: `${siteConfig.url}/logo/header/reworked-logo-orange.svg`,
       description: siteConfig.description,
       email: siteConfig.contact.email,
       address: {

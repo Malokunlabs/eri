@@ -2,8 +2,8 @@ export interface Testimonial {
   quote: string;
   name: string;
   company: string;
-  avatar?: string;
-  logo: string;
+  avatar?: string | null;
+  logo?: string | null;
 }
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -28,5 +28,33 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Luke van der Spuy",
     company: "Culture Foundry",
     logo: "/icons/brand-icon/culture-foundry.png",
+  },
+  {
+    quote:
+      "The Team at Eri consistently delivers that we consider to be a great experience. An in-depth understanding of lagos and the dedication to keep learning about it, an ability to turn great findings into great findings into great insights and access to a high_quality cultural immersion that unpacks such a dynamic city in a simple and memorable way.",
+    name: "Lola Pedro",
+    company: " TrendWatching",
+    logo: null,
+  },
+  {
+    quote:
+      "Eri curated a creative photowalk and access to fascinating and key neighborhoods in Lagos within a prompt timeline and that is always a worthwhile experience in a place like Lagos",
+    name: "Sangu Delle",
+    company: " Golden Palm VC",
+    logo: "/icons/brand-icon/trend-watching.png",
+  },
+  {
+    quote:
+      "Geneis has worked with Eri on several occasions to conduct detailed primary market research and to generate customer insights for consumers of financial products with the Nigerian market. The work conducted by the team at Eri was a real eye_opener insightful and powerful. The service was highly professional, timely and provided us with great insights into the market we were wishing to understand",
+    name: "Richard Ketley",
+    company: "Geneisis Analytics",
+    logo: "/icons/brand-icon/genesis.png",
+  },
+  {
+    quote:
+      "Eri offers a distinctive partnership with her vendors and collaboratos, and from my experience workings with various production companies as a cinematographer, I must say Eri understands what the importance of pre-preoduction, and how it aids the beauty of the final output. I cant say many research company out here understands that.",
+    name: "Kagho idhabor",
+    company: "Cinematohrapher",
+    logo: null,
   },
 ];
