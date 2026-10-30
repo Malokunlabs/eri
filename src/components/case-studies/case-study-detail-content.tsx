@@ -249,7 +249,7 @@ export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
             <article className="min-w-0 max-w-[680px]">
               <header className="border-b border-eri-grey-5 pb-6 lg:pb-8">
                 <h1 className="font-display text-[34px] font-semibold leading-[1.1] tracking-[-0.025em] text-eri-dark sm:text-[42px] lg:text-[48px]">
-                  {study.title || study.company}
+                  {study.description || study.title || study.company}
                 </h1>
 
                 {(study.date || study.author || study.readTime) && (

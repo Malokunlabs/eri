@@ -98,11 +98,11 @@ export function InsightsSection({ insights = [] }: InsightsSectionProps) {
           ref={railRef}
           className="flex snap-x snap-mandatory scroll-pl-4 scroll-pr-4 gap-5 overflow-x-auto scroll-smooth pl-4 pr-4 [scrollbar-width:none] sm:scroll-pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:scroll-pr-[max(32px,calc((100vw-1096px)/2+32px))] sm:pl-[max(32px,calc((100vw-1096px)/2+32px))] sm:pr-[max(32px,calc((100vw-1096px)/2+32px))] [&::-webkit-scrollbar]:hidden"
         >
-          {insights.map((insight) => (
+          {insights.map((insight, index) => (
             <article
               data-insight-card
               className="w-[calc(100vw-48px)] max-w-[342px] shrink-0 snap-start lg:w-[329px]"
-              key={insight.image}
+              key={insight.slug || `insight-${index}`}
             >
               <Link href={`/insights/${insight.slug}`} className="group block">
                 <div className="relative aspect-[342/441] overflow-hidden rounded-lg bg-eri-grey-3">
