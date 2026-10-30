@@ -41,14 +41,15 @@ export const TESTIMONIALS: Testimonial[] = [
       "Eri curated a creative photowalk and access to fascinating and key neighborhoods in Lagos within a prompt timeline and that is always a worthwhile experience in a place like Lagos",
     name: "Sangu Delle",
     company: " Golden Palm VC",
-    logo: "/icons/brand-icon/trend-watching.png",
+    logo: null,
+    // logo: "/icons/brand-icon/trend-watching.png",
   },
   {
     quote:
       "Geneis has worked with Eri on several occasions to conduct detailed primary market research and to generate customer insights for consumers of financial products with the Nigerian market. The work conducted by the team at Eri was a real eye_opener insightful and powerful. The service was highly professional, timely and provided us with great insights into the market we were wishing to understand",
     name: "Richard Ketley",
     company: "Geneisis Analytics",
-    logo: "/icons/brand-icon/genesis.png",
+    logo: "/icons/brand-icon/insight-edge.svg",
   },
   {
     quote:
