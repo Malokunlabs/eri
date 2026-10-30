@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/container";
 
 type Bundle = {
   id: string;
-  tier: string;
+  // tier: string;
   titleLines: string[];
   ctaLabel: string;
   ctaHref: string;
@@ -15,41 +15,41 @@ type Bundle = {
 const bundles: Bundle[] = [
   {
     id: "nationwide-field-network",
-    tier: "Tier 1 — Lead with these",
+    // tier: "Tier 1 ",
     titleLines: ["Nationwide", "Field Network"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
     paragraphs: [
-      "11,000+ verified agents across urban, peri-urban and rural Nigeria, six zones. The reach no competitor can sublease.",
+      "11,000+ verified agents across urban, peri-urban and rural Nigeria, six zones.",
     ],
   },
   {
     id: "field-research-data-collection",
-    tier: "Tier 1 — Lead with these",
+    // tier: "Tier 1 ",
     titleLines: ["Field Research", "& Data Collection"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
     paragraphs: [
       "Quantitative deployment (CAPI face-to-face or digital, geo-aware, multilingual, with recruitment, incentives, quota control, QC and clean data delivery)",
-      "Qualitative fieldwork (FGDs, IDIs, mobile diaries, ride-alongs, trade visits — recruitment through transcripts)",
-      "Qualitative fieldwork: FGDs, IDIs, mobile diaries, ride-alongs, and trade visits.",
+      "Qualitative fieldwork (Focus Group Discussions, Indept Interviews, mobile diaries, ride-alongs, trade visits)",
+      "Qualitative fieldwork: Focus Group Discussions, Indept Interviews, mobile diaries, ride-alongs, and trade visits.",
       "Full-service research when Eri owns design, field, analysis, and reporting.",
     ],
   },
   {
     id: "ground-truth-data-verification",
-    tier: "Tier 2 — The proof layer",
+    // tier: "Tier 2 ",
     titleLines: ["Ground-Truth Data &", "Verification (GroundAPI)"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
     paragraphs: [
       "Prices, presence, conditions and sentiment verified by agents physically in place.",
-      "For \u201Cprove-it\u201D buyers — DFIs, FMCG, fintech — where a claim has to survive a skeptic.",
+      "For \u201Cprove-it\u201D buyers — Development Finance Institutions [DFIs], Fast Moving Consumer Goods [FMCG], fintech — where a claim has to survive a skeptic.",
     ],
   },
   {
     id: "trade-retail-diagnostics",
-    tier: "Tier 2 — The proof layer",
+    // tier: "Tier 2 ",
     titleLines: ["Trade & Retail", "Diagnostics"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
@@ -59,17 +59,17 @@ const bundles: Bundle[] = [
   },
   {
     id: "ethnographic-video-cultural-intelligence",
-    tier: "Tier 2 — The proof layer",
+    // tier: "Tier 2 ",
     titleLines: ["Ethnographic Video", "& Cultural Intelligence"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
     paragraphs: [
-      "Documentary-grade field capture, video ethnography, culture-and-codes readouts. Your Monochrome Lagos credibility, commercialised.",
+      "Documentary-grade field capture, video ethnography, culture-and-codes readouts. ",
     ],
   },
   {
     id: "ground-intelligence-network",
-    tier: "Tier 3 — Subscription",
+    // tier: "Tier 3 ",
     titleLines: ["Ground Intelligence", "Network"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
@@ -109,9 +109,9 @@ export function SolutionBundleSection() {
             >
               {/* Card top: tier label + branded logo icon */}
               <div className="flex items-center justify-between gap-3">
-                <span className="text-[14px] font-medium leading-none tracking-[-0.01em] text-eri-grey-11 transition-colors duration-200 group-hover:text-white/90 sm:text-[15px]">
+                {/* <span className="text-[14px] font-medium leading-none tracking-[-0.01em] text-eri-grey-11 transition-colors duration-200 group-hover:text-white/90 sm:text-[15px]">
                   {bundle.tier}
-                </span>
+                </span> */}
                 <div className="relative h-5 w-[21px] shrink-0">
                   <Image
                     src="/icons/services-page/grey-logo.svg"
@@ -145,7 +145,7 @@ export function SolutionBundleSection() {
               <div className="mt-5">
                 <Link
                   href={bundle.ctaHref}
-                  className="eri-pill inline-flex min-h-10 items-center px-5 py-2.5 text-[13px] transition-colors duration-200 group-hover:border-eri-dark group-hover:bg-eri-coral-dark group-hover:text-eri-white sm:text-[14px]"
+                  className="eri-pill inline-flex min-h-10 items-center px-5 py-2.5 text-[14px] transition-colors duration-200 group-hover:border-eri-dark group-hover:bg-eri-coral-dark group-hover:text-eri-white sm:text-[14px]"
                 >
                   {bundle.ctaLabel}
                 </Link>
@@ -153,7 +153,7 @@ export function SolutionBundleSection() {
 
               {/* Divider */}
               <div
-                className="my-6 h-px w-full bg-eri-grey-5 transition-colors duration-200 group-hover:bg-white/25"
+                className="my-6 h-px w-full bg-eri-grey-5 transition-colors duration-200 group-hover:bg-white"
                 aria-hidden="true"
               />
 
@@ -162,7 +162,7 @@ export function SolutionBundleSection() {
                 {bundle.paragraphs.map((paragraph, i) => (
                   <p
                     key={i}
-                    className="text-[12px] leading-[1.55] text-eri-grey-11 transition-colors duration-200 group-hover:text-white/90 sm:text-[12.5px]"
+                    className="text-[16px] font-semibold leading-[1.55] text-black transition-colors duration-200 group-hover:text-white sm:text-[12.5px]"
                   >
                     {paragraph}
                   </p>

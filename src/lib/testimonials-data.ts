@@ -12,7 +12,7 @@ export const TESTIMONIALS: Testimonial[] = [
       'Eri is synonymous with speed and agility! I am always confident about my timelines when I work with the team. Responses are swift and on time. Quality is also top- notch. Looking forward to future studies!"',
     name: "Fred Okobi",
     company: "Moniepoint NG",
-    avatar: "/images/video-dairies/moniepoint-img.svg",
+    // avatar: "/images/video-dairies/moniepoint-img.svg",
     logo: "/images/video-dairies/moniepoint-logo.svg",
   },
   {
@@ -30,4 +30,3 @@ export const TESTIMONIALS: Testimonial[] = [
     logo: "/icons/brand-icon/culture-foundry.png",
   },
 ];
-

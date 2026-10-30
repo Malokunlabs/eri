@@ -52,51 +52,46 @@ export function ReportsPageContent() {
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
-      <section className="relative w-full overflow-hidden bg-eri-white text-eri-dark">
+      <section className="relative w-full overflow-hidden bg-eri-grey-2 text-eri-dark">
         {/* Navbar */}
         <SiteHeader variant="light" />
 
-        {/* Hero Image and Copy */}
-        <div className="pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
-          <Container size="insights">
-            <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,640px)_minmax(0,1fr)] lg:gap-10">
-              <div className="order-2 relative w-full lg:order-1">
-                <Image
-                  src="/images/report-page/bw-image.png"
-                  alt="Four women walking along a bridge at dusk in Nigeria"
-                  width={724}
-                  height={444}
-                  priority
-                  sizes="(max-width: 1023px) 100vw, 724px"
-                  className="-mx-[6.57%] -mb-[13.1%] h-auto w-[113.15%] max-w-none"
-                />
-              </div>
+        {/* Split Hero Image and Copy */}
+        <div className="grid grid-cols-1 lg:min-h-[calc(100svh-116px)] lg:grid-cols-2">
+          {/* Left: Full-bleed Monochrome Image */}
+          <div className="relative aspect-[1470/1694] w-full sm:aspect-[4/3] lg:aspect-auto lg:h-full">
+            <Image
+              src="/images/report-page/monochrome-image-large.jpg"
+              alt="Four women walking along a bridge at dusk in Nigeria"
+              fill
+              priority
+              sizes="(max-width: 1023px) 100vw, 50vw"
+              className="object-cover object-center"
+            />
+          </div>
 
-              <div className="order-1 max-w-95 lg:order-2">
-                <h1 className="font-display text-[36px] font-semibold leading-none tracking-[-0.02em] text-eri-dark sm:text-[48px] lg:text-[57px]">
-                  Reports <br className="hidden lg:inline" />
-                  by Aiye
-                </h1>
-                <p className="mt-3 font-display text-[17px] font-medium leading-[1.1] tracking-[-0.01em] text-eri-dark sm:mt-4 sm:text-[18px] lg:mt-5 lg:text-[19px]">
-                  An observatory of economic life
-                </p>
-                <p className="mt-3 max-w-88 font-sans text-[14px] font-normal leading-[1.5] tracking-[-0.01em] text-eri-grey-11 sm:text-[15px]">
-                  Tracking the pulse of markets, behaviors, and human adaptation
-                  across Nigeria. Built on field infrastructure. Grounded in
-                  lived reality.
-                </p>
-                <div className="mt-5 sm:mt-6 lg:mt-7">
-                  <Link
-                    target="_blank"
-                    href="https://aiye.africa/"
-                    className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
-                  >
-                    Download Report
-                  </Link>
-                </div>
-              </div>
+          {/* Right: Editorial Copy */}
+          <div className="flex items-center px-5 py-10 sm:px-8 sm:py-14 lg:px-14 lg:py-16 xl:px-20">
+            <div className="max-w-115">
+              <h1 className="font-display text-[64px] font-bold uppercase leading-[0.95] tracking-[-0.02em] text-eri-dark sm:text-[84px] lg:text-[104px] xl:text-[116px]">
+                AIYE
+              </h1>
+              <p className="mt-4 font-display text-[28px] font-normal leading-[1.12] tracking-[-0.02em] text-eri-dark sm:mt-5 sm:text-[34px] lg:text-[40px]">
+                An observatory of
+                <br />
+                economic life
+              </p>
+              <p className="mt-6 max-w-105 font-sans text-[14px] font-normal leading-[1.55] tracking-[-0.01em] text-eri-grey-11 sm:mt-7 sm:text-[15.5px]">
+                Tracking the pulse of markets, behaviors, and human adaptation
+                across Nigeria
+              </p>
+              <p className="mt-5 font-sans text-[14px] font-medium leading-[1.55] tracking-[-0.01em] text-eri-dark sm:mt-6 sm:text-[15.5px]">
+                Built on field infrastructure.
+                <br />
+                Grounded in lived reality.
+              </p>
             </div>
-          </Container>
+          </div>
         </div>
       </section>
 
@@ -106,7 +101,7 @@ export function ReportsPageContent() {
         className="py-16 sm:py-20 lg:py-28"
       >
         <Container size="insights">
-          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-14">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)] lg:gap-14">
             <div>
               <h2
                 id="snapshot-heading"
@@ -130,14 +125,13 @@ export function ReportsPageContent() {
               </div>
             </div>
 
-            <div className="relative w-full">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[16px] shadow-[0_12px_32px_rgba(0,0,0,0.12)]">
               <Image
-                src="/images/reports/reports-image.png"
-                alt="The Nigerian Urban Consumer 2026 Snapshot Q1 report preview"
-                width={723}
-                height={440}
-                sizes="(max-width: 1023px) 100vw, 723px"
-                className="-mx-[6.57%] -mb-[12.68%] h-auto w-[113.15%] max-w-none"
+                src="/images/report-page/ask-eri-image.jpg"
+                alt="Merchants and shoppers in a Lagos market"
+                fill
+                sizes="(max-width: 1023px) 100vw, 640px"
+                className="object-cover object-center"
                 priority
               />
             </div>

@@ -63,7 +63,7 @@ export function InsightsSection({ insights = [] }: InsightsSectionProps) {
             id="insights-heading"
             className="font-display text-[clamp(22px,6.6vw,28px)] font-semibold leading-[1.08] tracking-[-0.02em] sm:text-[38px] lg:text-[44px]"
           >
-            Windows from across Nigeria
+            Window into the lives of people...
           </h2>
           <Link
             href="/insights"
