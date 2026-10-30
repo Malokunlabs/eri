@@ -38,14 +38,14 @@ export function ReportsSection() {
           </Link>
         </div>
 
-        <div className="w-full overflow-hidden rounded-2xl">
+        <div className="relative w-full">
           <Image
             src="/images/reports/reports-image.png"
             alt="A motion-blurred street scene featuring a yellow and green vehicle"
             width={714}
             height={434}
             sizes="(max-width: 1023px) 100vw, 680px"
-            className="h-auto w-full rounded-2xl object-cover"
+            className="-mx-[6.57%] -mb-[12.68%] h-auto w-[113.15%] max-w-none"
           />
         </div>
       </Container>

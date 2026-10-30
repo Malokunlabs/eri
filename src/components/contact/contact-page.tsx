@@ -5,39 +5,7 @@ import { useEffect, useState } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { Container } from "@/components/ui/container";
-
-interface Testimonial {
-  quote: string;
-  name: string;
-  company: string;
-  avatar?: string;
-  logo: string;
-}
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    quote:
-      'Eri is synonymous with speed and agility! I am always confident about my timelines when I work with the team. Responses are swift and on time. Quality is also top- notch. Looking forward to future studies!"',
-    name: "Fred Okobi",
-    company: "Moniepoint NG",
-    avatar: "/images/video-dairies/moniepoint-img.svg",
-    logo: "/images/video-dairies/moniepoint-logo.svg",
-  },
-  {
-    quote:
-      '"Eri has been instrumental in our transformation into a data-driven marketing team. Beyond traditional research, their deep understanding of cultural trends, ranging from mainstream to Alte, provided us with essential insights. These insights helped transform our core landscapes and have become an integral component of our strategic planning."',
-    name: "Oyindamola Medeiros",
-    company: "Food Concept Limited",
-    logo: "/icons/brand-icon/Chicken_Republic.svg",
-  },
-  {
-    quote:
-      '"As our Nigerian technical partner in market research, we have had the pleasure of working with Eri on multiple projects. Their expertise, professionalism, and commitment to delivering actionable and traceable insights to every project from the initial scoping call to the final presentation is unparalleled. They always show a deep understanding of our business and client needs, and tailor their research approach to meet our objectives."',
-    name: "Luke van der Spuy",
-    company: "Culture Foundry",
-    logo: "/icons/brand-icon/culture-foundry.png",
-  },
-];
+import { TESTIMONIALS } from "@/lib/testimonials-data";
 
 const HAS_CAROUSEL = TESTIMONIALS.length > 1;
 
@@ -195,7 +163,7 @@ export function ContactPage() {
       {/* Main */}
       <main
         id="main-content"
-        className="relative z-10 flex min-h-[calc(100vh-80px)] flex-col justify-center py-8 sm:py-12 lg:py-14"
+        className="relative z-10 pt-6 pb-8 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
       >
         <Container size="reach">
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-12 xl:gap-16">

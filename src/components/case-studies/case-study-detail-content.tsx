@@ -125,7 +125,7 @@ export function CaseStudyDetailContent({ study }: CaseStudyDetailContentProps) {
     <div className="min-h-screen bg-eri-grey-2">
       <SiteHeader variant="light" />
 
-      <main id="main-content" className="pb-20 pt-8 sm:pt-12 lg:pb-32 lg:pt-14">
+      <main id="main-content" className="pb-20 pt-6 sm:pt-10 lg:pb-32 lg:pt-12">
         <Container size="insights">
           {/* Breadcrumb / Back link */}
           <div className="mb-6 lg:mb-8">

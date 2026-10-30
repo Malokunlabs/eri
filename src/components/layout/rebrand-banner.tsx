@@ -14,16 +14,14 @@ export function RebrandBanner() {
       aria-label="Rebrand announcement"
       className="relative z-50 flex h-14 items-center justify-center bg-[#4db6ff] px-12"
     >
-      <p className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 font-display text-[11px] font-semibold leading-none text-[#0a8fe8] shadow-sm sm:text-[12px]">
-        <span>Was Formerly</span>
+      <p className="inline-flex items-center rounded-full bg-white px-4 py-2 shadow-sm">
         <Image
-          src="/logo/header/Malokunlabs.svg"
-          alt=""
-          width={16}
-          height={16}
-          className="size-4 shrink-0"
+          src="/logo/header/new-malokun-logo.png"
+          alt="A Malokun Labs Company"
+          width={202}
+          height={24}
+          className="h-5 w-auto sm:h-6"
         />
-        <span>Malokun Labs</span>
       </p>
 
       <button

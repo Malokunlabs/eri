@@ -26,8 +26,7 @@ export function CaseStudySpotlightSection({
       }
     }
     return {
-      intro:
-        study.paragraphs || (study.description ? [study.description] : []),
+      intro: study.paragraphs || (study.description ? [study.description] : []),
       sections: [],
     };
   }, [study]);
@@ -69,7 +68,9 @@ export function CaseStudySpotlightSection({
 
       const sectionElements = sections
         .map((s) => ({ id: s.id, el: document.getElementById(s.id) }))
-        .filter((item): item is { id: string; el: HTMLElement } => item.el !== null);
+        .filter(
+          (item): item is { id: string; el: HTMLElement } => item.el !== null,
+        );
 
       if (sectionElements.length === 0) return;
 
@@ -130,7 +131,7 @@ export function CaseStudySpotlightSection({
   return (
     <section
       aria-labelledby="case-study-spotlight-heading"
-      className="bg-eri-grey-2 pb-20 pt-8 lg:pb-32 lg:pt-14"
+      className="bg-white pb-20 pt-8 lg:pb-32 lg:pt-14"
     >
       <Container size="insights">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[330px_1fr] lg:gap-14 xl:gap-20">
@@ -181,49 +182,48 @@ export function CaseStudySpotlightSection({
             </div>
 
             {/* Table of contents: Sub headings under the SVG for each section */}
-            {sections.length > 0 &&
-              sections.some((s) => s.heading?.trim()) && (
-                <nav
-                  aria-label="Table of contents"
-                  className="mt-6 flex flex-col space-y-3 pb-8 lg:mt-7"
-                >
-                  <span className="sr-only">Table of contents</span>
-                  {sections
-                    .filter((section) => section.heading?.trim())
-                    .map((section) => {
-                      const isActive = activeSectionId === section.id;
-                      return (
-                        <div
-                          key={section.id}
-                          data-section-id={section.id}
-                          className={`border-b pb-3.5 transition-colors duration-200 ${
-                            isActive ? "border-eri-dark" : "border-eri-grey-5"
+            {sections.length > 0 && sections.some((s) => s.heading?.trim()) && (
+              <nav
+                aria-label="Table of contents"
+                className="mt-6 flex flex-col space-y-3 pb-8 lg:mt-7"
+              >
+                <span className="sr-only">Table of contents</span>
+                {sections
+                  .filter((section) => section.heading?.trim())
+                  .map((section) => {
+                    const isActive = activeSectionId === section.id;
+                    return (
+                      <div
+                        key={section.id}
+                        data-section-id={section.id}
+                        className={`border-b pb-3.5 transition-colors duration-200 ${
+                          isActive ? "border-eri-dark" : "border-eri-grey-5"
+                        }`}
+                      >
+                        <a
+                          href={`#${section.id}`}
+                          onClick={(e) => handleTocClick(e, section.id)}
+                          className={`flex items-start gap-2.5 font-sans text-[15px] leading-[1.4] transition-colors duration-150 lg:text-[16px] ${
+                            isActive
+                              ? "font-medium text-eri-dark"
+                              : "font-normal text-eri-grey-11 hover:text-eri-dark"
                           }`}
                         >
-                          <a
-                            href={`#${section.id}`}
-                            onClick={(e) => handleTocClick(e, section.id)}
-                            className={`flex items-start gap-2.5 font-sans text-[15px] leading-[1.4] transition-colors duration-150 lg:text-[16px] ${
+                          <span
+                            className={`mt-1.5 size-1.5 shrink-0 rounded-full transition-all duration-200 ${
                               isActive
-                                ? "font-medium text-eri-dark"
-                                : "font-normal text-eri-grey-11 hover:text-eri-dark"
+                                ? "bg-eri-coral scale-100 opacity-100"
+                                : "bg-transparent scale-0 opacity-0"
                             }`}
-                          >
-                            <span
-                              className={`mt-1.5 size-1.5 shrink-0 rounded-full transition-all duration-200 ${
-                                isActive
-                                  ? "bg-eri-coral scale-100 opacity-100"
-                                  : "bg-transparent scale-0 opacity-0"
-                              }`}
-                              aria-hidden="true"
-                            />
-                            <span className="flex-1">{section.heading}</span>
-                          </a>
-                        </div>
-                      );
-                    })}
-                </nav>
-              )}
+                            aria-hidden="true"
+                          />
+                          <span className="flex-1">{section.heading}</span>
+                        </a>
+                      </div>
+                    );
+                  })}
+              </nav>
+            )}
           </aside>
 
           {/* Right Column: Article Header & Body */}

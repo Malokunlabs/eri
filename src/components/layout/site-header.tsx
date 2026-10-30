@@ -41,12 +41,12 @@ export function SiteHeader({ variant = "dark" }: SiteHeaderProps) {
           <Image
             src={
               isLight
-                ? "/logo/header/formallyMalokunlabs-logo-orange.svg"
-                : "/logo/header/FormallyMalokunlabslogo-white.svg"
+                ? "/logo/header/new-logo-orange.svg"
+                : "/logo/header/new-logo-white.svg"
             }
-            alt="Eri"
-            width={91}
-            height={32}
+            alt="Eri, a Malokun Labs company"
+            width={167}
+            height={33}
             className="h-7 w-auto md:h-7.5 lg:h-8"
             loading="eager"
           />

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useRef } from "react";
 
 import { SiteHeader } from "@/components/layout/site-header";
@@ -126,52 +125,43 @@ export function AboutPageContent() {
       {/* Section 1: Hero Section */}
       <section className="relative w-full overflow-hidden bg-eri-coral text-eri-white">
         {/* Navbar */}
-        <SiteHeader variant="dark" />
+        <div className="relative z-10">
+          <SiteHeader variant="dark" />
+        </div>
 
         {/* Hero Content */}
-        <div className="pb-16 pt-10 sm:pb-24 sm:pt-14 lg:pb-32 lg:pt-16">
+        <div className="relative z-10 pt-6 sm:pt-10 lg:pt-12">
           <Container size="insights">
-            <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto] lg:gap-16">
-              <div>
-                <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
-                  About Us
-                </h1>
-                <p className="mt-5 max-w-105 text-[14px] leading-[1.55] text-white/95 sm:text-[15px] lg:text-[16px]">
-                  Eri exists because the most important things about a market in
-                  Nigeria are not written down anywhere, and someone has to go
-                  and see them.
-                </p>
-                {/* <div className="mt-7 sm:mt-8">
-                  <Link
-                    href="/contact"
-                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-eri-dark bg-eri-coral-dark px-7 py-2.5 font-display text-[15px] font-medium text-white shadow-sm transition-all hover:bg-eri-coral-dark/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  >
-                    Contact Us
-                  </Link>
-                </div> */}
-              </div>
-
-              <div className="flex justify-start lg:justify-end">
-                <Image
-                  src="/images/about/3lines.png"
-                  alt=""
-                  width={274}
-                  height={157}
-                  className="h-auto w-60 sm:w-68.5"
-                />
-              </div>
+            <div className="mx-auto flex max-w-135 flex-col items-center text-center">
+              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">
+                About Us
+              </h1>
+              <p className="mt-4 max-w-95 text-[14px] leading-[1.55] text-white/95 sm:mt-5 sm:max-w-110 sm:text-[15px] lg:text-[16px]">
+                Eri exists because the most important things about a market in
+                Nigeria are not written down anywhere, and someone has to go and
+                see them.
+              </p>
             </div>
           </Container>
         </div>
 
-        {/* Zebra Crossing Graphic */}
-        <div className="w-full">
+        {/* Hero Artwork (Zebra Crossing + People) */}
+        <div className="relative -mt-48 w-full sm:-mt-28 md:-mt-36 lg:-mt-48 xl:-mt-56">
           <Image
-            src="/images/about/zebra-crossing.png"
+            src="/images/about/about-mobile-bg.png"
             alt=""
-            width={1440}
-            height={200}
-            className="h-auto w-full object-cover object-bottom"
+            width={390}
+            height={844}
+            priority
+            className="pointer-events-none block h-auto w-full select-none object-cover object-bottom sm:hidden"
+          />
+          <Image
+            src="/images/about/about-bg.png"
+            alt=""
+            width={1280}
+            height={720}
+            priority
+            className="pointer-events-none hidden h-auto w-full select-none object-cover object-bottom sm:block"
           />
         </div>
       </section>

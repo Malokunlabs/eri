@@ -189,7 +189,7 @@ export function VideoDiariesPageContent({
     <div className="min-h-screen bg-eri-white">
       <SiteHeader variant="light" />
 
-      <main id="main-content" className="pb-16 pt-8 lg:pb-24 lg:pt-14">
+      <main id="main-content" className="pb-16 pt-6 sm:pt-10 lg:pb-24 lg:pt-12">
         <Container size="insights">
           {/* Section 1: Hero Section */}
           <section

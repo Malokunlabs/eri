@@ -52,40 +52,49 @@ export function ReportsPageContent() {
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
-      <section className="relative min-h-140 w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-155 lg:min-h-170">
-        {/* Background Hero Image */}
-        <Image
-          src="/images/report-page/new-bg.png"
-          alt="Woman carrying a tray in a Nigerian rural setting"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center brightness-[0.92]"
-        />
+      <section className="relative w-full overflow-hidden bg-eri-white text-eri-dark">
+        {/* Navbar */}
+        <SiteHeader variant="light" />
 
-        {/* Subtle Dark Gradient Overlay for optimal text readability */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent lg:from-black/75 lg:via-black/35"
-        />
-
-        {/* Navbar overlaid on hero */}
-        <div className="relative z-20">
-          <SiteHeader variant="dark" />
-        </div>
-
-        {/* Hero Title and Copy */}
-        <div className="relative z-10 flex min-h-[460px] items-center pb-20 pt-8 sm:min-h-[520px] lg:min-h-[580px]">
+        {/* Hero Image and Copy */}
+        <div className="pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <Container size="insights">
-            <div className="max-w-[560px]">
-              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-white sm:text-[48px] lg:text-[56px]">
-                Reports by Aiye
-              </h1>
-              <p className="mt-5 max-w-[460px] text-[14px] leading-[1.55] text-eri-white/90 sm:text-[15px] lg:text-[16px]">
-                Eri publishes its own field research, gathered by our people in
-                markets and stores across Nigeria, and every report is free to
-                read.
-              </p>
+            <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,640px)_minmax(0,1fr)] lg:gap-10">
+              <div className="order-2 relative w-full lg:order-1">
+                <Image
+                  src="/images/report-page/bw-image.png"
+                  alt="Four women walking along a bridge at dusk in Nigeria"
+                  width={724}
+                  height={444}
+                  priority
+                  sizes="(max-width: 1023px) 100vw, 724px"
+                  className="-mx-[6.57%] -mb-[13.1%] h-auto w-[113.15%] max-w-none"
+                />
+              </div>
+
+              <div className="order-1 max-w-95 lg:order-2">
+                <h1 className="font-display text-[36px] font-semibold leading-none tracking-[-0.02em] text-eri-dark sm:text-[48px] lg:text-[57px]">
+                  Reports <br className="hidden lg:inline" />
+                  by Aiye
+                </h1>
+                <p className="mt-3 font-display text-[17px] font-medium leading-[1.1] tracking-[-0.01em] text-eri-dark sm:mt-4 sm:text-[18px] lg:mt-5 lg:text-[19px]">
+                  An observatory of economic life
+                </p>
+                <p className="mt-3 max-w-88 font-sans text-[14px] font-normal leading-[1.5] tracking-[-0.01em] text-eri-grey-11 sm:text-[15px]">
+                  Tracking the pulse of markets, behaviors, and human adaptation
+                  across Nigeria. Built on field infrastructure. Grounded in
+                  lived reality.
+                </p>
+                <div className="mt-5 sm:mt-6 lg:mt-7">
+                  <Link
+                    target="_blank"
+                    href="https://aiye.africa/"
+                    className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
+                  >
+                    Download Report
+                  </Link>
+                </div>
+              </div>
             </div>
           </Container>
         </div>
@@ -127,8 +136,8 @@ export function ReportsPageContent() {
                 alt="The Nigerian Urban Consumer 2026 Snapshot Q1 report preview"
                 width={723}
                 height={440}
-                sizes="(max-width: 1023px) 100vw, 580px"
-                className="h-auto w-full"
+                sizes="(max-width: 1023px) 100vw, 723px"
+                className="-mx-[6.57%] -mb-[12.68%] h-auto w-[113.15%] max-w-none"
                 priority
               />
             </div>

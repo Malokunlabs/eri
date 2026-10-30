@@ -94,7 +94,7 @@ export function InsightsPageContent({
     <div className="bg-eri-white">
       <SiteHeader variant="light" />
 
-      <main id="main-content" className="pb-16 pt-10 lg:pb-24 lg:pt-12">
+      <main id="main-content" className="pb-16 pt-6 sm:pt-10 lg:pb-24 lg:pt-12">
         <Container size="insights">
           <div className="flex flex-col gap-6 border-b border-eri-grey-5 pb-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
             <div>
