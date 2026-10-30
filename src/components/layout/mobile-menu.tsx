@@ -131,10 +131,10 @@ export function MobileMenu({ variant = "dark" }: MobileMenuProps) {
                     className="shrink-0 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-eri-white"
                   >
                     <Image
-                      src="/logo/header/logo.svg"
-                      alt="Eri"
-                      width={91}
-                      height={32}
+                      src="/logo/header/new-logo-white.svg"
+                      alt="Eri, a Malokun Labs company"
+                      width={167}
+                      height={33}
                       className="h-7 w-auto"
                       priority
                     />
