@@ -5,63 +5,76 @@ import { Container } from "@/components/ui/container";
 
 type Bundle = {
   id: string;
-  audience: string;
-  title: string;
-  description: string;
+  tier: string;
+  titleLines: string[];
   ctaLabel: string;
   ctaHref: string;
-  features: string[];
-  featured?: boolean;
+  paragraphs: string[];
 };
 
 const bundles: Bundle[] = [
   {
-    id: "ground-truth",
-    audience: "Start-ups & MSEs",
-    title: "Ground Truth",
-    description:
-      "You bring the question. We put people where the answer is and bring back clean data.",
+    id: "nationwide-field-network",
+    tier: "Tier 1 — Lead with these",
+    titleLines: ["Nationwide", "Field Network"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
-    features: [
-      "Geo-tagged photos for on-shelf reality",
-      "Micro-surveys for on-shelf reality",
-      "Blind product/message tests with selfie reactions",
-      "Live QR feedback + shelf audits",
-      "Monday dashboard mail",
+    paragraphs: [
+      "11,000+ verified agents across urban, peri-urban and rural Nigeria, six zones. The reach no competitor can sublease.",
     ],
   },
   {
-    id: "field-research",
-    audience: "Regional Organizations",
-    title: "Field Research",
-    description:
-      "You bring the question. We put people where the answer is and bring back clean data.",
-    ctaLabel: "Book Demo",
-    ctaHref: "/contact",
-    features: [
-      "Geo-tagged photos for on-shelf reality",
-      "Micro-surveys for on-shelf reality",
-      "Blind product/message tests with selfie reactions",
-      "Live QR feedback + shelf audits",
-      "Monday dashboard mail",
-    ],
-    featured: true,
-  },
-  {
-    id: "standing-intelligence",
-    audience: "Established Multinationals",
-    title: "Standing Intelligence",
-    description:
-      "Market intelligence on a subscription. You see the number every month it moves.",
+    id: "field-research-data-collection",
+    tier: "Tier 1 — Lead with these",
+    titleLines: ["Field Research", "& Data Collection"],
     ctaLabel: "Book a Demo",
     ctaHref: "/contact",
-    features: [
-      "Geo-tagged photos for on-shelf reality",
-      "Micro-surveys for on-shelf reality",
-      "Blind product/message tests with selfie reactions",
-      "Standing coverage on the market you choose, refreshed to a fixed schedule",
-      "Built for teams watching a market month to month",
+    paragraphs: [
+      "Quantitative deployment (CAPI face-to-face or digital, geo-aware, multilingual, with recruitment, incentives, quota control, QC and clean data delivery)",
+      "Qualitative fieldwork (FGDs, IDIs, mobile diaries, ride-alongs, trade visits — recruitment through transcripts)",
+      "Qualitative fieldwork: FGDs, IDIs, mobile diaries, ride-alongs, and trade visits.",
+      "Full-service research when Eri owns design, field, analysis, and reporting.",
+    ],
+  },
+  {
+    id: "ground-truth-data-verification",
+    tier: "Tier 2 — The proof layer",
+    titleLines: ["Ground-Truth Data &", "Verification (GroundAPI)"],
+    ctaLabel: "Book a Demo",
+    ctaHref: "/contact",
+    paragraphs: [
+      "Prices, presence, conditions and sentiment verified by agents physically in place.",
+      "For \u201Cprove-it\u201D buyers — DFIs, FMCG, fintech — where a claim has to survive a skeptic.",
+    ],
+  },
+  {
+    id: "trade-retail-diagnostics",
+    tier: "Tier 2 — The proof layer",
+    titleLines: ["Trade & Retail", "Diagnostics"],
+    ctaLabel: "Book a Demo",
+    ctaHref: "/contact",
+    paragraphs: [
+      "Retail audits, availability and distribution checks, and a rapid commercial pulse when direction is needed in weeks, not quarters.",
+    ],
+  },
+  {
+    id: "ethnographic-video-cultural-intelligence",
+    tier: "Tier 2 — The proof layer",
+    titleLines: ["Ethnographic Video", "& Cultural Intelligence"],
+    ctaLabel: "Book a Demo",
+    ctaHref: "/contact",
+    paragraphs: [
+      "Documentary-grade field capture, video ethnography, culture-and-codes readouts. Your Monochrome Lagos credibility, commercialised.",
+    ],
+  },
+  {
+    id: "ground-intelligence-network",
+    tier: "Tier 3 — Subscription",
+    titleLines: ["Ground Intelligence", "Network"],
+    ctaLabel: "Book a Demo",
+    ctaHref: "/contact",
+    paragraphs: [
+      "Standing market intelligence on subscription, tiered Signal / Current / Infrastructure.",
     ],
   },
 ];
@@ -88,63 +101,51 @@ export function SolutionBundleSection() {
         </div>
 
         {/* Cards grid */}
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {bundles.map((bundle) => (
             <div
               key={bundle.id}
-              className={`relative flex flex-1 flex-col rounded-2xl p-6 sm:p-7 lg:p-8 ${
-                bundle.featured
-                  ? "bg-eri-mauve text-eri-white"
-                  : "border border-eri-grey-5 bg-eri-grey-3 text-eri-dark"
-              }`}
+              className="group relative flex flex-col rounded-2xl border border-eri-grey-5 bg-eri-grey-3 p-6 text-eri-dark transition-colors duration-200 hover:border-eri-mauve hover:bg-eri-mauve hover:text-eri-white sm:p-7"
             >
-              {/* Card top: audience label + branded logo icon */}
+              {/* Card top: tier label + branded logo icon */}
               <div className="flex items-center justify-between gap-3">
-                <span
-                  className={`text-[12px] font-medium leading-none tracking-[0.01em] sm:text-[13px] ${
-                    bundle.featured ? "text-white/70" : "text-eri-grey-11"
-                  }`}
-                >
-                  {bundle.audience}
+                <span className="text-[14px] font-medium leading-none tracking-[-0.01em] text-eri-grey-11 transition-colors duration-200 group-hover:text-white/90 sm:text-[15px]">
+                  {bundle.tier}
                 </span>
-                <Image
-                  src={
-                    bundle.featured
-                      ? "/icons/services-page/white-logo.svg"
-                      : "/icons/services-page/grey-logo.svg"
-                  }
-                  alt=""
-                  width={21}
-                  height={20}
-                  aria-hidden="true"
-                />
+                <div className="relative h-5 w-[21px] shrink-0">
+                  <Image
+                    src="/icons/services-page/grey-logo.svg"
+                    alt=""
+                    width={21}
+                    height={20}
+                    aria-hidden="true"
+                    className="transition-opacity duration-200 group-hover:opacity-0"
+                  />
+                  <Image
+                    src="/icons/services-page/white-logo.svg"
+                    alt=""
+                    width={21}
+                    height={20}
+                    aria-hidden="true"
+                    className="absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                  />
+                </div>
               </div>
 
               {/* Bundle title */}
-              <h3
-                className={`font-display mt-3 text-[28px] font-semibold leading-[1.1] tracking-[-0.02em] sm:text-[32px] lg:text-[30px] xl:text-[34px] ${
-                  bundle.featured ? "text-eri-white" : "text-eri-dark"
-                }`}
-              >
-                {bundle.title}
+              <h3 className="font-display mt-5 text-[24px] font-semibold leading-[1.15] tracking-[-0.02em] text-eri-dark transition-colors duration-200 group-hover:text-eri-white sm:text-[26px]">
+                {bundle.titleLines.map((line, idx) => (
+                  <span key={idx} className="block">
+                    {line}
+                  </span>
+                ))}
               </h3>
-
-              {/* Description */}
-              <p
-                className={`mt-2.5 text-[13px] leading-[1.6] sm:text-[14px] ${
-                  bundle.featured ? "text-white/75" : "text-eri-grey-11"
-                }`}
-              >
-                {bundle.description}
-              </p>
 
               {/* CTA */}
               <div className="mt-5">
                 <Link
                   href={bundle.ctaHref}
-                  className={`eri-pill inline-flex min-h-10 items-center px-5 py-2.5 text-[13px] sm:text-[14px] ${
-                    bundle.featured ? "eri-pill--header border-transparent" : ""
-                  }`}
+                  className="eri-pill inline-flex min-h-10 items-center px-5 py-2.5 text-[13px] transition-colors duration-200 group-hover:border-eri-dark group-hover:bg-eri-coral-dark group-hover:text-eri-white sm:text-[14px]"
                 >
                   {bundle.ctaLabel}
                 </Link>
@@ -152,38 +153,21 @@ export function SolutionBundleSection() {
 
               {/* Divider */}
               <div
-                className={`my-6 h-px w-full ${
-                  bundle.featured ? "bg-white/20" : "bg-eri-grey-5"
-                }`}
+                className="my-6 h-px w-full bg-eri-grey-5 transition-colors duration-200 group-hover:bg-white/25"
                 aria-hidden="true"
               />
 
-              {/* Features list */}
-              <ul className="flex flex-col gap-3" role="list">
-                {bundle.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <Image
-                      src={
-                        bundle.featured
-                          ? "/icons/services-page/white-correct-icon.svg"
-                          : "/icons/services-page/dark-correct-icon.svg"
-                      }
-                      alt=""
-                      width={12}
-                      height={12}
-                      className="mt-1 shrink-0"
-                      aria-hidden="true"
-                    />
-                    <span
-                      className={`text-[13px] leading-[1.55] sm:text-[14px] ${
-                        bundle.featured ? "text-white/80" : "text-eri-grey-11"
-                      }`}
-                    >
-                      {feature}
-                    </span>
-                  </li>
+              {/* Paragraphs */}
+              <div className="flex flex-col gap-3">
+                {bundle.paragraphs.map((paragraph, i) => (
+                  <p
+                    key={i}
+                    className="text-[12px] leading-[1.55] text-eri-grey-11 transition-colors duration-200 group-hover:text-white/90 sm:text-[12.5px]"
+                  >
+                    {paragraph}
+                  </p>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>

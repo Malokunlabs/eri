@@ -130,7 +130,7 @@ export function AboutPageContent() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 pt-8 sm:pt-10 lg:pt-12">
+        <div className="relative z-10 pt-6 sm:pt-10 lg:pt-12">
           <Container size="insights">
             <div className="mx-auto flex max-w-135 flex-col items-center text-center">
               <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-white sm:text-[48px] lg:text-[56px]">

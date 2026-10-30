@@ -163,7 +163,7 @@ export function ContactPage() {
       {/* Main */}
       <main
         id="main-content"
-        className="relative z-10 flex min-h-[calc(100vh-80px)] flex-col justify-center py-8 sm:py-12 lg:py-14"
+        className="relative z-10 pt-6 pb-8 sm:pt-10 sm:pb-12 lg:pt-12 lg:pb-14"
       >
         <Container size="reach">
           <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-stretch lg:gap-12 xl:gap-16">

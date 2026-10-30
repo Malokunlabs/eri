@@ -52,12 +52,12 @@ export function ReportsPageContent() {
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
-      <section className="relative flex min-h-[calc(100svh-36px)] w-full flex-col overflow-hidden bg-eri-white text-eri-dark">
+      <section className="relative w-full overflow-hidden bg-eri-white text-eri-dark">
         {/* Navbar */}
         <SiteHeader variant="light" />
 
         {/* Hero Image and Copy */}
-        <div className="flex flex-1 items-center py-10 sm:py-14 lg:py-16">
+        <div className="pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <Container size="insights">
             <div className="grid items-center gap-6 lg:grid-cols-[minmax(0,640px)_minmax(0,1fr)] lg:gap-10">
               <div className="order-2 relative w-full lg:order-1">
@@ -74,8 +74,7 @@ export function ReportsPageContent() {
 
               <div className="order-1 max-w-95 lg:order-2">
                 <h1 className="font-display text-[36px] font-semibold leading-none tracking-[-0.02em] text-eri-dark sm:text-[48px] lg:text-[57px]">
-                  Reports{" "}
-                  <br className="hidden lg:inline" />
+                  Reports <br className="hidden lg:inline" />
                   by Aiye
                 </h1>
                 <p className="mt-3 font-display text-[17px] font-medium leading-[1.1] tracking-[-0.01em] text-eri-dark sm:mt-4 sm:text-[18px] lg:mt-5 lg:text-[19px]">
