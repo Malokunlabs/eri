@@ -52,40 +52,50 @@ export function ReportsPageContent() {
   return (
     <div className="bg-eri-white">
       {/* Section 1: Hero Section */}
-      <section className="relative min-h-140 w-full overflow-hidden bg-[#241a15] text-eri-white sm:min-h-155 lg:min-h-170">
-        {/* Background Hero Image */}
-        <Image
-          src="/images/report-page/new-bg.png"
-          alt="Woman carrying a tray in a Nigerian rural setting"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center brightness-[0.92]"
-        />
+      <section className="relative w-full overflow-hidden bg-eri-white text-eri-dark">
+        {/* Navbar */}
+        <SiteHeader variant="light" />
 
-        {/* Subtle Dark Gradient Overlay for optimal text readability */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent lg:from-black/75 lg:via-black/35"
-        />
-
-        {/* Navbar overlaid on hero */}
-        <div className="relative z-20">
-          <SiteHeader variant="dark" />
-        </div>
-
-        {/* Hero Title and Copy */}
-        <div className="relative z-10 flex min-h-[460px] items-center pb-20 pt-8 sm:min-h-[520px] lg:min-h-[580px]">
+        {/* Hero Image and Copy */}
+        <div className="pt-8 pb-8 sm:pt-12 sm:pb-12 lg:pt-16 lg:pb-14">
           <Container size="insights">
-            <div className="max-w-[560px]">
-              <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-white sm:text-[48px] lg:text-[56px]">
-                Reports by Aiye
-              </h1>
-              <p className="mt-5 max-w-[460px] text-[14px] leading-[1.55] text-eri-white/90 sm:text-[15px] lg:text-[16px]">
-                Eri publishes its own field research, gathered by our people in
-                markets and stores across Nigeria, and every report is free to
-                read.
-              </p>
+            <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-12">
+              <div className="relative w-full">
+                <Image
+                  src="/images/report-page/bw-image.png"
+                  alt="Four women walking along a bridge at dusk in Nigeria"
+                  width={724}
+                  height={444}
+                  priority
+                  sizes="(max-width: 1023px) 100vw, 600px"
+                  className="h-auto w-full"
+                />
+              </div>
+
+              <div className="max-w-105 lg:pb-4">
+                <h1 className="font-display text-[38px] font-semibold leading-[1.04] tracking-tight text-eri-dark sm:text-[48px] lg:text-[56px]">
+                  Reports
+                  <br />
+                  by Aiye
+                </h1>
+                <p className="mt-4 font-display text-[17px] font-semibold leading-[1.35] text-eri-dark sm:mt-5 sm:text-[18px] lg:text-[20px]">
+                  An observatory of economic life
+                </p>
+                <p className="mt-3 max-w-95 text-[14px] leading-[1.55] text-eri-grey-11 sm:text-[15px]">
+                  Tracking the pulse of markets, behaviors, and human adaptation
+                  across Nigeria. Built on field infrastructure. Grounded in
+                  lived reality.
+                </p>
+                <div className="mt-7 sm:mt-8">
+                  <Link
+                    target="_blank"
+                    href="https://aiye.africa/"
+                    className="eri-pill eri-pill--primary min-h-10 px-5 py-2.5 font-display text-[14px]"
+                  >
+                    Download Report
+                  </Link>
+                </div>
+              </div>
             </div>
           </Container>
         </div>
