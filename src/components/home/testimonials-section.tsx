@@ -45,7 +45,7 @@ function restingStyle(pos: number): React.CSSProperties {
 
 // The front card rolls down and away while the next one comes into view.
 const ROLLED_STYLE: React.CSSProperties = {
-  transform: "translateY(115%) rotateX(-14deg) scale(1.02)",
+  transform: "translateY(28px) rotateX(-8deg) scale(0.97)",
   opacity: 0,
   zIndex: 40,
 };
@@ -183,7 +183,7 @@ export function TestimonialsSection() {
   return (
     <section
       aria-labelledby="testimonials-heading"
-      className="bg-eri-white py-16 text-eri-dark sm:py-20 lg:py-28"
+      className="overflow-hidden bg-eri-white py-16 text-eri-dark sm:py-20 lg:py-28"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
