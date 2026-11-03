@@ -134,6 +134,14 @@ export function CaseStudySpotlightSection({
       className="bg-white pb-20 pt-8 lg:pb-32 lg:pt-14"
     >
       <Container size="insights">
+        <div className="mb-10 text-center lg:mb-14">
+          <h2
+            id="case-study-spotlight-heading"
+            className="mx-auto max-w-[800px] font-display text-[40px] font-semibold leading-[1.1] tracking-[-0.02em] text-eri-dark sm:text-[52px] lg:text-[64px]"
+          >
+            Case Study Spotlight
+          </h2>
+        </div>
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[330px_1fr] lg:gap-14 xl:gap-20">
           {/* Left Column: Featured SVG Folder + Table of Contents (Sticky on desktop) */}
           <aside
@@ -230,7 +238,7 @@ export function CaseStudySpotlightSection({
           <article className="min-w-0 max-w-[680px]">
             <header className="border-b border-eri-grey-5 pb-6 lg:pb-8">
               <h1
-                id="case-study-spotlight-heading"
+                id="case-study-spotlight-title"
                 className="font-display text-[34px] font-semibold leading-[1.1] tracking-[-0.025em] text-eri-dark sm:text-[42px] lg:text-[48px]"
               >
                 {study.description || study.title || study.company}
